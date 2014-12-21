@@ -179,3 +179,4 @@ class erk_style_dir_repair
 		// Enable the message handler
 		$stk_no_error = false;
 	}
+}
