@@ -64,7 +64,7 @@ class sql_query
 
 		if (!function_exists('remove_comments'))
 		{
-			include(PHPBB_ROOT_PATH . 'includes/functions_admin.' . PHP_EXT);
+			//include(PHPBB_ROOT_PATH . 'includes/functions_admin.' . PHP_EXT);
 		}
 		if (!function_exists('split_sql_file'))
 		{
@@ -75,7 +75,7 @@ class sql_query
 		$remove_remarks = $dbmd[$dbms]['COMMENTS'];
 
 		$delimiter = $dbmd[$dbms]['DELIM'];
-		$remove_remarks($sql_query);
+		//$remove_remarks($sql_query);
 		$sql_query = split_sql_file($sql_query, $delimiter);
 
 		// Return on error
