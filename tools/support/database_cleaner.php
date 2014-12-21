@@ -124,7 +124,7 @@ if (!class_exists('database_cleaner'))
 
 			if (!class_exists('phpbb_db_tools'))
 			{
-				include PHPBB_ROOT_PATH . 'includes/db/db_tools.' . PHP_EXT;
+				include STK_ROOT_PATH . 'includes/db/db_tools.' . PHP_EXT;
 			}
 			$db_tools = new phpbb_db_tools($db);
 
