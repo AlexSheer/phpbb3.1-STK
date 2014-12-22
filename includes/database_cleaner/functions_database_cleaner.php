@@ -127,7 +127,7 @@ function get_permission_rows(&$permission_data, &$permission_rows, &$existing_pe
 function get_role_rows(&$roles_data, &$role_rows, &$existing_roles)
 {
 	global $db;
-	
+
 	$existing_roles = array();
 	$sql_ary = array(
 		'SELECT'	=> 'ar.role_name',
@@ -182,24 +182,16 @@ function get_columns($table)
 {
 	global $db;
 
-	static $db_tools = null;
-	if ($db_tools == null)
-	{
-		if (!class_exists('phpbb_db_tools'))
-		{
-			include(PHPBB_ROOT_PATH . 'includes/db/db_tools.' . PHP_EXT);
-		}
-		$db_tools = new phpbb_db_tools($db);
-	}
-
 	// Set the query and column for each dbms
 	static $sql = '';
 	static $column_name = '';
+	$dbms = $db->get_sql_layer();
 	if (empty($sql))
 	{
-		switch ($db_tools->sql_layer)
+		switch ($db->get_sql_layer())
 		{
 			// MySQL
+			case 'mysql4'	:	
 			case 'mysql_40'	:
 			case 'mysql_41'	:
 				$sql = "SHOW COLUMNS FROM %s";
@@ -259,7 +251,7 @@ function get_columns($table)
 	// Get the columns
 	$columns = array();
 
-	if ($db_tools->sql_layer != 'sqlite')
+	if ($db->get_sql_layer() != 'sqlite')
 	{
 		while ($row = $db->sql_fetchrow($result))
 		{
