@@ -36,7 +36,7 @@ class mysql_upgrader
 	{
 		// Only available for MySQL DBMS
 		global $db;
-		if (!in_array($db->sql_layer, array('mysql', 'mysql4', 'mysqli')))
+		if (!in_array($db->get_sql_layer(), array('mysql', 'mysql4', 'mysqli')))
 		{
 			return 'TOOL_MYSQL_ONLY';
 		}
