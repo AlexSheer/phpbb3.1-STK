@@ -40,7 +40,7 @@ class database_cleaner_views
 	* @var database_cleaner_data The database cleaner data object
 	*/
 	var $db_cleaner = array();
-	
+
 	/**
 	* @var String Some steps have a specific notice when not ran
 	*/
@@ -195,6 +195,7 @@ class database_cleaner_views
 	*/
 	function columns()
 	{
+		global $umil;
 		// Time to start going through the database and listing any extra/missing fields
 		$last_output_table = '';
 		foreach ($this->db_cleaner->data->tables as $table_name => $data)
@@ -205,6 +206,10 @@ class database_cleaner_views
 				continue;
 			}
 
+			if ($umil->table_exists($table_name) === false)
+			{
+				continue;
+			}
 			$existing_columns = get_columns($table_name);
 
 			if ($existing_columns === false)
@@ -284,7 +289,7 @@ class database_cleaner_views
 
 		$this->success_message = 'DATABASE_COLUMNS_SUCCESS';
 	}
-	
+
 	/**
 	* Validate the extension groups
 	*/
@@ -486,7 +491,7 @@ class database_cleaner_views
 
 		$this->success_message = 'EXTENSIONS_SUCCESS';
 	}
-	
+
 	/**
 	* Reset report reasons?
 	*/
@@ -501,7 +506,7 @@ class database_cleaner_views
 		$this->success_message	= 'RESET_BOT_SUCCESS';
 		$this->not_run_message	= 'RESET_BOTS_SKIP';
 	}
-	
+
 	/**
 	* Reset system roles?
 	*/
@@ -514,7 +519,7 @@ class database_cleaner_views
 
 		$this->success_message = 'DATABASE_ROLES_SUCCESS';
 	}
-	
+
 	/**
 	* Validate the `acl_roles` table
 	*/
@@ -564,12 +569,12 @@ class database_cleaner_views
 			$req_tables		= $this->db_cleaner->data->tables;
 			$tables			= array_unique(array_merge(array_keys($req_tables), $found_tables));
 			sort($tables);
-	
+
 			$this->_section_data['tables'] = array(
 				'NAME'		=> 'DATABASE_TABLES',
 				'TITLE'		=> 'DATABASE_TABLES',
 			);
-	
+
 			foreach ($tables as $table)
 			{
 				// Table was added or removed
@@ -580,20 +585,20 @@ class database_cleaner_views
 						'FIELD_NAME'	=> $table,
 						'MISSING'		=> isset($req_tables[$table]) ? true : false,
 					);
-	
+
 					if ($this->_has_changes === false)
 					{
 						$this->_has_changes = true;
 					}
 				}
 			}
-			
+
 			// A bit nasty but the only real work around at this moment
 			if (empty($table_prefix) && $this->_has_changes)
 			{
 				$this->_u_next_step = append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->db_cleaner->step, 'submit' => false, 'tables_confirm' => true));
 			}
-	
+
 			$this->success_message = 'BOARD_DISABLE_SUCCESS';
 		}
 		else
@@ -606,7 +611,7 @@ class database_cleaner_views
 				set_var($value, $value, 'string', true);
 				$tables["items[{$table}]"] = $value;
 			}
-			
+
 			$this->_hidden_fields = $tables;
 
 			$this->_confirm_box = array(
