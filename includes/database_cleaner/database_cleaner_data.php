@@ -35,7 +35,7 @@ class database_cleaner_data
 	 * Instance of the phpBB DB tools
 	 * @var phpbb_db_tools
 	 */
-	var $db_tools = null;
+//	var $db_tools = null;
 
 	/**
 	* @var Array Config entries that were removed by this version
@@ -104,10 +104,12 @@ class database_cleaner_data
 	 *
 	 * @param phpbb_db_tools $db_tools The phpBB phpbb_db_tools object
 	 */
+/*	 
 	function database_cleaner_data($db_tools = null)
 	{
 		$this->db_tools = $db_tools;
 	}
+*/
 
 	/**
 	* Some data needs to be adjusted in certain cases
@@ -115,7 +117,7 @@ class database_cleaner_data
 	function init()
 	{
 		// Extract tables
-		global $table_prefix;
+		global $table_prefix, $db;
 
 		$this->tables = $this->schema_data;
 
@@ -191,7 +193,7 @@ class database_cleaner_data
 
 		// Firebird and Oracle, need the table and column names in 
 		// UPPERCASE. #62821
-		switch ($this->db_tools->sql_layer)
+		switch ($db->get_sql_layer())
 		{
 			case 'firebird'	:
 			case 'oracle'	:
