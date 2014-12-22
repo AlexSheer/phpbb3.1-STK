@@ -23,13 +23,14 @@ class profile_list
 		global $db, $template, $user, $phpbb_container;
 
 		page_header($user->lang['PROFILE_LIST']);
-
+/*
 		if (!class_exists('phpbb_db_tools'))
 		{
 			include(PHPBB_ROOT_PATH . 'stk/includes/db/db_tools.' . PHP_EXT);
 		}
 		$db_tools = new phpbb_db_tools($db);
 
+*/
 		$user->add_lang('memberlist');
 
 		// Handle delete
@@ -106,7 +107,7 @@ class profile_list
 			{
 				$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ');
 
-				switch ($db_tools->sql_layer)
+				switch ($db->get_sql_layer())
 				{
 					case 'mssql'		:
 					case 'mssqlnative'	:
@@ -208,23 +209,23 @@ class profile_list
 			}
 
 			$template->assign_block_vars('users', array(
-				'AIM'				=> $row['user_aim'],
+//				'AIM'				=> $row['user_aim'],
 				'EMAIL'				=> $row['user_email'],
-				'ICQ'				=> $row['user_icq'],
-				'INTERESTS'			=> $row['user_interests'],
+//				'ICQ'				=> $row['user_icq'],
+//				'INTERESTS'			=> $row['user_interests'],
 				'JABBER'			=> $row['user_jabber'],
 				'JOINED'			=> $user->format_date($row['user_regdate']),
-				'LOCATION'			=> $row['user_from'],
-				'MSNM'				=> $row['user_msnm'],
-				'OCCUPATION'		=> $row['user_occ'],
+//				'LOCATION'			=> $row['user_from'],
+//				'MSNM'				=> $row['user_msnm'],
+//				'OCCUPATION'		=> $row['user_occ'],
 				'POSTS'				=> $row['user_posts'],
 				'SIGNATURE'			=> ((!isset($options[$display]) || $display == 'user_sig') && $row['user_sig']) ? generate_text_for_display($row['user_sig'], $row['user_sig_bbcode_uid'], $row['user_sig_bbcode_bitfield'], 7) : '',
 				'USERID'			=> ($user->data['user_id'] == $row['user_id']) ? false : $row['user_id'],
 				'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 				'VISITED'			=> ($row['user_lastvisit']) ? $user->format_date($row['user_lastvisit']) : 0,
 				'WARNINGS'			=> $row['user_warnings'],
-				'WEBSITE'			=> $row['user_website'],
-				'YIM'				=> $row['user_yim'],
+//				'WEBSITE'			=> $row['user_website'],
+//				'YIM'				=> $row['user_yim'],
 
 				'OPTION_SECTION'		=> (isset($options[$display])) ? $row[$display] : '',
 				'ORDER_SECTION'			=> (in_array($order_by, $timestamps)) ? (($row[$order_by]) ? $user->format_date($row[$order_by]) : $user->lang['NEVER']) : $row[$order_by],
