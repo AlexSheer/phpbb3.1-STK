@@ -186,12 +186,13 @@ function get_columns($table)
 	static $sql = '';
 	static $column_name = '';
 	$dbms = $db->get_sql_layer();
+
 	if (empty($sql))
 	{
 		switch ($db->get_sql_layer())
 		{
 			// MySQL
-			case 'mysql4'	:	
+			case 'mysql4'	:
 			case 'mysql_40'	:
 			case 'mysql_41'	:
 				$sql = "SHOW COLUMNS FROM %s";
