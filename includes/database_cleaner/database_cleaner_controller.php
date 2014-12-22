@@ -734,7 +734,7 @@ class database_cleaner_controller
 				}
 				
 				// Delete, this is taken from "acp_reasons"
-				switch ($db->sql_layer)
+				switch ($db->get_sql_layer())
 				{
 					// The ugly one!
 					case 'mysqli':
