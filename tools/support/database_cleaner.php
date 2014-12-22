@@ -122,11 +122,11 @@ if (!class_exists('database_cleaner'))
 				include STK_ROOT_PATH . 'includes/database_cleaner/database_cleaner_data.' . PHP_EXT;
 			}
 
-			if (!class_exists('phpbb_db_tools'))
+			if (!class_exists('tools'))
 			{
-				include STK_ROOT_PATH . 'includes/db/db_tools.' . PHP_EXT;
+				include PHPBB_ROOT_PATH . 'phpbb/db/tools.' . PHP_EXT;
 			}
-			$db_tools = new phpbb_db_tools($db);
+			$db_tools = new phpbb\db\tools($db);
 
 			// Load all data for this version
 			$this->data = new database_cleaner_data($db_tools);
