@@ -32,12 +32,6 @@ class database_cleaner_data
 	var $config = array();
 
 	/**
-	 * Instance of the phpBB DB tools
-	 * @var phpbb_db_tools
-	 */
-//	var $db_tools = null;
-
-	/**
 	* @var Array Config entries that were removed by this version
 	*/
 	var $removed_config = array();
@@ -93,23 +87,11 @@ class database_cleaner_data
 	* @var Array An array containing all tables that are included in a vanilla phpBB install of this version
 	*/
 	var $tables = array();
-	
+
 	/**
 	* @var Array An array containing all report reasons
 	*/
 	var $report_reasons = array();
-
-	/**
-	 * Setup the data container
-	 *
-	 * @param phpbb_db_tools $db_tools The phpBB phpbb_db_tools object
-	 */
-/*	 
-	function database_cleaner_data($db_tools = null)
-	{
-		$this->db_tools = $db_tools;
-	}
-*/
 
 	/**
 	* Some data needs to be adjusted in certain cases
@@ -164,7 +146,7 @@ class database_cleaner_data
 					{
 						continue;
 					}
-					
+
 					include (PHPBB_ROOT_PATH . "language/{$entry}/install." . PHP_EXT);
 
 					if (in_array($test, $lang))
@@ -191,7 +173,7 @@ class database_cleaner_data
 			}
 		}
 
-		// Firebird and Oracle, need the table and column names in 
+		// Firebird and Oracle, need the table and column names in
 		// UPPERCASE. #62821
 		switch ($db->get_sql_layer())
 		{
