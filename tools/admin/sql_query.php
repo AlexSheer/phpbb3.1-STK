@@ -62,20 +62,24 @@ class sql_query
 			return;
 		}
 
-		if (!function_exists('remove_comments'))
-		{
-			//include(PHPBB_ROOT_PATH . 'includes/functions_admin.' . PHP_EXT);
-		}
 		if (!function_exists('split_sql_file'))
 		{
 			include(PHPBB_ROOT_PATH . 'includes/functions_install.' . PHP_EXT);
 		}
 
+		$dbms=  str_replace('phpbb\\db\\driver\\', '', $dbms);
 		$dbmd = get_available_dbms($dbms);
-		$remove_remarks = $dbmd[$dbms]['COMMENTS'];
+		if ($dbms == 'mysql' || $dbms == 'mysqli' || $dbms == 'firebird' || $dbms == 'sqlite')
+		{
+			$remove_remarks = 'phpbb_remove_comments';
+		}
+		else
+		{
+			$remove_remarks = 'phpbb_remove_remarks';
+		}
 
 		$delimiter = $dbmd[$dbms]['DELIM'];
-		//$remove_remarks($sql_query);
+		$remove_remarks($sql_query);
 		$sql_query = split_sql_file($sql_query, $delimiter);
 
 		// Return on error
@@ -85,7 +89,7 @@ class sql_query
 		{
 			// Run the query and make sure that nothing went wrong
 			$result = $db->sql_query($sql);
-			if ($db->sql_error_triggered)
+			if ($db->get_sql_error_triggered())
 			{
 				// Write the error result to the cache and return the user back
 				// to the main page
@@ -144,7 +148,7 @@ class sql_query
 		global $db;
 
 		$error	= $db->sql_error($sql);
-		$msg	= 'SQL ERROR [ ' . $db->sql_layer . ' ]<br /><br />' . $error['message'] . ' [' . $error['code'] . ']';
+		$msg	= 'SQL ERROR [ ' . $db->get_sql_layer() . ' ]<br /><br />' . $error['message'] . ' [' . $error['code'] . ']';
 
 		// Create some html to also embed the query
 		$return = $msg . '<dl class="codebox querybox">
