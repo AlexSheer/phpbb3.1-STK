@@ -103,4 +103,8 @@ $lang = array_merge($lang, array(
 	'VISITED'							=> 'Last visit',
 	'TOTAL'								=> 'Total',
 	'CONFIRM_EMAIL'						=> 'Confirm email',
+
+	'ERK_OK'							=> 'The Emergency Repair Kit hasn\'t found any critical issues within your phpBB installation.',
+	'RELOAD_STK'						=> 'Click <a href="%s"><b>here</b></a> to reload STK.',
+	'RELOAD_ARK'						=> 'Click <a href="%s"><b>here</b></a> to reload ARK.',
 ));
