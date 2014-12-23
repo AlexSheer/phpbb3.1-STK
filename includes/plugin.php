@@ -273,11 +273,6 @@ class plugin
 		$tpl_data = array();
 		foreach ($tool_list as $tool)
 		{
-			// Temporary add for phpBB 3.1 - scip Emergency Repair Kit
-			if ($tool == 'erk')
-			{
-				continue;
-			}
 			$class = $this->load_tool($this->_parts['c'], $tool);
 
 			// Can this tool be used?
