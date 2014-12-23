@@ -62,16 +62,17 @@ $critical_repair->autorun_tools();
 $user->session_begin();
 $auth->acl($user->data);
 $user->setup('acp/common', $config['default_style']);
+stk_add_lang('common');
 
 // Purge teh caches
 $umil = new umil(true);
 $umil->cache_purge(array(
 	'data',
-	'template',
-	'theme',
-	'imageset',
+//	'template',
+//	'theme',
+//	'imageset',
 ));
 
 
 // Let's tell the user all is okay :)
-$critical_repair->trigger_error("The Emergency Repair Kit hasn't found any critical issues within your phpBB installation.", true);
+$critical_repair->trigger_error($user->lang['ERK_OK'], true);
