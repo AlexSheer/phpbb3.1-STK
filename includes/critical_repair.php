@@ -123,6 +123,7 @@ class critical_repair
 	 */
 	function trigger_error($msg, $redirect_stk = false)
 	{
+		global $user;
 		if (!is_array($msg))
 		{
 			$msg = array($msg);
@@ -151,14 +152,14 @@ class critical_repair
 					<?php
 					if ($redirect_stk)
 					{
-						echo '<a href="' . STK_ROOT_PATH . '">Support Toolkit index</a> &bull; ';
+						echo '<a href="' . STK_ROOT_PATH . '">' . $user->lang['SUPPORT_TOOL_KIT_INDEX'] . '</a> &bull; ';
 					}
 					else
 					{
-						echo '<a href="' . STK_ROOT_PATH . 'erk.php">Emergency Repair Toolkit index</a> &bull; ';
+						echo '<a href="' . STK_ROOT_PATH . 'erk.'.PHP_EXT.'">' . $user->lang['CAT_ERK'] . '</a> &bull; ';
 					}
 					?>
-					<a href="<?php echo PHPBB_ROOT_PATH; ?>">Board index</a>
+					<a href="<?php echo PHPBB_ROOT_PATH; ?>"><?php echo $user->lang['FORUM_INDEX'] ?></a>
 				</p>
 			</div>
 			<div id="page-body">
@@ -166,7 +167,7 @@ class critical_repair
 					<div class="panel">
 						<span class="corners-top"><span></span></span>
 							<div id="content">
-								<h1>Emergency Repair Kit</h1>
+								<h1><?php echo $user->lang['CAT_ERK'] ?></h1>
 								<?php
 								foreach ($msg as $m)
 								{
@@ -177,11 +178,13 @@ class critical_repair
 									<?php
 									if ($redirect_stk)
 									{
-										echo 'Click <a href="' . STK_ROOT_PATH . '">here</a> to reload the STK';
+										$msg = sprintf($user->lang['RELOAD_STK'], STK_ROOT_PATH);
+										echo $msg;
 									}
 									else
 									{
-										echo 'Click <a href="' . STK_ROOT_PATH . 'erk.php">here</a> to reload the ERK';
+										$msg = sprintf($user->lang['RELOAD_ARK'], ''.STK_ROOT_PATH.'erk.'.PHP_EXT.'');
+										echo $msg;
 									}
 									?>
 								</p>
@@ -191,8 +194,8 @@ class critical_repair
 				</div>
 			</div>
 			<div id="page-footer">
-				Support Toolkit &copy; <a href="http://www.phpbb.com/">phpBB Group</a><br />
-				Powered by <a href="http://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Group
+				Support Toolkit for phpBB3.1.x &copy;</a><br />
+				Powered by <a href="http://www.phpbb.com/">phpBB</a>&reg; Forum Software &copy; phpBB Group - adaptation for phpBB3.1.x by &copy; Sheer
 			</div>
 		</div>
 	</body>
