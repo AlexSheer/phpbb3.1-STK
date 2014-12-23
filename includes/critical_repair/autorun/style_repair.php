@@ -23,12 +23,11 @@ class erk_style_repair
 		global $config, $db;
 
 		$config['default_style'] = (!isset($config['default_style']) || !$config['default_style']) ? 1 : $config['default_style'];
-		$sql = 'SELECT s.style_id, t.template_path
-			FROM ' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . ' i
-			WHERE s.style_id = ' . (int) $config['default_style'] . '
-				AND t.template_id = s.template_id
-				AND c.theme_id = s.theme_id
-				AND i.imageset_id = s.imageset_id';
+
+		$sql = 'SELECT style_id, style_path
+			FROM ' . STYLES_TABLE . '
+			WHERE style_id = ' . (int) $config['default_style'];
+
 		$result = $db->sql_query($sql);
 		// No styles in the database
 		$data = $db->sql_fetchrow($result);
@@ -45,11 +44,8 @@ class erk_style_repair
 	{
 		global $db, $table_prefix;
 
-		$sql = 'SELECT s.style_id
-			FROM ' . STYLES_TABLE . ' s, ' . STYLES_TEMPLATE_TABLE . ' t, ' . STYLES_THEME_TABLE . ' c, ' . STYLES_IMAGESET_TABLE . " i
-			WHERE t.template_id = s.template_id
-				AND c.theme_id = s.theme_id
-				AND i.imageset_id = s.imageset_id";
+		$sql = 'SELECT style_id
+			FROM ' . STYLES_TABLE;
 		$result2 = $db->sql_query_limit($sql, 1);
 		$row = $db->sql_fetchrow($result2);
 		if ($row)
@@ -129,9 +125,6 @@ class erk_style_repair
 					'style_name'		=> $style_name,
 					'style_copyright'	=> '',
 					'style_active'		=> 1,
-					'template_id'		=> $template_id,
-					'theme_id'			=> $theme_id,
-					'imageset_id'		=> $imageset_id,
 				);
 				$db->sql_query('INSERT INTO ' . STYLES_TABLE . ' ' . $db->sql_build_array('INSERT', $sql_ary));
 				$style_id = $db->sql_nextid();
