@@ -170,7 +170,7 @@ class plugin
 		if ($tool_name != 'erk')
 		{
 			// SRT Generator gets handled a bit different
-			$force_lang = ($tool_name == 'srt_generator') ? 'en' : false;
+			$force_lang = ($tool_name == 'srt_generator') ? $user->data['user_lang'] : false;
 			stk_add_lang('tools/' . $tool_cat . '/' . $tool_name, $force_lang);
 		}
 
