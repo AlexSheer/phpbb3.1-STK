@@ -342,7 +342,7 @@ function stk_add_lang($lang_file, $fore_lang = false)
 	// No language file :/
 	if (empty($user->lang_name))
 	{
-		//trigger_error("Language file: {$lang_file}." . PHP_EXT . ' missing!', E_USER_ERROR);
+		trigger_error("Language file: {$lang_file}." . PHP_EXT . ' missing!', E_USER_ERROR);
 	}
 
 	// In phpBB <= 3.0.2 the lang_name is stored in the lang_path
