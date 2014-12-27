@@ -278,6 +278,11 @@ function stk_add_lang($lang_file, $fore_lang = false)
 		);
 	}
 
+	if (empty($user->lang_path))
+	{
+		die('No language found!');
+	}
+
 	// Empty the lang_name
 	$user->lang_name = '';
 
@@ -287,7 +292,7 @@ function stk_add_lang($lang_file, $fore_lang = false)
 		$lang_dirs = array(
 			$user->data['user_lang'],			// User default
 			basename($config['default_lang']),	// Board default
-			basename($config['default_lang']),	// System default
+			'en',								// System default
 		);
 
 		// Only unique dirs
@@ -600,7 +605,13 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 {
 	// First and foremost handle the case where phpBB calls trigger error
 	// but the STK really needs to continue.
-	global $critical_repair, $stk_no_error;
+	global $critical_repair, $stk_no_error, $user;
+
+	if (!isset($user->lang['STK_FATAL_ERROR']))
+	{
+		stk_add_lang('common');
+	}
+
 	if ($stk_no_error === true)
 	{
 		return true;
@@ -634,10 +645,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 		// Set out own message if needed
 		if ($errno == E_USER_ERROR)
 		{
-			$msg_text = 'The Support Toolkit encountered a fatal error.<br /><br />
-						 The Support Toolkit includes an Emergency Repair Kit (ERK), a tool designed to resolve certain errors that prevent phpBB from functioning.
-						 It is advised that you run the ERK now so it can attempt to repair the error it has detected.<br />
-						 To run the ERK, click <a href="' . STK_ROOT_PATH . 'erk.php">here</a>.';
+			$msg_text = $user->lang['STK_FATAL_ERROR'];
 		}
 
 		if (!isset($critical_repair))
