@@ -106,7 +106,7 @@ class erk_bom_sniffer
 		// Read the whitelist
 		if (!file_exists(STK_ROOT_PATH . 'includes/critical_repair/whitelist.txt'))
 		{
-			$critical_repair->trigger_error(sprintf($this->messages['no_whitelist'], 'http://www.phpbb.com/community/viewforum.php?f=46'));
+			$critical_repair->trigger_error(sprintf($$user->lang['ERK_NO_WHITELIST'], 'http://www.phpbb.com/community/viewforum.php?f=46'));
 		}
 		$this->whitelist = file(STK_ROOT_PATH . 'includes/critical_repair/whitelist.txt', FILE_IGNORE_NEW_LINES);
 
@@ -214,7 +214,7 @@ class erk_bom_sniffer
 		// Inform the user what to do if we've created files
 		if (is_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer'))
 		{
-			$critical_repair->trigger_error($this->messages['issue_found']);
+			$critical_repair->trigger_error($user->lang['ERK_ISSUE_FOUND']);
 		}
 	}
 
