@@ -239,7 +239,7 @@ class critical_repair
 			while (($file = readdir($dir)) !== false)
 			{
 				$path = STK_ROOT_PATH . 'language/' . $file;
-				if (!is_file($path) && !is_link($path) && $file == $default_lang)
+				if (!is_file($path) && !is_link($path) && $file == strtolower($default_lang))
 				{
 					$language = $file;
 					break;
