@@ -124,6 +124,8 @@ class critical_repair
 	function trigger_error($msg, $redirect_stk = false)
 	{
 		global $user;
+
+		$user = $this->user_setup($user);
 		if (!is_array($msg))
 		{
 			$msg = array($msg);
@@ -203,5 +205,62 @@ class critical_repair
 <?php
 		// Make sure we exit, can't use any phpBB stuff here
 		exit;
+	}
+
+	function user_setup($user = false)
+	{
+		if (!isset($user))
+		{
+			if (!class_exists('phpbb\session'))
+			{
+				include(PHPBB_ROOT_PATH . 'phpbb/session.' . PHP_EXT);
+			}
+			if (!class_exists('phpbb\user'))
+			{
+				include(PHPBB_ROOT_PATH . 'phpbb/user.' . PHP_EXT);
+			}
+
+			if (file_exists(STK_ROOT_PATH . 'default_lang.txt'))
+			{
+				$default_lang = file_get_contents(STK_ROOT_PATH . 'default_lang.txt');
+			}
+			else
+			{
+				$default_lang = 'en';
+			}
+
+			$dir = @opendir(PHPBB_ROOT_PATH . 'language');
+			if (!$dir)
+			{
+				die('Unable to access the language directory');
+				exit;
+			}
+
+			while (($file = readdir($dir)) !== false)
+			{
+				$path = STK_ROOT_PATH . 'language/' . $file;
+				if (!is_file($path) && !is_link($path) && $file == $default_lang)
+				{
+					$language = $file;
+					break;
+				}
+			}
+			closedir($dir);
+
+			if (!file_exists(PHPBB_ROOT_PATH . 'language/' . $language) || !is_dir(PHPBB_ROOT_PATH . 'language/' . $language))
+			{
+				die('No language found!');
+			}
+
+			$user = new \phpbb\user('\phpbb\datetime');
+			$lang_path = $user->lang_path;
+			$lang_path = '' . $lang_path . '' . $language . '';
+			$user->lang_path = ''.PHPBB_ROOT_PATH.''.$lang_path.'';
+			$user->add_lang('install.'. PHP_EXT . '');
+			$user->add_lang('common.'. PHP_EXT . '');
+			$user->lang_path = $lang_path;
+			$user->add_lang('common.'. PHP_EXT . '');
+		}
+		return $user;
 	}
 }
