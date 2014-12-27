@@ -2611,11 +2611,9 @@ class umil
 			if (strpos($column_data[0], ':') !== false)
 			{
 				list($orig_column_type, $column_length) = explode(':', $column_data[0]);
-				//print_r($type_map[$dbms][$orig_column_type . ':']);
 				if (!is_array($type_map[$dbms][$orig_column_type . ':']))
 				{
 					$column_type = sprintf($type_map[$dbms][$orig_column_type . ':'], $column_length);
-					//print "$column_type";
 				}
 				else
 				{
