@@ -46,18 +46,6 @@ class erk_bom_sniffer
 	var $file_changed = false;
 
 	/**
-	* @var Array Messages that will be triggered by this tool
-	* @access private
-	*/
-	var $messages = array(
-		'bom_sniffer_writable'	=> 'The BOM sniffer requires %s to exist and to be writable!',
-		'issue_found'			=> 'As part of the “Emergency Repair Kit” of the Support Toolkit the ERK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The Support Toolkit has tried to resolve these issues and created a package with the corrected files <em>(backed up versions can be found in <c>store/bom_sniffer_backup/</c>)</em>. This package is stored in the <c>store/bom_sniffer/</c> directory. To apply the changed files to your board please <strong>move</strong> the files from the “store” to their correct location and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the ERK if no flaws are found.<br /><br /><strong style="color: #ff0000;">Before moving the generated files, please make sure that the generated files are correct!</strong> When in doubt please seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">support forum</a>.',
-		'remove_dir'			=> "The Support Toolkit has tried to remove the repaired file storage directory of this tool but wasn't able to do so. In order for this tool to run correctly the '<c>%s</c>' must be removed from the server. Please remove this directory manually and release the Support Toolkit.",
-		'store_write'			=> 'The BOM sniffer requires the <c>store</c> directory to exist and to be writable!',
-		'no_whitelist'			=> 'The BOM sniffer couldn\'t read the whitelist, and can\'t run the tests. Please seek assistance in the <a href="%s">Support Forums</a>.'
-	);
-
-	/**
 	* @var string The php close string
 	* @access private
 	*/
@@ -91,12 +79,14 @@ class erk_bom_sniffer
 	*/
 	function erk_bom_sniffer()
 	{
-		global $critical_repair, $stk_config;
+		global $critical_repair, $stk_config, $user;
+
+		$user = $critical_repair->user_setup($user);
 
 		// "Store" must be writable
 		if (@is_writable(PHPBB_ROOT_PATH . 'store') !== true)
 		{
-			$critical_repair->trigger_error($this->messages['store_write']);
+			$critical_repair->trigger_error($user->lang['ERK_STORE_WRITE']);
 		}
 
 		// Make sure the BOM sniffer dir store dir doesn't exist
@@ -108,7 +98,7 @@ class erk_bom_sniffer
 				// Not empty try to remove the store dir
 				if ($this->recursively_remove_dir(PHPBB_ROOT_PATH . 'store/bom_sniffer') === false)
 				{
-					$critical_repair->trigger_error(sprintf($this->messages['remove_dir'], PHPBB_ROOT_PATH . "store/bom_sniffer/"));
+					$critical_repair->trigger_error(sprintf($user->lang['ERK_REMOVE_DIR'], PHPBB_ROOT_PATH . "store/bom_sniffer/"));
 				}
 			}
 		}
@@ -1001,6 +991,10 @@ class _erk_bom_sniffer_cache
 	*/
 	function _erk_bom_sniffer_cache($bom_sniffer)
 	{
+		global $critical_repair, $user;
+
+		$user = $critical_repair->user_setup($user);
+
 		$this->bom_sniffer = $bom_sniffer;
 
 		$this->_cache_path = PHPBB_ROOT_PATH . 'cache/';
@@ -1008,7 +1002,7 @@ class _erk_bom_sniffer_cache
 		// Dir exists and is writable
 		if (@is_writable($this->_cache_path) !== true)
 		{
-			$this->bom_sniffer->trigger_message(sprintf($this->bom_sniffer->messages['bom_sniffer_writable']), $this->_cache_path);
+			$critical_repair->trigger_error($user->lang['BOM_SNIFFER_WRITABLE']);
 		}
 
 		// If we've got data cached for this load it.
