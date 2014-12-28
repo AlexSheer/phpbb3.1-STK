@@ -22,22 +22,16 @@ class profile_list
 	{
 		global $db, $template, $user, $phpbb_container;
 
-		page_header($user->lang['PROFILE_LIST']);
-/*
-		if (!class_exists('phpbb_db_tools'))
-		{
-			include(PHPBB_ROOT_PATH . 'stk/includes/db/db_tools.' . PHP_EXT);
-		}
-		$db_tools = new phpbb_db_tools($db);
+		$submit = request_var('sa', false);
 
-*/
+		page_header($user->lang['PROFILE_LIST']);
+
 		$user->add_lang('memberlist');
 
 		// Handle delete
-		if (isset($_REQUEST['sa']))
+		if ($submit)
 		{
 			$uids = request_var('marked_user_id', array(0, 0));
-
 			if (confirm_box(true))
 			{
 				if (!function_exists('user_delete'))
