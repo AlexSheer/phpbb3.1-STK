@@ -1,11 +1,11 @@
 <?php
 /**
 *
-* @package Support Toolkit - Restore Delted Users Russian language Pthelovod
+* @package Support Toolkit - Restore Delted Users Russian language Sheer
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* 
+*
 */
 
 /**
