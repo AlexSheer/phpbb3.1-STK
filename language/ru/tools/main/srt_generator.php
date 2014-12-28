@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @package Support Toolkit language Pthelovod
+ * @package Support Toolkit language Sheer
  * @version $Id$
  * @copyright (c) 2010 phpBB Group
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
