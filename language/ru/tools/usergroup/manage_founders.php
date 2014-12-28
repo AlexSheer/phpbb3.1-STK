@@ -1,11 +1,11 @@
 <?php
 /**
 *
-* @package Support Toolkit - Make Founder Russian language Pthelovod
+* @package Support Toolkit - Make Founder Russian language Sheer
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* 
+*
 */
 
 /**
@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'BOTH_FIELDS_FILLED'		=> 'Для выбора достаточно заполнить одно из полей  - имя или ID пользователя.',
-	
+
 	'DEMOTE_FAILED'				=> 'Невозможно удалить статус Основателя для всех пользователей!',
 	'DEMOTE_FOUNDERS'			=> 'Понизить выбранных Основателей в статусе',
 	'DEMOTE_SUCCESSFULL'		=> 'Статус Основателя успешно удалён для %d пользователей!',
@@ -51,9 +51,9 @@ $lang = array_merge($lang, array(
 	'MAKE_FOUNDER_FAILED'		=> 'Невозможно сделать данного пользователя Основателем',
 	'MAKE_FOUNDER_SUCCESS'		=> 'Пользователю <a href="%1$s">%2$s</a> успешно присвоен статус Основателя.',
 	'MANAGE_FOUNDERS'			=> 'Управление Основателями конференции',
-	
+
 	'NO_FOUNDERS'				=> 'Основателей не найдено',
-	
+
 	'PROMOTE_FOUNDER'			=> 'Сделать Основателем',
 
 	'USER_NAME_TO_FOUNDER'			=> 'Имя пользователя, которому необходимо присвоить статус Основателя',
