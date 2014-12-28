@@ -54,10 +54,12 @@ class clear_extensions
 	{
 		global $db, $template, $user, $cache;
 
+		$off = request_var('off', false);
+
 		page_header($user->lang['CLEAR_EXTENSIONS']);
 		$no_composer = false;
 
-		if (isset($_REQUEST['off']))
+		if ($off)
 		{
 			$uids = request_var('marked_name', array('', ''));
 			if (empty($uids))
