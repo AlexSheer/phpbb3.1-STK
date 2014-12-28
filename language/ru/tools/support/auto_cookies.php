@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Toolkit - Auto Cookies Russian language Pthelovod
+* @package Support Toolkit - Auto Cookies Russian language Sheer
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
