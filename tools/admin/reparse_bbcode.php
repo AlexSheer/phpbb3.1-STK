@@ -461,7 +461,7 @@ class reparse_bbcode
 			'submit'	=> true,
 			'mode'		=> $_next_mode,
 			'step'		=> $_next_step,
-			'reparseall'	=> (!empty($_REQUEST['reparseall'])) ? true : false,
+			'reparseall'	=> ($all) ? true : false,
 		);
 
 		meta_refresh(1, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, $params));
