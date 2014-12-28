@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'AUTHOR'					=> 'Автор',
-		'FORUM_NAME'				=> 'Название форума',
+	'FORUM_NAME'				=> 'Название форума',
 	'NEW_TOPIC_ID'				=> 'ID новой темы',
 	'POST_ID'					=> 'ID сообщения',
 	'TOPIC_ID'					=> 'ID темы',
