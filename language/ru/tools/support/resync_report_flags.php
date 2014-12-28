@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @package Support Toolkit - Resynchronise report flags Russian language Pthelovod
+ * @package Support Toolkit - Resynchronise report flags Russian language Sheer
  * @copyright (c) 2011 phpBB Group
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
