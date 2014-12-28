@@ -110,7 +110,7 @@ class restore_deleted_users
 			{
 				$post_ids[] = (int)$row['post_id'];
 			}
-			
+
 			$return['vars']['legend2'] = 'DAMAGED_POSTS';
 			$return['vars']['damaged_posts'] = array('lang' => 'DAMAGED_POSTS', 'default' => implode(', ', $post_ids), 'explain' => true, 'type' => 'text:40:255');
 		}
@@ -132,19 +132,22 @@ class restore_deleted_users
 	{
 		global $config, $db, $umil;
 
+		$post		= request_var('post', false);
+		$conflicted	= request_var('conflicted', false);
+
 		if (!check_form_key('restore_deleted_users'))
 		{
 			$error[] = 'FORM_INVALID';
 			return;
 		}
 
-		if (!isset($_REQUEST['post']) && !isset($_REQUEST['conflicted']))
+		if (!$post && !$conflicted
 		{
 			$error[] = 'NO_USER_SELECTED';
 			return;
 		}
 
-		if (isset($_REQUEST['post']))
+		if ($post)
 		{
 			// Get the selected users
 			$posts = array_keys(request_var('post', array(0 => 0)));
