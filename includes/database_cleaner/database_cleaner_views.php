@@ -72,6 +72,8 @@ class database_cleaner_views
 	{
 		global $error, $template, $user;
 
+		$did_run = request_var('did_run', false);
+
 		// Error?
 		if (!empty($error))
 		{
@@ -149,7 +151,7 @@ class database_cleaner_views
 		}
 
 		$msg = $this->success_message;
-		if (empty($_REQUEST['did_run']) && $this->db_cleaner->step > 0)
+		if (!$did_run && $this->db_cleaner->step > 0)
 		{
 			$msg = (!empty($this->not_run_message)) ? $this->not_run_message : ((isset($user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step - 1]])) ? $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step - 1]] : $this->success_message);
 		}
@@ -501,7 +503,7 @@ class database_cleaner_views
 			'title'		=> 'RESET_REPORT_REASONS',
 			'message'	=> 'RESET_REPORT_REASONS_EXPLAIN',
 		);
-		
+
 		// Only success message when the bots have been reset
 		$this->success_message	= 'RESET_BOT_SUCCESS';
 		$this->not_run_message	= 'RESET_BOTS_SKIP';
@@ -563,7 +565,8 @@ class database_cleaner_views
 	{
 		global $table_prefix;
 
-		if (!isset($_REQUEST['tables_confirm']))
+		$tables_confirm = request_var('tables_confirm', false);
+		if (!$tables_confirm)
 		{
 			$found_tables	= get_phpbb_tables();
 			$req_tables		= $this->db_cleaner->data->tables;
@@ -605,7 +608,8 @@ class database_cleaner_views
 		{
 			// I'n not sure why request_var doesn't work here so we'll do it a bit different
 			$tables = array();
-			foreach ($_REQUEST['items'] as $table => $value)
+			$tems = request_var('items', array(''));
+			foreach ($tems as $table => $value)
 			{
 				set_var($table, $table, 'string', true);
 				set_var($value, $value, 'string', true);
