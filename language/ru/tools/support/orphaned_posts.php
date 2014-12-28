@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Toolkit - Orphaned posts/topics Russian language Pthelovod
+* @package Support Toolkit - Orphaned posts/topics Russian language Sheer
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -39,27 +39,27 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'AUTHOR'					=> 'Автор',
-	'FORUM_NAME'				=> 'Название Форума',
-	'NEW_TOPIC_ID'				=> 'ID Новой Темы',
-	'POST_ID'					=> 'ID Сообщения',
-	'TOPIC_ID'					=> 'ID Темы',
+		'FORUM_NAME'				=> 'Название форума',
+	'NEW_TOPIC_ID'				=> 'ID новой темы',
+	'POST_ID'					=> 'ID сообщения',
+	'TOPIC_ID'					=> 'ID темы',
 
 	'DELETE_EMPTY_TOPICS'		=> 'Удалить выбранные темы нажатием на кнопку. (Действие необратимо!)',
-	'EMPTY_TOPICS'				=> 'Пустые (испорченные) Темы',
+	'EMPTY_TOPICS'				=> 'Пустые (испорченные) темы',
 	'EMPTY_TOPICS_EXPLAIN'		=> 'Это темы, в которых нет сообщений или это ссылки на пропавшие темы.',
-	'NO_EMPTY_TOPICS'			=> 'Пустых (испорченных) Тем не найдено',
-	'NO_TOPICS_SELECTED'		=> 'Нет выбранных Тем',
+	'NO_EMPTY_TOPICS'			=> 'Пустых (испорченных) тем не найдено',
+	'NO_TOPICS_SELECTED'		=> 'Нет выбранных тем',
 
 	'ORPHANED_POSTS'			=> 'Одиночные сообщения (не приписанные к темам)',
 	'ORPHANED_POSTS_EXPLAIN'	=> 'Эти сообщения не привязаны к конкретным темам. Укажите ID темы-родителя, к которой необходимо привязать потерянные сообщения.',
 	'NO_ORPHANED_POSTS'			=> 'Одиночные сообщения (не приписанные к темам) не найдены',
-	'NO_TOPIC_IDS'				=> 'Не указаны ID-ы тем-родителей',
-	'NONEXISTENT_TOPIC_IDS'		=> 'Указанные ID-ы тем-родителей не существуют: %s.<br />Пожалуйста, проверьте корректность указанных ID-ов тем.',
+	'NO_TOPIC_IDS'				=> 'Не указаны идентификаторы тем-родителей',
+	'NONEXISTENT_TOPIC_IDS'		=> 'Темы-родителеи с указанными идентификаторами не существуют: %s.<br />Пожалуйста, проверьте корректность идентификаторов тем.',
 	'REASSIGN'					=> 'Переназначение',
 
 	'DELETE_SHADOWS'			=> 'Удалить выбранные ссылки на пропавшие темы нажатием на кнопку. (Действие не обратимо!)',
-	'ORPHANED_SHADOWS'			=> 'Ссылки на пропавшие Темы',
-	'ORPHANED_SHADOWS_EXPLAIN'	=> 'Это ссылки на пропавшие темы, которых уже не существует.',
+	'ORPHANED_SHADOWS'			=> 'Ссылки на пропавшие темы',
+	'ORPHANED_SHADOWS_EXPLAIN'	=> 'Это ссылки на несуществующие темы.',
 	'NO_ORPHANED_SHADOWS'		=> 'Ссылок на пропавшие темы не обнаружено',
 
 	'POSTS_DELETED'				=> '%d сообщений удалено',
