@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Toolkit - MySQL Upgrader Russian language Pthelovod
+* @package Support Toolkit - MySQL Upgrader Russian language Sheer
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
@@ -47,7 +47,7 @@ $lang = array_merge($lang, array(
 	'MYSQL_UPGRADER_RUN_EXPLAIN'		=> 'Выбрав эту опцию, Утилита Обновления MySQL будет автоматически генерировать запросы для обновления и исправлений вашей MySQL и автоматически запускать эти запросы к вашей Базе Данных.<br />Для выполнения обновления необходимо длительное время, <strong>НЕ ПРЕРЫВАЙТЕ</strong> до окончания его дейстия, то есть до уведомления об окончании процесса обновления и окончания всех запросов к БД.',
 	'MYSQL_UPGRADER_SCRIPT'				=> 'Запросы Утилиты Обновления MySQL.',
 	'MYSQL_UPGRADER_SUCCESSFULL'		=> 'Действия Утилиты Обновления MySQL успешно закончены',
-	
+
 	'QUERY_FINISHED'					 => 'Завершение выполнения запроса %1$d из %2$d, переход к следующему шагу.',
 	'TOOL_MYSQL_ONLY'					=> 'Этот инструмет доступен только для пользователей MySQL DBMS',
 ));
