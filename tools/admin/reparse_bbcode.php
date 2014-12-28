@@ -286,9 +286,9 @@ class reparse_bbcode
 		{
 			case BBCODE_REPARSE_POSTS :
 				$sql_ary = array(
-					'SELECT'	=> 'f.forum_id, f.enable_indexing,
-									p.post_id, p.poster_id, p.icon_id, p.post_text, p.post_subject, p.post_username, p.post_time, p.post_edit_reason, p.bbcode_uid, p.enable_sig, p.post_edit_locked, p.enable_bbcode, p.enable_magic_url, p.enable_smilies, p.post_attachment,
-									t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_type, t.topic_status, t.topic_title, t.poll_title, t.topic_time_limit, t.poll_start, t.poll_length, t.poll_max_options, t.poll_last_vote, t.poll_vote_change,
+					'SELECT'	=> 'f.forum_id, f.enable_indexing, f.forum_name,
+									p.post_id, p.poster_id, p.icon_id, p.post_text, p.post_subject, p.post_username, p.post_time, p.post_edit_reason, p.bbcode_uid, p.enable_sig, p.post_edit_locked, p.enable_bbcode, p.enable_magic_url, p.enable_smilies, p.post_attachment, p.post_edit_user,
+									t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_type, t.topic_status, t.topic_title, t.poll_title, t.topic_time_limit, t.poll_start, t.poll_length, t.poll_max_options, t.poll_last_vote, t.poll_vote_change, t.topic_posts_approved, topic_posts_unapproved, topic_posts_softdeleted,
 									u.username',
 					'FROM'		=> array(
 						FORUMS_TABLE	=> 'f',
