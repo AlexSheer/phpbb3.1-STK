@@ -141,7 +141,7 @@ class restore_deleted_users
 			return;
 		}
 
-		if (!$post && !$conflicted
+		if (!$post && !$conflicted)
 		{
 			$error[] = 'NO_USER_SELECTED';
 			return;
