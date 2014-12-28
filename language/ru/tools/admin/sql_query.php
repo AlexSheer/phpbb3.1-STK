@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Toolkit - SQL Query Russian language Pthelovod
+* @package Support Toolkit - SQL Query Russian language Sheer
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -48,7 +48,7 @@ $lang = array_merge($lang, array(
 	'SHOW_RESULTS'					=> 'Отобразить результаты',
 	'SQL_QUERY'						=> 'Выполнение SQL-запроса',
 	'SQL_QUERY_EXPLAIN'				=> 'Введите SQL-запрос для выполнения. Если по умолчанию введен префикс phpbb_, но вы используете другой префикс, то он будет автоматически заменен на ваш префикс таблиц базы данных.',
-	
+
 	'SQL_QUERY_LEGEND'				=> 'SQL-запрос',
 	'SQL_QUERY_SUCCESS'				=> 'SQL-запрос выполнен успешно.',
 ));
