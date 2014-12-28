@@ -217,7 +217,8 @@ class reparse_bbcode
 //		}
 
 		// Greb our batch
-		$bitfield = (empty($_REQUEST['reparseall'])) ? true : false;
+		$all = request_var('reparseall', false);
+		$bitfield = ($all) ? true : false;
 
 		// The MSSQL DBMS doesn't break correctly out of the loop
 		// when it is finished reparsing the last post. Therefore
@@ -445,6 +446,8 @@ class reparse_bbcode
 	function _next_step($step, $mode, $next_mode = false)
 	{
 		global $template, $user;
+
+		$all = request_var('reparseall', false);
 
 		$_next_mode	= ($next_mode === false) ? $mode : ++$mode;
 		$_next_step	= ($next_mode === false) ? ++$step : 0;
