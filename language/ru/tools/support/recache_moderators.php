@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Toolkit - Recache moderators Russian language Pthelovod
+* @package Support Toolkit - Recache moderators Russian language Sheer
 * @version $Id$
 * @copyright (c) 2010 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
