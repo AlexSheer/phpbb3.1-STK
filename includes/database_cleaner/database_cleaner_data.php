@@ -177,7 +177,6 @@ class database_cleaner_data
 		// UPPERCASE. #62821
 		switch ($db->get_sql_layer())
 		{
-			case 'firebird'	:
 			case 'oracle'	:
 				// Uppercase the table names
 				stk_array_walk_keys($this->tables, 'strtoupper');
