@@ -151,7 +151,12 @@ class umil
 		}
 
 		// Setup $this->db_tools
+		if (!class_exists('phpbb\db\tools'))
+		{
+			include PHPBB_ROOT_PATH . 'phpbb/db/tools.' . PHP_EXT;
+		}
 
+		$this->db_tools = new phpbb\db\tools($this->db);
 
 		$this->stand_alone = $stand_alone;
 
@@ -1930,7 +1935,7 @@ class umil
 							'role_id'			=> $role_id,
 							'auth_option_id'	=> $auth_option_id,
 							'auth_setting'		=> $has_permission,
-				        );
+						);
 					}
 				}
 
@@ -1946,7 +1951,7 @@ class umil
 							'group_id'			=> $group_id,
 							'auth_option_id'	=> $auth_option_id,
 							'auth_setting'		=> $has_permission,
-				        );
+						);
 					}
 				}
 
@@ -2076,7 +2081,7 @@ class umil
 		// Use sql_table_exists if available
 		if (method_exists($this->db_tools, 'sql_table_exists'))
 		{
-			$roe = $this->db->return_on_error;
+			$roe = $this->db->sql_return_on_error();
 			$result = $this->db_tools->sql_table_exists($table_name);
 
 			// db_tools::sql_table_exists resets the return_on_error to false always after completing, so we must make sure we set it to true again if it was before
@@ -2568,7 +2573,7 @@ class umil
 
 		// A list of types being unsigned for better reference in some db's
 		$unsigned_types = array('UINT', 'UINT:', 'USINT', 'BOOL', 'TIMESTAMP');
-		$supported_dbms = array('firebird', 'mssql', 'mssqlnative', 'mysql_40', 'mysql_41', 'oracle', 'postgres', 'sqlite');
+		$supported_dbms = array('mssql', 'mssqlnative', 'mysql', 'mysql_4', 'mysql_40', 'mysql_41', 'oracle', 'postgres', 'sqlite', 'sqlite3');
 
 		$sql = '';
 
@@ -2577,16 +2582,15 @@ class umil
 
 		if ($dbms == 'mysql4')
 		{
-			$dbms = 'mysql_41';
+			$dbms = 'mysql';
 		}
 
 		switch ($dbms)
 		{
-			case 'mysql_40':
-			case 'mysql_41':
-			case 'firebird':
+			case 'mysql':
 			case 'oracle':
 			case 'sqlite':
+			case 'sqlite3':
 			case 'postgres':
 				$sql .= "CREATE TABLE {$table_name} (\n";
 			break;
@@ -2668,8 +2672,7 @@ class umil
 
 			switch ($dbms)
 			{
-				case 'mysql_40':
-				case 'mysql_41':
+				case 'mysql':
 					$sql .= "\t{$column_name} {$column_type} ";
 
 					// For hexadecimal values do not use single quotes
@@ -2695,6 +2698,7 @@ class umil
 				break;
 
 				case 'sqlite':
+				case 'sqlite3':
 					if (isset($column_data[2]) && $column_data[2] == 'auto_increment')
 					{
 						$sql .= "\t{$column_name} INTEGER PRIMARY KEY ";
@@ -2708,30 +2712,6 @@ class umil
 					$sql .= 'NOT NULL ';
 					$sql .= (!is_null($column_data[1])) ? "DEFAULT '{$column_data[1]}'" : '';
 					$sql .= ",\n";
-				break;
-
-				case 'firebird':
-					$sql .= "\t{$column_name} {$column_type} ";
-
-					if (!is_null($column_data[1]))
-					{
-						$sql .= 'DEFAULT ' . ((is_numeric($column_data[1])) ? $column_data[1] : "'{$column_data[1]}'") . ' ';
-					}
-
-					$sql .= 'NOT NULL';
-
-					// This is a UNICODE column and thus should be given it's fair share
-					if (preg_match('/^X?STEXT_UNI|VCHAR_(CI|UNI:?)/', $column_data[0]))
-					{
-						$sql .= ' COLLATE UNICODE';
-					}
-
-					$sql .= ",\n";
-
-					if (isset($column_data[2]) && $column_data[2] == 'auto_increment')
-					{
-						$generator = $column_name;
-					}
 				break;
 
 				case 'mssql':
@@ -2808,12 +2788,6 @@ class umil
 
 		switch ($dbms)
 		{
-			case 'firebird':
-				// Remove last line delimiter...
-				$sql = substr($sql, 0, -2);
-				$sql .= "\n);;\n\n";
-			break;
-
 			case 'mssql':
 			case 'mssqlnative':
 				$sql = substr($sql, 0, -2);
@@ -2832,8 +2806,7 @@ class umil
 
 			switch ($dbms)
 			{
-				case 'mysql_40':
-				case 'mysql_41':
+				case 'mysql':
 				case 'postgres':
 					$sql .= "\tPRIMARY KEY (" . implode(', ', $table_data['PRIMARY_KEY']) . "),\n";
 				break;
@@ -2897,6 +2870,7 @@ class umil
 			break;
 
 			case 'sqlite':
+			case 'sqlite3':
 				// Remove last line delimiter...
 				$sql = substr($sql, 0, -2);
 				$sql .= "\n);\n\n";
@@ -2935,13 +2909,6 @@ class umil
 						$sql .= ' ' . $key_name . ' (' . implode(', ', $key_data[1]) . "),\n";
 					break;
 
-					case 'firebird':
-						$sql .= ($key_data[0] == 'INDEX') ? 'CREATE INDEX' : '';
-						$sql .= ($key_data[0] == 'UNIQUE') ? 'CREATE UNIQUE INDEX' : '';
-
-						$sql .= ' ' . $table_name . '_' . $key_name . ' ON ' . $table_name . '(' . implode(', ', $key_data[1]) . ");;\n";
-					break;
-
 					case 'mssql':
 					case 'mssqlnative':
 						$sql .= ($key_data[0] == 'INDEX') ? 'CREATE  INDEX' : '';
@@ -2963,6 +2930,7 @@ class umil
 					break;
 
 					case 'sqlite':
+					case 'sqlite3':
 						$sql .= ($key_data[0] == 'INDEX') ? 'CREATE INDEX' : '';
 						$sql .= ($key_data[0] == 'UNIQUE') ? 'CREATE UNIQUE INDEX' : '';
 
@@ -2994,18 +2962,6 @@ class umil
 			break;
 
 			// Create Generator
-			case 'firebird':
-				if ($generator !== false)
-				{
-					$sql .= "\nCREATE GENERATOR {$table_name}_gen;;\n";
-					$sql .= 'SET GENERATOR ' . $table_name . "_gen TO 0;;\n\n";
-
-					$sql .= 'CREATE TRIGGER t_' . $table_name . ' FOR ' . $table_name . "\n";
-					$sql .= "BEFORE INSERT\nAS\nBEGIN\n";
-					$sql .= "\tNEW.{$generator} = GEN_ID({$table_name}_gen, 1);\nEND;;\n\n";
-				}
-			break;
-
 			case 'oracle':
 				if ($generator !== false)
 				{
