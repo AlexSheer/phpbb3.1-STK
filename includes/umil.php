@@ -248,14 +248,14 @@ class umil
 	*/
 	function umil_end()
 	{
-		global $user, $db;
+		global $user;
 
 		// Set up the result.  This will get the arguments sent to the function.
 		$args = func_get_args();
 		$result = call_user_func_array(array($this, 'get_output_text'), $args);
 		$this->result = ($result) ? $result : $this->result;
 
-		if ($db->get_sql_error_triggered())
+		if ($this->db->get_sql_error_triggered())
 		{
 			if ($this->result == ((isset($user->lang['SUCCESS'])) ? $user->lang['SUCCESS'] : 'SUCCESS'))
 			{
