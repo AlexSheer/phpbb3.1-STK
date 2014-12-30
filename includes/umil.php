@@ -2582,12 +2582,14 @@ class umil
 
 		if ($dbms == 'mysql4')
 		{
-			$dbms = 'mysql';
+			$dbms = 'mysql_41';
 		}
 
 		switch ($dbms)
 		{
 			case 'mysql':
+			case 'mysql_40':
+			case 'mysql_41':
 			case 'oracle':
 			case 'sqlite':
 			case 'sqlite3':
@@ -2673,6 +2675,8 @@ class umil
 			switch ($dbms)
 			{
 				case 'mysql':
+				case 'mysql_40':
+				case 'mysql_41':
 					$sql .= "\t{$column_name} {$column_type} ";
 
 					// For hexadecimal values do not use single quotes
@@ -2807,6 +2811,8 @@ class umil
 			switch ($dbms)
 			{
 				case 'mysql':
+				case 'mysql_40':
+				case 'mysql_41':
 				case 'postgres':
 					$sql .= "\tPRIMARY KEY (" . implode(', ', $table_data['PRIMARY_KEY']) . "),\n";
 				break;
