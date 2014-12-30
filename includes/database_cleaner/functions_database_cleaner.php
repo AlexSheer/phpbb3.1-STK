@@ -192,6 +192,7 @@ function get_columns($table)
 		switch ($db->get_sql_layer())
 		{
 			// MySQL
+			case 'mysql'	:
 			case 'mysql4'	:
 			case 'mysql_40'	:
 			case 'mysql_41'	:
@@ -227,16 +228,9 @@ function get_columns($table)
 				$column_name = 'column_name';
 			break;
 
-			// Firebird
-			case 'firebird'	:
-				$sql = "SELECT RDB\$FIELD_NAME as FNAME
-					FROM RDB\$RELATION_FIELDS
-					WHERE RDB\$RELATION_NAME = '%s'";
-				$column_name = 'fname';
-			break;
-
 			// SQLite
 			case 'sqlite'	:
+			case 'sqlite3'	
 				$sql = "SELECT sql
 					FROM sqlite_master
 					WHERE type = 'table'
@@ -252,7 +246,7 @@ function get_columns($table)
 	// Get the columns
 	$columns = array();
 
-	if ($db->get_sql_layer() != 'sqlite')
+	if ($db->get_sql_layer() != 'sqlite' || $db->get_sql_layer() != 'sqlite3')
 	{
 		while ($row = $db->sql_fetchrow($result))
 		{
@@ -384,7 +378,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		$data->module_categories	= array_merge($data->module_categories, $_datafile->module_categories);
 		$data->module_extras		= array_merge($data->module_extras, $_datafile->module_extras);
 		$data->groups				= array_merge($data->groups, $_datafile->groups);
-		$data->removed_config	= array_merge($data->removed_config, $_datafile->removed_config);
+		$data->removed_config		= array_merge($data->removed_config, $_datafile->removed_config);
 		$data->report_reasons		= array_merge($data->report_reasons, $_datafile->report_reasons);
 		$_datafile->get_schema_struct($data->schema_data);
 
