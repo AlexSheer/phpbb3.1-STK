@@ -122,7 +122,7 @@ if (!class_exists('database_cleaner'))
 				include STK_ROOT_PATH . 'includes/database_cleaner/database_cleaner_data.' . PHP_EXT;
 			}
 
-			if (!class_exists('tools'))
+			if (!class_exists('phpbb\db\tools'))
 			{
 				include PHPBB_ROOT_PATH . 'phpbb/db/tools.' . PHP_EXT;
 			}
