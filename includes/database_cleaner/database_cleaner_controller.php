@@ -246,7 +246,7 @@ class database_cleaner_controller
 
 		return $error;
 	}
-	
+
 	/**
 	* Fix the extension groups
 	*/
@@ -642,7 +642,7 @@ class database_cleaner_controller
 				}
 
 				// In versions prior to 3.0.10, the ACP used a hardcoded module ID of 1 for the version check module
-				// So the main module (General) needs to have its ID manually set 
+				// So the main module (General) needs to have its ID manually set
 				if (version_compare(PHPBB_VERSION, '3.0.10', '<'))
 				{
 					$sql = 'SELECT module_id
@@ -704,14 +704,14 @@ class database_cleaner_controller
 
 		return $error;
 	}
-	
+
 	/**
 	* Reset the report reasons
 	*/
 	function report_reasons($error)
 	{
 		global $db;
-		
+
 		if (isset($_POST['yes']))
 		{
 			// First off all grep the ID of the `other`
@@ -721,7 +721,7 @@ class database_cleaner_controller
 			$result = $db->sql_query($sql);
 			$other_reason_id = (int) $db->sql_fetchfield('reason_id');
 			$db->sql_freeresult($result);
-			
+
 			// Select everything
 			$result = $db->sql_query('SELECT * FROM ' . REPORTS_REASONS_TABLE);
 			while ($row = $db->sql_fetchrow($result))
@@ -732,7 +732,7 @@ class database_cleaner_controller
 					unset($this->db_cleaner->data->report_reasons[$row['reason_title']]);
 					continue;
 				}
-				
+
 				// Delete, this is taken from "acp_reasons"
 				switch ($db->get_sql_layer())
 				{
@@ -767,8 +767,8 @@ class database_cleaner_controller
 					// Teh standard
 					case 'postgres':
 					case 'oracle':
-					case 'firebird':
 					case 'sqlite':
+					case 'sqlite3':
 						// Change the reports using this reason to 'other'
 						$sql = 'UPDATE ' . REPORTS_TABLE . '
 							SET reason_id = ' . (int) $other_reason_id . ", report_text = '" . $db->sql_escape($row['reason_description']) . "\n\n' || report_text
@@ -780,7 +780,7 @@ class database_cleaner_controller
 				$db->sql_query('DELETE FROM ' . REPORTS_REASONS_TABLE . ' WHERE reason_id = ' . (int) $row['reason_id']);
 			}
 			$db->sql_freeresult($result);
-			
+
 			// Did the user remove any of the original reasons?
 			if (!empty($this->db_cleaner->data->report_reasons))
 			{
@@ -798,7 +798,7 @@ class database_cleaner_controller
 				$result	= $db->sql_query($sql);
 				$order	= $db->sql_fetchfield('next', false, $result);
 				$db->sql_freeresult($result);
-				
+
 				$insert = array();
 				foreach ($this->db_cleaner->data->report_reasons as $deleted => $data)
 				{
@@ -808,7 +808,7 @@ class database_cleaner_controller
 						'reason_order'			=> ++$order,
 					);
 				}
-				
+
 				// Insert
 				$db->sql_multi_insert(REPORTS_REASONS_TABLE, $insert);
 			}
@@ -816,7 +816,7 @@ class database_cleaner_controller
 
 		return $error;
 	}
-	
+
 	/**
 	* Reset the phpBB system roles
 	*/
@@ -879,7 +879,7 @@ class database_cleaner_controller
 
 		return $error;
 	}
-	
+
 	/**
 	* Fix system roles
 	*/
