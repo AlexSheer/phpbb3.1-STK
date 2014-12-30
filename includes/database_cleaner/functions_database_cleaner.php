@@ -230,7 +230,7 @@ function get_columns($table)
 
 			// SQLite
 			case 'sqlite'	:
-			case 'sqlite3'	
+			case 'sqlite3'	:	
 				$sql = "SELECT sql
 					FROM sqlite_master
 					WHERE type = 'table'
