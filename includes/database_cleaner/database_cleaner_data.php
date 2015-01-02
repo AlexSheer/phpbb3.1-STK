@@ -114,66 +114,7 @@ class database_cleaner_data
 			}
 		}
 
-		// Since phpBB 3.0.8 the module extensions are translatable,
-		// for earlier versions we'll have to figure out which language
-		// was used while installing and hope that this language is still
-		// available
-		if (version_compare(PHPBB_VERSION, '3.0.8', '<'))
-		{
-			global $db, $user;
-
-			$sql = 'SELECT group_name
-				FROM ' . EXTENSION_GROUPS_TABLE;
-			$result	= $db->sql_query_limit($sql, 1, 0);
-			$test	= $db->sql_fetchfield('group_name', false, $result);
-			$db->sql_freeresult($result);
-
-			$ext_group_trans = array();
-
-			// Be nice and be the users language ^^
-			$user->add_lang('install');
-			if (in_array($test, $user->lang))
-			{
-				$ext_group_trans = $user->lang;
-			}
-			else
-			{
-				// Loop through all available language packs
-				$d = dir(PHPBB_ROOT_PATH . 'language/');
-				while (false !== ($entry = $d->read()))
-				{
-					if (strpos($entry, '.') !== false)
-					{
-						continue;
-					}
-
-					include (PHPBB_ROOT_PATH . "language/{$entry}/install." . PHP_EXT);
-
-					if (in_array($test, $lang))
-					{
-						$ext_group_trans = $lang;
-						break;
-					}
-					$lang = array();
-				}
-			}
-
-			// Now translate it
-			foreach ($this->extension_groups as $name => $data)
-			{
-				$this->extension_groups[$ext_group_trans[$name]] = $data;
-				unset($this->extension_groups[$name]);
-			}
-
-			// And the extensions have the same issue :/
-			foreach ($this->extensions as $name => $data)
-			{
-				$this->extensions[$ext_group_trans[$name]] = $data;
-				unset($this->extensions[$name]);
-			}
-		}
-
-		// Firebird and Oracle, need the table and column names in
+		// Oracle, need the table and column names in
 		// UPPERCASE. #62821
 		switch ($db->get_sql_layer())
 		{
