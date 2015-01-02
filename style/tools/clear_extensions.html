@@ -15,7 +15,7 @@
 			<td<!-- IF row.S_ACTIVE --> style="font-weight: bold;"<!-- ENDIF -->><!-- IF row.EXT_MISSING_PATH -->{row.EXT_MISSING_PATH}<!-- ENDIF --> {row.DISPLAY_NAME}<span style="color: <!-- IF row.S_ACTIVE -->#007D00;">{L_S_ACTIVE}<!-- ELSE -->#F00;">{L_S_OFF}<!-- ENDIF --></span></td>
 			<td>{row.EXT_NAME}</td>
 			<td>{row.MISSING_PATH}</td>
-			<td class="mark"><input type="checkbox" name="marked_name[]" value="{row.EXT_NAME}" /></td>
+			<td class="mark"><input type="checkbox" style="cursor:default;" name="marked_name[]" value="{row.EXT_NAME}" /></td>
 		</tr>
 		<!-- END row -->
 		</table>
