@@ -5,7 +5,7 @@
 <p>{L_PROFILE_LIST_EXPLAIN}</p>
 
 <form method="post" id="display_form" action="{U_DISPLAY_ACTION}">
-	<fieldset class="jumpbox">
+	<fieldset class="jumpbox" style="line-height: 1.8em;">
 		<label for="display">{L_FILTER}:</label>
 		<select name="display" id="display" onchange="document.forms['display_form'].submit()">
 			<option value="all">{L_ALL}</option>
@@ -14,7 +14,7 @@
 		<!-- END options -->
 		</select>
 		<label for="empty_only">{L_ONLY_NON_EMPTY}</label>
-		<input name="empty_only" type="checkbox" class="checkbox"<!-- IF S_EMPTY_CHECKED --> checked="checked"<!-- ENDIF --> onclick="document.forms['display_form'].submit()" />
+		<input name="empty_only" type="checkbox" class="checkbox"<!-- IF S_EMPTY_CHECKED --> checked="checked"<!-- ENDIF --> onclick="document.forms['display_form'].submit()" /><br/>
 		<label for="order">{L_ORDER_BY}:</label>
 		<select name="order" id="order" onchange="document.forms['display_form'].submit()">
 		<!-- BEGIN order -->
