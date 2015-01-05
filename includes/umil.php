@@ -2580,7 +2580,7 @@ class umil
 		// Create Table statement
 		$generator = $textimage = false;
 
-		if ($dbms == 'mysql4')
+		if ($dbms == 'mysql4' || $dbms == 'mysqli')
 		{
 			$dbms = 'mysql_41';
 		}
@@ -2972,7 +2972,6 @@ class umil
 				if ($generator !== false)
 				{
 					$sql .= "\nCREATE SEQUENCE {$table_name}_seq\n/\n\n";
-
 					$sql .= "CREATE OR REPLACE TRIGGER t_{$table_name}\n";
 					$sql .= "BEFORE INSERT ON {$table_name}\n";
 					$sql .= "FOR EACH ROW WHEN (\n";
