@@ -261,18 +261,22 @@ class database_cleaner_views
 	*/
 	function config()
 	{
+		global $db;
+
 		// display extra config variables and let them check/uncheck the ones they want to add/remove
 		$this->_section_data['config'] = array(
 			'NAME'		=> 'CONFIG_SETTINGS',
 			'TITLE'		=> 'ROWS',
 		);
 
+		$removed_config = ($db->get_sql_layer() == 'mysql4') ? array('auth_oauth_bitly_key', 'auth_oauth_bitly_secret', 'auth_oauth_facebook_key', 'auth_oauth_facebook_secret', 'auth_oauth_google_key', 'auth_oauth_google_secret') : array();
+
 		$config_rows = $existing_config = array();
 		get_config_rows($this->db_cleaner->data->config, $config_rows, $existing_config);
 		foreach ($config_rows as $name)
 		{
 			// Skip ones that are in the default install and are in the existing config, or if it was removed by a later update
-			if ((isset($this->db_cleaner->data->config[$name]) && in_array($name, $existing_config)) || in_array($name, $this->db_cleaner->data->removed_config))
+			if ((isset($this->db_cleaner->data->config[$name]) && in_array($name, $existing_config)) || in_array($name, $removed_config))
 			{
 				continue;
 			}
