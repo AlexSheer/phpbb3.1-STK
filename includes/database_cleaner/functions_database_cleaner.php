@@ -379,7 +379,6 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		$data->module_categories	= array_merge($data->module_categories, $_datafile->module_categories);
 		$data->module_extras		= array_merge($data->module_extras, $_datafile->module_extras);
 		$data->groups				= array_merge($data->groups, $_datafile->groups);
-		$data->removed_config		= array_merge($data->removed_config, $_datafile->removed_config);
 		$data->report_reasons		= array_merge($data->report_reasons, $_datafile->report_reasons);
 		$_datafile->get_schema_struct($data->schema_data);
 
@@ -396,10 +395,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 	// Perform some actions that only have to be done on given versions or on all
 	switch($phpbb_version)
 	{
-		case '3_0_12'	:
-		case '3_0_11'	:
-		case '3_0_10'	:
-		case '3_0_9' 	:
+		case '3_1_2'	:
 			// The extension group names have been changed, remove the old ones
 			foreach ($data->extension_groups as $key => $null)
 			{
@@ -418,12 +414,6 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 				}
 			}
 
-		// No Break;
-
-		case '3_0_8' :
-		case '3_0_7_pl1' :
-		case '3_0_7' :
-		case '3_0_6' :
 			// If $config['questionnaire_unique_id] exists add it to the config data array
 			if (isset($config['questionnaire_unique_id']))
 			{
@@ -434,14 +424,6 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 			$extra_add = array('ACP_FORUM_PERMISSIONS_COPY');
 			array_splice($data->module_extras['acp']['ACP_FORUM_BASED_PERMISSIONS'], 1, 0, $extra_add);
 
-		// No Break;
-
-		case '3_0_5' :
-		case '3_0_4' :
-		case '3_0_3' :
-		case '3_0_2' :
-		case '3_0_1' :
-		case '3_0_0' :
 			$data->config['version'] = $phpbb_version;		// We always need to set the version afterwards
 		break;
 	}
