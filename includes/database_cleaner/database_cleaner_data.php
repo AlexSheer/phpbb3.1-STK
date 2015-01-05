@@ -32,11 +32,6 @@ class database_cleaner_data
 	var $config = array();
 
 	/**
-	* @var Array Config entries that were removed by this version
-	*/
-	var $removed_config = array();
-
-	/**
 	* @var Array The permissions array for this version
 	*/
 	var $acl_options = array();
