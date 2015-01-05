@@ -2573,7 +2573,7 @@ class umil
 
 		// A list of types being unsigned for better reference in some db's
 		$unsigned_types = array('UINT', 'UINT:', 'USINT', 'BOOL', 'TIMESTAMP');
-		$supported_dbms = array('mssql', 'mssqlnative', 'mysql', 'mysql_4', 'mysql_40', 'mysql_41', 'oracle', 'postgres', 'sqlite', 'sqlite3');
+		$supported_dbms = array('mssql', 'mssqlnative', 'mysqli', 'mysql', 'mysql_4', 'mysql_40', 'mysql_41', 'oracle', 'postgres', 'sqlite', 'sqlite3');
 
 		$sql = '';
 
