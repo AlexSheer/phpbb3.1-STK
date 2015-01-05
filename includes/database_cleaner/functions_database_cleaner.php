@@ -193,6 +193,7 @@ function get_columns($table)
 		{
 			// MySQL
 			case 'mysql'	:
+			case 'mysqli'	:
 			case 'mysql4'	:
 			case 'mysql_40'	:
 			case 'mysql_41'	:
