@@ -13,10 +13,8 @@
 			<option value="{options.OPTION}"<!-- IF options.SELECTED --> selected="selected"<!-- ENDIF -->>{options.LANG}</option>
 		<!-- END options -->
 		</select>
-		&nbsp;
-		<label for="empty_only">{L_ONLY_NON_EMPTY}:</label>
+		<label for="empty_only">{L_ONLY_NON_EMPTY}</label>
 		<input name="empty_only" type="checkbox" class="checkbox"<!-- IF S_EMPTY_CHECKED --> checked="checked"<!-- ENDIF --> onclick="document.forms['display_form'].submit()" />
-		&nbsp;
 		<label for="order">{L_ORDER_BY}:</label>
 		<select name="order" id="order" onchange="document.forms['display_form'].submit()">
 		<!-- BEGIN order -->
@@ -27,11 +25,11 @@
 			<option value="DESC"<!-- IF S_DESC --> selected="selected"<!-- ENDIF -->>{L_DESCENDING}</option>
 			<option value="ASC"<!-- IF not S_DESC --> selected="selected"<!-- ENDIF -->>{L_ASCENDING}</option>
 		</select>
-		&nbsp;
 		<label for="limit">{L_LIMIT}:</label>
 		<input name="limit" type="text" size="3" value="{LIMIT}" />
-		&nbsp;
-		<input type="submit" value="{L_GO}" class="button2" />
+		<div style="margin-top:10px">
+			<input type="submit" value="{L_GO}" class="button2" />
+		</div>
 	</fieldset>
 </form>
 
@@ -66,18 +64,23 @@
 						<!-- IF users.VISITED -->{L_VISITED}: <b>{users.VISITED}</b><br /><!-- ENDIF -->
 						{L_TOTAL_POSTS}: <b>{users.POSTS}</b><br />
 						<!-- IF users.WARNINGS -->{L_WARNINGS}: <b>{users.WARNINGS}</b><br /><!-- ENDIF -->
-						<!-- IF users.LOCATION -->{L_LOCATION}: <b>{users.LOCATION</b>}<br /><!-- ENDIF -->
+						<!-- IF users.LOCATION -->{L_LOCATION}: <b>{users.LOCATION}</b><br /><!-- ENDIF -->
 						<!-- IF users.OCCUPATION -->{L_OCCUPATION}: <b>{users.OCCUPATION}</b><br /><!-- ENDIF -->
-						<!-- IF users.INTERESTS -->{L_INTERESTS}:</strong> <b>{users.INTERESTS</b>}<br /><!-- ENDIF -->
+						<!-- IF users.INTERESTS -->{L_INTERESTS}:</strong> <b>{users.INTERESTS}</b><br /><!-- ENDIF -->
 					</div>
 
-					<div class="column2">
+					<div class="column2" style="line-height: 1.4em;">
 						<!-- IF users.EMAIL --><strong>{L_EMAIL_ADDRESS}:</strong> {users.EMAIL}<br /><!-- ENDIF -->
 						<!-- IF users.WEBSITE --><strong>{L_WEBSITE}:</strong> {users.WEBSITE}<br /><!-- ENDIF -->
-						<!-- IF users.MSNM --><strong>{L_MSNM}:</strong> {users.MSNM}<br /><!-- ENDIF -->
-						<!-- IF users.YIM --><strong>{L_YIM}:</strong> {users.YIM}<br /><!-- ENDIF -->
-						<!-- IF users.AIM --><strong>{L_AIM}:</strong> {users.AIM}<br /><!-- ENDIF -->
-						<!-- IF users.ICQ --><strong>{L_ICQ}:</strong> {users.ICQ}<br /><!-- ENDIF -->
+						<!-- IF users.WLM --><strong>WLM:</strong> {users.WLM}<br /><!-- ENDIF -->
+						<!-- IF users.AOL --><strong>AOL:</strong> {users.AOL}<br /><!-- ENDIF -->
+						<!-- IF users.SKYPE --><strong>{L_SKYPE}:</strong> {users.SKYPE}<br /><!-- ENDIF -->
+						<!-- IF users.FACEBOOK --><strong>{L_FACEBOOK}:</strong> {users.FACEBOOK}<br /><!-- ENDIF -->
+						<!-- IF users.YAHOO --><strong>{L_YAHOO}:</strong> {users.YAHOO}<br /><!-- ENDIF -->
+						<!-- IF users.GOOGLE --><strong>{L_GOOGLEPLUS}:</strong> {users.GOOGLE}<br /><!-- ENDIF -->
+						<!-- IF users.TWITTER --><strong>{L_TWITTER}:</strong> {users.TWITTER}<br /><!-- ENDIF -->
+						<!-- IF users.YOUTUBE --><strong>{L_YOUTUBE}:</strong> {users.YOUTUBE}<br /><!-- ENDIF -->
+						<!-- IF users.ICQ --><strong>ICQ:</strong> {users.ICQ}<br /><!-- ENDIF -->
 						<!-- IF users.JABBER --><strong>{L_JABBER}:</strong> {users.JABBER}<br /><!-- ENDIF -->
 					</div>
 				<!-- IF users.SIGNATURE --><br style="clear: both;" /><br /><hr /><!-- ENDIF -->
