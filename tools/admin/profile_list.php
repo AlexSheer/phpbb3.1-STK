@@ -76,30 +76,40 @@ class profile_list
 		* Filter stuff
 		*/
 		$options = array(
-//			'user_icq'			=> 'ICQ',
-//			'user_aim'			=> 'AIM',
-//			'user_yim'			=> 'YIM',
-//			'user_msnm'			=> 'MSNM',
-			'user_jabber'		=> 'JABBER',
-//			'user_website'		=> 'WEBSITE',
-//			'user_occ'			=> 'OCCUPATION',
-//			'user_interests'	=> 'INTERESTS',
-//			'user_from'			=> 'LOCATION',
-			'user_sig'			=> 'SIGNATURE',
+			'pf_phpbb_icq'			=> 'ICQ',
+			'pf_phpbb_wlm'			=> 'WLM',
+			'pf_phpbb_aol'			=> 'AOL',
+			'pf_phpbb_skype'		=> 'SKYPE',
+			'pf_phpbb_facebook'		=> 'FACEBOOK',
+			'pf_phpbb_googleplus'	=> 'GOOGLEPLUS',
+			'pf_phpbb_twitter'		=> 'TWITTER',
+			'pf_phpbb_yahoo'		=> 'YAHOO',
+			'pf_phpbb_youtube'		=> 'YOUTUBE',
+			'user_jabber'			=> 'JABBER',
+			'pf_phpbb_website'		=> 'WEBSITE',
+			'pf_phpbb_occupation'	=> 'OCCUPATION',
+			'pf_phpbb_interests'	=> 'INTERESTS',
+			'pf_phpbb_location'		=> 'LOCATION',
+			'user_sig'				=> 'SIGNATURE',
 		);
 
 		$profile_where = '';
+		$extra = '';
+		$profile = '';
+
 		foreach ($options as $option => $lang_key)
 		{
 			$template->assign_block_vars('options', array(
 				'OPTION'	=> $option,
-				'LANG'		=> $user->lang[$lang_key],
+				'LANG'		=> isset($user->lang[$lang_key]) ? $user->lang[$lang_key] : $lang_key,
 				'SELECTED'	=> ($display == $option) ? true : false,
 			));
 
 			if ($empty_only)
 			{
 				$profile_where .= (($profile_where == '') ? ' AND (' : ' OR ');
+				$extra = ', ' . PROFILE_FIELDS_DATA_TABLE . ' p';
+				$profile = ' AND u.user_id = p.user_id ';
 
 				switch ($db->get_sql_layer())
 				{
@@ -169,16 +179,23 @@ class profile_list
 		/*
 		* Main stuff...
 		*/
-		$sql = 'SELECT COUNT(user_id) AS cnt FROM ' . USERS_TABLE . '
-			WHERE user_type <> ' . USER_IGNORE .
-			$profile_where;
+		$sql = 'SELECT COUNT(u.user_id) as cnt
+					FROM ' . USERS_TABLE . ' u '. $extra . '
+			WHERE u.user_type <> ' . USER_IGNORE .
+			$profile_where .
+			$profile;
+
 		$db->sql_query($sql);
 		$count = $db->sql_fetchfield('cnt');
 
-		$sql = 'SELECT * FROM ' . USERS_TABLE . '
-			WHERE user_type <> ' . USER_IGNORE .
-			$profile_where .
-			$order_sql;
+		$sql = 'SELECT u.user_id, u.username, u.user_sig, u.user_jabber, u.user_inactive_reason, u.user_email, u.user_regdate, u.user_posts, u.user_sig_bbcode_uid, u.user_sig_bbcode_bitfield, u.user_colour, u.user_lastvisit, u.user_warnings, u.user_lastpost_time, u.username_clean, p.*
+			FROM ' . USERS_TABLE . ' AS u
+			LEFT JOIN ' . PROFILE_FIELDS_DATA_TABLE . ' AS p ON (p.user_id = u.user_id)
+			WHERE u.user_type <> ' . USER_IGNORE .
+				$profile_where .
+				$profile .
+				$order_sql;
+
 		$result = $db->sql_query_limit($sql, $limit, $start);
 		while ($row = $db->sql_fetchrow($result))
 		{
@@ -203,23 +220,29 @@ class profile_list
 			}
 
 			$template->assign_block_vars('users', array(
-//				'AIM'				=> $row['user_aim'],
+				'WLM'				=> $row['pf_phpbb_wlm'],
+				'AOL'				=> $row['pf_phpbb_aol'],
+				'SKYPE'				=> $row['pf_phpbb_skype'],
+				'FACEBOOK'			=> $row['pf_phpbb_facebook'],
+				'YAHOO'				=> $row['pf_phpbb_yahoo'],
+				'GOOGLE'			=> $row['pf_phpbb_googleplus'],
+				'TWITTER'			=> $row['pf_phpbb_twitter'],
+				'YOUTUBE' 			=> $row['pf_phpbb_youtube'],
+
 				'EMAIL'				=> $row['user_email'],
-//				'ICQ'				=> $row['user_icq'],
-//				'INTERESTS'			=> $row['user_interests'],
+				'ICQ'				=> $row['pf_phpbb_icq'],
+				'INTERESTS'			=> $row['pf_phpbb_interests'],
 				'JABBER'			=> $row['user_jabber'],
 				'JOINED'			=> $user->format_date($row['user_regdate']),
-//				'LOCATION'			=> $row['user_from'],
-//				'MSNM'				=> $row['user_msnm'],
-//				'OCCUPATION'		=> $row['user_occ'],
+				'LOCATION'			=> $row['pf_phpbb_location'],
+				'OCCUPATION'		=> $row['pf_phpbb_occupation'],
 				'POSTS'				=> $row['user_posts'],
 				'SIGNATURE'			=> ((!isset($options[$display]) || $display == 'user_sig') && $row['user_sig']) ? generate_text_for_display($row['user_sig'], $row['user_sig_bbcode_uid'], $row['user_sig_bbcode_bitfield'], 7) : '',
 				'USERID'			=> ($user->data['user_id'] == $row['user_id']) ? false : $row['user_id'],
 				'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 				'VISITED'			=> ($row['user_lastvisit']) ? $user->format_date($row['user_lastvisit']) : 0,
 				'WARNINGS'			=> $row['user_warnings'],
-//				'WEBSITE'			=> $row['user_website'],
-//				'YIM'				=> $row['user_yim'],
+				'WEBSITE'			=> $row['pf_phpbb_website'],
 
 				'OPTION_SECTION'		=> (isset($options[$display])) ? $row[$display] : '',
 				'ORDER_SECTION'			=> (in_array($order_by, $timestamps)) ? (($row[$order_by]) ? $user->format_date($row[$order_by]) : $user->lang['NEVER']) : $row[$order_by],
