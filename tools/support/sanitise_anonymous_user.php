@@ -88,7 +88,7 @@ class sanitise_anonymous_user
 			'group_id'					=> $group_id,
 			'username'					=> 'Anonymous',
 			'username_clean'			=> 'anonymous',
-			'user_regdate'				=> $config['board_startdate'],,
+			'user_regdate'				=> $config['board_startdate'],
 			'user_password'				=> '',
 			'user_email'				=> '',
 			'user_lang'					=> $config['default_lang'],
