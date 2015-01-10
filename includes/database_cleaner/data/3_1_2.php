@@ -831,9 +831,10 @@ class datafile_3_1_2
 				'ACP_PERMISSION_ROLES',
 				'ACP_PERMISSION_MASKS',
 			),
-			'ACP_CAT_STYLES'		=> array(
+			'ACP_CAT_CUSTOMISE'		=> array(
 				'ACP_STYLE_MANAGEMENT',
-				'ACP_STYLE_COMPONENTS',
+				'ACP_EXTENSION_MANAGEMENT',
+				'ACP_LANGUAGE',
 			),
 			'ACP_CAT_MAINTENANCE'	=> array(
 				'ACP_FORUM_LOGS',
@@ -864,6 +865,9 @@ class datafile_3_1_2
 			'UCP_ZEBRA'			=> null,
 		),
 	);
+	var $module_categories_basenames = array(
+		'UCP_PM' => 'ucp_pm',
+	);
 
 	var $module_extras = array(
 		'acp'	=> array(
@@ -877,6 +881,7 @@ class datafile_3_1_2
 			),
 			'ACP_FORUM_BASED_PERMISSIONS' => array(
 				'ACP_FORUM_PERMISSIONS',
+//				'ACP_FORUM_PERMISSIONS_COPY',
 				'ACP_FORUM_MODERATORS',
 				'ACP_USERS_FORUM_PERMISSIONS',
 				'ACP_GROUPS_FORUM_PERMISSIONS',
@@ -969,6 +974,263 @@ class datafile_3_1_2
 		'spam'		=> array('{L_REPORT_SPAM}', 2),
 		'off_topic'	=> array('{L_REPORT_OFF_TOPIC}', 3),
 		'other'		=> array('{L_REPORT_OTHER}', 4),
+	);
+
+	var $acp_modules = array(
+		'acp'		=> array(
+				'ACP_CAT_GENERAL'		=> array(
+					'ACP_INDEX',
+					'ACP_QUICK_ACCESS'			=> array(
+						'ACP_MANAGE_USERS',
+						'ACP_GROUPS_MANAGE',
+						'ACP_MANAGE_FORUMS',
+						'ACP_MOD_LOGS',
+						'ACP_BOTS',
+						'ACP_PHP_INFO',
+					),
+					'ACP_BOARD_CONFIGURATION'	=> array(
+						'ACP_ATTACHMENT_SETTINGS',
+						'ACP_BOARD_SETTINGS',
+						'ACP_BOARD_FEATURES',
+						'ACP_AVATAR_SETTINGS',
+						'ACP_MESSAGE_SETTINGS',
+						'ACP_SIGNATURE_SETTINGS',
+						'ACP_FEED_SETTINGS',
+						'ACP_REGISTER_SETTINGS',
+						'ACP_VC_SETTINGS',
+						'ACP_VC_CAPTCHA_DISPLAY',
+						'ACP_CONTACT_SETTINGS',
+					),
+					'ACP_CLIENT_COMMUNICATION'	=> array(
+						'ACP_AUTH_SETTINGS',
+						'ACP_EMAIL_SETTINGS',
+						'ACP_JABBER_SETTINGS',
+					),
+					'ACP_SERVER_CONFIGURATION'	=> array(
+						'ACP_COOKIE_SETTINGS',
+						'ACP_SERVER_SETTINGS',
+						'ACP_SECURITY_SETTINGS',
+						'ACP_LOAD_SETTINGS',
+						'ACP_SEARCH_SETTINGS',
+						'ACP_SEND_STATISTICS',
+					),
+				),
+				'ACP_CAT_FORUMS'		=> array(
+					'ACP_MANAGE_FORUMS'				=> array(
+						'ACP_MANAGE_FORUMS',
+						'ACP_PRUNE_FORUMS',
+					),
+					'ACP_FORUM_BASED_PERMISSIONS'	=> array(
+						'ACP_FORUM_PERMISSIONS',
+						'ACP_FORUM_PERMISSIONS_COPY',
+						'ACP_FORUM_MODERATORS',
+						'ACP_USERS_FORUM_PERMISSIONS',
+						'ACP_GROUPS_FORUM_PERMISSIONS',
+					),
+				),
+				'ACP_CAT_POSTING'		=> array(
+					'ACP_MESSAGES'			=> array(
+						'ACP_BBCODES',
+						'ACP_MESSAGE_SETTINGS',
+						'ACP_POST_SETTINGS',
+						'ACP_ICONS',
+						'ACP_SMILIES',
+						'ACP_WORDS',
+					),
+					'ACP_ATTACHMENTS'		=> array(
+						'ACP_MANAGE_EXTENSIONS',
+						'ACP_EXTENSION_GROUPS',
+						'ACP_ORPHAN_ATTACHMENTS',
+						'ACP_MANAGE_ATTACHMENTS',
+					),
+				),
+				'ACP_CAT_USERGROUP'		=> array(
+					'ACP_CAT_USERS'			=> array(
+						'ACP_INACTIVE_USERS',
+						'ACP_MANAGE_USERS',
+						'ACP_USER_PROFILE',
+						'ACP_USERS_PERMISSIONS',
+						'ACP_CUSTOM_PROFILE_FIELDS',
+						'ACP_PRUNE_USERS',
+						'ACP_MANAGE_RANKS',
+						'ACP_USER_FEEDBACK',
+						'ACP_USER_WARNINGS',
+						'ACP_USER_PREFS',
+						'ACP_USER_AVATAR',
+						'ACP_USER_RANK',
+						'ACP_USER_SIG',
+						'ACP_USER_GROUPS',
+						'ACP_USER_PERM',
+						'ACP_USER_ATTACH',
+					),
+					'ACP_GROUPS'			=> array(
+						'ACP_GROUPS_MANAGE',
+						'ACP_GROUPS_POSITION',
+						'ACP_GROUPS_PERMISSIONS',
+						'ACP_GROUPS_FORUM_PERMISSIONS',
+					),
+					'ACP_USER_SECURITY'		=> array(
+						'ACP_BAN_EMAILS',
+						'ACP_BAN_IPS',
+						'ACP_BAN_USERNAMES',
+						'ACP_DISALLOW_USERNAMES',
+					),
+				),
+				'ACP_CAT_PERMISSIONS'	=> array(
+					'ACP_PERMISSIONS',
+					'ACP_GLOBAL_PERMISSIONS'		=> array(
+						'ACP_USERS_PERMISSIONS',
+						'ACP_GROUPS_PERMISSIONS',
+						'ACP_ADMINISTRATORS',
+						'ACP_GLOBAL_MODERATORS',
+					),
+					'ACP_FORUM_BASED_PERMISSIONS'	=> array(
+						'ACP_FORUM_PERMISSIONS',
+						'ACP_FORUM_PERMISSIONS_COPY',
+						'ACP_FORUM_MODERATORS',
+						'ACP_USERS_FORUM_PERMISSIONS',
+						'ACP_GROUPS_FORUM_PERMISSIONS',
+					),
+					'ACP_PERMISSION_ROLES'			=> array(
+						'ACP_ADMIN_ROLES',
+						'ACP_USER_ROLES',
+						'ACP_MOD_ROLES',
+						'ACP_FORUM_ROLES',
+					),
+					'ACP_PERMISSION_MASKS'			=> array(
+						'ACP_PERMISSION_TRACE',
+						'ACP_VIEW_ADMIN_PERMISSIONS',
+						'ACP_VIEW_USER_PERMISSIONS',
+						'ACP_VIEW_GLOBAL_MOD_PERMISSIONS',
+						'ACP_VIEW_FORUM_MOD_PERMISSIONS',
+						'ACP_VIEW_FORUM_PERMISSIONS',
+					),
+				),
+				'ACP_CAT_CUSTOMISE'		=> array(
+					'ACP_EXTENSION_MANAGEMENT'		=> array(
+						'ACP_EXTENSIONS',
+					),
+					'ACP_STYLE_MANAGEMENT'			=> array(
+						'ACP_STYLES',
+						'ACP_STYLES_INSTALL',
+					),
+					'ACP_LANGUAGE'					=> array(
+						'ACP_LANGUAGE_PACKS',
+					),
+				),
+				'ACP_CAT_MAINTENANCE'	=> array(
+					'ACP_FORUM_LOGS'		=> array(
+						'ACP_ADMIN_LOGS',
+						'ACP_MOD_LOGS',
+						'ACP_USERS_LOGS',
+						'ACP_CRITICAL_LOGS',
+					),
+					'ACP_CAT_DATABASE'		=> array(
+						'ACP_BACKUP',
+						'ACP_RESTORE',
+						'ACP_SEARCH_INDEX',
+					),
+				),
+				'ACP_CAT_SYSTEM'			=> array(
+					'ACP_AUTOMATION'			=> array(
+						'ACP_VERSION_CHECK',
+					),
+					'ACP_GENERAL_TASKS'			=> array(
+						'ACP_BOTS',
+						'ACP_MASS_EMAIL',
+						'ACP_PHP_INFO',
+						'ACP_MANAGE_REASONS',
+					),
+					'ACP_MODULE_MANAGEMENT'		=> array(
+						'ACP',
+						'MCP',
+						'UCP',
+					),
+				),
+				'ACP_CAT_DOT_MODS'			=> array(
+				),
+		),
+		'ucp'	=> array(
+			'UCP_MAIN'		=> array(
+				'UCP_MAIN_FRONT',
+				'UCP_MAIN_SUBSCRIBED',
+				'UCP_MAIN_BOOKMARKS',
+				'UCP_MAIN_DRAFTS',
+				'UCP_MAIN_ATTACHMENTS',
+				'UCP_NOTIFICATION_LIST',
+			),
+			'UCP_PROFILE'		=> array(
+				'UCP_PROFILE_PROFILE_INFO',
+				'UCP_PROFILE_SIGNATURE',
+				'UCP_PROFILE_AVATAR',
+				'UCP_PROFILE_REG_DETAILS',
+				'UCP_PROFILE_AUTOLOGIN_KEYS',
+				'UCP_AUTH_LINK_MANAGE',
+			),
+			'UCP_PREFS'			=> array(
+				'UCP_PREFS_PERSONAL',
+				'UCP_PREFS_POST',
+				'UCP_PREFS_VIEW',
+				'UCP_NOTIFICATION_OPTIONS',
+			),
+			'UCP_PM'			=> array(
+				'UCP_PM_VIEW',
+				'UCP_PM_COMPOSE',
+				'UCP_PM_DRAFTS',
+				'UCP_PM_OPTIONS',
+			),
+			'UCP_USERGROUPS'	=> array(
+				'UCP_USERGROUPS_MEMBER',
+				'UCP_USERGROUPS_MANAGE',
+			),
+			'UCP_ZEBRA'			=> array(
+				'UCP_ZEBRA_FRIENDS',
+				'UCP_ZEBRA_FOES',
+			),
+		),
+		'mcp'	=> array(
+			'MCP_MAIN'		=> array(
+				'MCP_MAIN_FRONT',
+				'MCP_MAIN_FORUM_VIEW',
+				'MCP_MAIN_TOPIC_VIEW',
+				'MCP_MAIN_POST_DETAILS',
+			),
+			'MCP_QUEUE'		=> array(
+				'MCP_QUEUE_UNAPPROVED_TOPICS',
+				'MCP_QUEUE_UNAPPROVED_POSTS',
+				'MCP_QUEUE_DELETED_TOPICS',
+				'MCP_QUEUE_DELETED_POSTS',
+				'MCP_QUEUE_APPROVE_DETAILS',
+			),
+			'MCP_REPORTS'	=> array(
+				'MCP_REPORTS_OPEN',
+				'MCP_REPORTS_CLOSED',
+				'MCP_REPORT_DETAILS',
+				'MCP_PM_REPORTS_OPEN',
+				'MCP_PM_REPORTS_CLOSED',
+				'MCP_PM_REPORT_DETAILS',
+			),
+			'MCP_NOTES'		=> array(
+				'MCP_NOTES_FRONT',
+				'MCP_NOTES_USER'
+			),
+			'MCP_WARN'		=> array(
+				'MCP_WARN_FRONT',
+				'MCP_WARN_LIST',
+				'MCP_WARN_USER',
+				'MCP_WARN_POST',
+			),
+			'MCP_LOGS'		=> array(
+				'MCP_LOGS_FRONT',
+				'MCP_LOGS_FORUM_VIEW',
+				'MCP_LOGS_TOPIC_VIEW',
+			),
+			'MCP_BAN'		=> array(
+				'MCP_BAN_USERNAMES',
+				'MCP_BAN_IPS',
+				'MCP_BAN_EMAILS',
+			),
+		),
 	);
 
 	/**
