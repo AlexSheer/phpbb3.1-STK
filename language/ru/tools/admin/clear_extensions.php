@@ -57,4 +57,6 @@ $lang = array_merge($lang, array(
 	'EXT_OFF_CONFIRM'				=> 'Вы действительно желаете отключить эти расширения?',
 	'EXT_MISSING_PATH'				=> 'Расширение «%s» не является совместимым.<br />',
 	'NO_COMPOSER'					=> 'Запрашиваемый файл не найден: ' . $phpbb_root_path . 'ext/%s/composer.json',
+	'NO_EXTENSIONS_TITLE'			=> 'Расширения',
+	'NO_EXTENSIONS_TEXT'			=> 'Не найдено ни одного установленного расширения',
 ));
