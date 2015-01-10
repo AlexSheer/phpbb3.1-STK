@@ -301,6 +301,8 @@ class database_cleaner_views
 	*/
 	function extension_groups()
 	{
+		global $user, $template;
+
 		// display extra config variables and let them check/uncheck the ones they want to add/remove
 		$this->_section_data['extension_groups'] = array(
 			'NAME'		=> 'EXTENSION_GROUPS_SETTINGS',
@@ -328,6 +330,11 @@ class database_cleaner_views
 				$this->_has_changes = true;
 			}
 		}
+
+		$template->assign_vars(array(
+			'NO_CHANGES_TEXT'	=> $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+			'NO_CHANGES_TITLE'	=> $user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+		));
 
 		$this->success_message = 'CONFIG_UPDATE_SUCCESS';
 	}
@@ -431,6 +438,11 @@ class database_cleaner_views
 			}
 		}
 
+		$template->assign_vars(array(
+			'NO_CHANGES_TEXT'	=> $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+			'NO_CHANGES_TITLE'	=> $user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+		));
+
 		$this->success_message = 'PERMISSION_UPDATE_SUCCESS';
 	}
 
@@ -468,6 +480,8 @@ class database_cleaner_views
 	*/
 	function permissions()
 	{
+		global $template, $user;
+
 		$this->_section_data['permissions'] = array(
 			'NAME'		=> 'PERMISSION_SETTINGS',
 			'TITLE'		=> 'ROWS',
@@ -494,6 +508,11 @@ class database_cleaner_views
 				$this->_has_changes = true;
 			}
 		}
+
+		$template->assign_vars(array(
+			'NO_CHANGES_TEXT'	=> $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+			'NO_CHANGES_TITLE'	=> $user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+		));
 
 		$this->success_message = 'EXTENSIONS_SUCCESS';
 	}
@@ -531,6 +550,8 @@ class database_cleaner_views
 	*/
 	function roles()
 	{
+		global $template, $user;
+
 		// display extra config variables and let them check/uncheck the ones they want to add/remove
 		$this->_section_data['roles'] = array(
 			'NAME'		=> 'ROLE_SETTINGS',
@@ -559,6 +580,11 @@ class database_cleaner_views
 			}
 		}
 
+		$template->assign_vars(array(
+			'NO_CHANGES_TEXT'	=> $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+			'NO_CHANGES_TITLE'	=> $user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+		));
+
 		$this->success_message = 'SYSTEM_GROUP_UPDATE_SUCCESS';
 	}
 
@@ -567,7 +593,7 @@ class database_cleaner_views
 	*/
 	function tables()
 	{
-		global $table_prefix;
+		global $table_prefix, $template, $user;
 
 		$tables_confirm = request_var('tables_confirm', false);
 		if (!$tables_confirm)
@@ -600,6 +626,11 @@ class database_cleaner_views
 				}
 			}
 
+			$template->assign_vars(array(
+				'NO_CHANGES_TEXT'	=> $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+				'NO_CHANGES_TITLE'	=> $user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+			));
+
 			// A bit nasty but the only real work around at this moment
 			if (empty($table_prefix) && $this->_has_changes)
 			{
@@ -627,5 +658,50 @@ class database_cleaner_views
 				'message'	=> 'EMPTY_PREFIX_CONFIRM',
 			);
 		}
+	}
+
+	/**
+	* Validate all modules in the database
+	*/
+	function acp_modules()
+	{
+		global $user, $template;
+
+		$this->_section_data['acp_modules'] = array(
+			'NAME'		=> 'ACP_MODULES_SETTINGS',
+			'TITLE'		=> 'ROWS',
+		);
+
+		$module_rows = $existing_modules = array();
+
+		get_acp_modules($this->db_cleaner->data->acp_modules, $module_rows);
+
+		foreach ($module_rows as $key => $value)
+		{
+			$name = $value['name'];
+			$acp_name = $value['acp_name'];
+			if (in_array($acp_name, $existing_modules))
+			{
+				continue;
+			}
+
+			$this->_section_data['acp_modules']['ITEMS'][] = array(
+				'NAME'			=> '' . $acp_name . ' (' .$name. ')' . $user->lang['GO_TO_ACP'] . ' <a href="' . $value['link'] . '" target="_blank">' . $value['module_name'] . '</a> [' . $value['parent_module_name'] . ' (' . $value['parent_id'] . ')]',
+				'FIELD_NAME'	=> $name,
+				'MISSING'		=> false,
+			);
+
+			if ($this->_has_changes === false)
+			{
+				$this->_has_changes = true;
+			}
+		}
+
+		$template->assign_vars(array(
+			'NO_CHANGES_TEXT'	=> $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+			'NO_CHANGES_TITLE'	=> $user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+		));
+
+		$this->success_message = 'DATABASE_ROLE_DATA_SUCCESS';
 	}
 }
