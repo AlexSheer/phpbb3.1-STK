@@ -418,7 +418,7 @@ class database_cleaner_controller
 		if (isset($_POST['yes']))
 		{
 			// Remove existing modules
-			$db->sql_query('DELETE FROM ' . MODULES_TABLE);
+			$db->sql_query('TRUNCATE TABLE ' . MODULES_TABLE);
 
 			// Re-add the modules
 			if (!class_exists('acp_modules'))
@@ -439,8 +439,14 @@ class database_cleaner_controller
 
 				foreach ($this->db_cleaner->data->module_categories[$module_class] as $cat_name => $subs)
 				{
+					$basename = '';
+					// Check if this sub-category has a basename. If it has, use it.
+					if (isset($this->module_categories_basenames[$cat_name]))
+					{
+						$basename = $this->module_categories_basenames[$cat_name];
+					}
 					$module_data = array(
-						'module_basename'	=> '',
+						'module_basename'	=> $basename,
 						'module_enabled'	=> 1,
 						'module_display'	=> 1,
 						'parent_id'			=> 0,
@@ -454,9 +460,9 @@ class database_cleaner_controller
 					$_module->update_module_data($module_data, true);
 
 					// Check for last sql error happened
-					if ($db->sql_error_triggered)
+					if ($db->get_sql_error_triggered())
 					{
-						$error = $db->sql_error($db->sql_error_sql);
+						$error = $db->sql_error($db->get_sql_error_sql());
 						trigger_error($error);
 					}
 
@@ -468,8 +474,14 @@ class database_cleaner_controller
 					{
 						foreach ($subs as $level2_name)
 						{
+							$basename = '';
+							// Check if this sub-category has a basename. If it has, use it.
+							if (isset($this->module_categories_basenames[$level2_name]))
+							{
+								$basename = $this->module_categories_basenames[$level2_name];
+							}
 							$module_data = array(
-								'module_basename'	=> '',
+								'module_basename'	=> $basename,
 								'module_enabled'	=> 1,
 								'module_display'	=> 1,
 								'parent_id'			=> (int) $categories[$cat_name]['id'],
@@ -482,9 +494,9 @@ class database_cleaner_controller
 							$_module->update_module_data($module_data, true);
 
 							// Check for last sql error happened
-							if ($db->sql_error_triggered)
+							if ($db->get_sql_error_triggered())
 							{
-								$error = $db->sql_error($db->sql_error_sql);
+								$error = $db->sql_error($db->get_sql_error_sql());
 								trigger_error($error);
 							}
 
@@ -499,13 +511,6 @@ class database_cleaner_controller
 
 				foreach ($module_info as $module_basename => $fileinfo)
 				{
-					if (empty($fileinfo['modes']))
-					{
-						// Apparently it is possible to have an empty "modules" array.
-						// #62958
-						continue;
-					}
-
 					foreach ($fileinfo['modes'] as $module_mode => $row)
 					{
 						foreach ($row['cat'] as $cat_name)
@@ -529,9 +534,9 @@ class database_cleaner_controller
 							$_module->update_module_data($module_data, true);
 
 							// Check for last sql error happened
-							if ($db->sql_error_triggered)
+							if ($db->get_sql_error_triggered())
 							{
-								$error = $db->sql_error($db->sql_error_sql);
+								$error = $db->sql_error($db->get_sql_error_sql());
 								trigger_error($error);
 							}
 						}
@@ -544,7 +549,7 @@ class database_cleaner_controller
 					// Move main module 4 up...
 					$sql = 'SELECT *
 						FROM ' . MODULES_TABLE . "
-						WHERE module_basename = 'main'
+						WHERE module_basename = 'acp_main'
 							AND module_class = 'acp'
 							AND module_mode = 'main'";
 					$result = $db->sql_query($sql);
@@ -556,7 +561,7 @@ class database_cleaner_controller
 					// Move permissions intro screen module 4 up...
 					$sql = 'SELECT *
 						FROM ' . MODULES_TABLE . "
-						WHERE module_basename = 'permissions'
+						WHERE module_basename = 'acp_permissions'
 							AND module_class = 'acp'
 							AND module_mode = 'intro'";
 					$result = $db->sql_query($sql);
@@ -568,7 +573,7 @@ class database_cleaner_controller
 					// Move manage users screen module 5 up...
 					$sql = 'SELECT *
 						FROM ' . MODULES_TABLE . "
-						WHERE module_basename = 'users'
+						WHERE module_basename = 'acp_users'
 							AND module_class = 'acp'
 							AND module_mode = 'overview'";
 					$result = $db->sql_query($sql);
@@ -576,6 +581,58 @@ class database_cleaner_controller
 					$db->sql_freeresult($result);
 
 					$_module->move_module_by($row, 'move_up', 5);
+
+					// Move extension management module 1 up...
+					$sql = 'SELECT *
+						FROM ' . MODULES_TABLE . "
+						WHERE module_langname = 'ACP_EXTENSION_MANAGEMENT'
+							AND module_class = 'acp'
+							AND module_mode = ''
+							AND module_basename = ''";
+					$result = $db->sql_query($sql);
+					$row = $db->sql_fetchrow($result);
+					$db->sql_freeresult($result);
+
+					$_module->move_module_by($row, 'move_up', 1);
+				}
+
+				if ($module_class == 'mcp')
+				{
+					// Move pm report details module 3 down...
+					$sql = 'SELECT *
+						FROM ' . MODULES_TABLE . "
+						WHERE module_basename = 'mcp_pm_reports'
+							AND module_class = 'mcp'
+							AND module_mode = 'pm_report_details'";
+					$result = $db->sql_query($sql);
+					$row = $db->sql_fetchrow($result);
+					$db->sql_freeresult($result);
+
+					$_module->move_module_by($row, 'move_down', 3);
+
+					// Move closed pm reports module 3 down...
+					$sql = 'SELECT *
+						FROM ' . MODULES_TABLE . "
+						WHERE module_basename = 'mcp_pm_reports'
+							AND module_class = 'mcp'
+							AND module_mode = 'pm_reports_closed'";
+					$result = $db->sql_query($sql);
+					$row = $db->sql_fetchrow($result);
+					$db->sql_freeresult($result);
+
+					$_module->move_module_by($row, 'move_down', 3);
+
+					// Move open pm reports module 3 down...
+					$sql = 'SELECT *
+						FROM ' . MODULES_TABLE . "
+						WHERE module_basename = 'mcp_pm_reports'
+							AND module_class = 'mcp'
+							AND module_mode = 'pm_reports'";
+					$result = $db->sql_query($sql);
+					$row = $db->sql_fetchrow($result);
+					$db->sql_freeresult($result);
+
+					$_module->move_module_by($row, 'move_down', 3);
 				}
 
 				if ($module_class == 'ucp')
@@ -583,7 +640,7 @@ class database_cleaner_controller
 					// Move attachment module 4 down...
 					$sql = 'SELECT *
 						FROM ' . MODULES_TABLE . "
-						WHERE module_basename = 'attachments'
+						WHERE module_basename = 'ucp_attachments'
 							AND module_class = 'ucp'
 							AND module_mode = 'attachments'";
 					$result = $db->sql_query($sql);
@@ -591,6 +648,30 @@ class database_cleaner_controller
 					$db->sql_freeresult($result);
 
 					$_module->move_module_by($row, 'move_down', 4);
+
+					// Move notification options module 4 down...
+					$sql = 'SELECT *
+						FROM ' . MODULES_TABLE . "
+						WHERE module_basename = 'ucp_notifications'
+							AND module_class = 'ucp'
+							AND module_mode = 'notification_options'";
+					$result = $db->sql_query($sql);
+					$row = $db->sql_fetchrow($result);
+					$db->sql_freeresult($result);
+
+					$_module->move_module_by($row, 'move_down', 4);
+
+					// Move OAuth module 5 down...
+					$sql = 'SELECT *
+						FROM ' . MODULES_TABLE . "
+						WHERE module_basename = 'ucp_auth_link'
+							AND module_class = 'ucp'
+							AND module_mode = 'auth_link'";
+					$result = $db->sql_query($sql);
+					$row = $db->sql_fetchrow($result);
+					$db->sql_freeresult($result);
+
+					$_module->move_module_by($row, 'move_down', 5);
 				}
 
 				// And now for the special ones
@@ -632,36 +713,33 @@ class database_cleaner_controller
 							$_module->update_module_data($module_data, true);
 
 							// Check for last sql error happened
-							if ($db->sql_error_triggered)
+							if ($db->get_sql_error_triggered())
 							{
-								$error = $db->sql_error($db->sql_error_sql);
+								$error = $db->sql_error($db->get_sql_error_sql());
 								trigger_error($error);
 							}
 						}
 					}
 				}
 
-				// In versions prior to 3.0.10, the ACP used a hardcoded module ID of 1 for the version check module
-				// So the main module (General) needs to have its ID manually set
-				if (version_compare(PHPBB_VERSION, '3.0.10', '<'))
+				$_module->remove_cache_file();
+			}
+
+			if (isset($this->db_cleaner->data->module_categories_basenames))
+			{
+				foreach($this->db_cleaner->data->module_categories_basenames as $module => $basename)
 				{
 					$sql = 'SELECT module_id
-						FROM ' . MODULES_TABLE . "
-						WHERE module_langname = 'ACP_CAT_GENERAL'
-							AND module_class = 'acp'";
+						FROM '. MODULES_TABLE .'
+						WHERE module_langname = \'' . $module . '\'';
 					$result = $db->sql_query($sql);
-					$old_id = (int)$db->sql_fetchfield('module_id', false, $result);
+					$row = $db->sql_fetchrow($result);
 					$db->sql_freeresult($result);
-
-					// Update the GENERAL module first
-					$sql = 'UPDATE ' . MODULES_TABLE . " SET module_id = 1 WHERE module_id = $old_id";
-					$db->sql_query($sql);
-
-					// Update parent IDs
-					$sql = 'UPDATE ' . MODULES_TABLE . " SET parent_id = 1 WHERE parent_id = $old_id";
+					$module_id = $row['module_id'];
+					$sql = 'UPDATE '. MODULES_TABLE .' SET module_basename = \'' . $basename . '\'
+						WHERE module_id = ' . $module_id;
 					$db->sql_query($sql);
 				}
-
 				$_module->remove_cache_file();
 			}
 		}
@@ -952,5 +1030,110 @@ class database_cleaner_controller
 		}
 
 		return $error;
+	}
+
+	/**
+	* Delete non standart phpBB modules
+	*/
+	function acp_modules($error, $selected)
+	{
+		global $db, $phpbb_root_path, $phpEx;
+
+		if (sizeof($selected))
+		{
+			if (!class_exists('acp_modules'))
+			{
+				include($phpbb_root_path . 'includes/acp/acp_modules.' . $phpEx);
+				$acp_tools = new acp_modules();
+			}
+
+			$module_ids = $class = array();
+
+			foreach (array_keys($selected) as $module_id)
+			{
+				$module_ids[] = $module_id;
+			}
+
+			$sql = 'SELECT module_class, module_id
+				FROM ' . MODULES_TABLE . '
+				WHERE ' . $db->sql_in_set('module_id', $module_ids) . '
+				ORDER BY module_id ASC';
+
+			$result = $db->sql_query($sql);
+			while($row = $db->sql_fetchrow($result))
+			{
+				$class[$row['module_id']] = $row['module_class'];
+			}
+			$db->sql_freeresult($result);
+
+			foreach (array_keys($selected) as $module_id)
+			{
+				$this->delete_module($module_id, $acp_tools, $class[$module_id]);
+			}
+		}
+		return $error;
+	}
+
+	/**
+	* Delete module
+	*/
+	function delete_module($module_id, $acp_tools, $class)
+	{
+		$acp_tools->module_class = $class;
+
+		// Try to delete module, but first check if module has a childrens
+		$branch = $acp_tools->get_module_branch($module_id, 'children', 'descending', false);
+		if (sizeof($branch))
+		{
+			// Yes, module has a childrens
+			foreach($branch as $module)
+			{
+				if ($module['module_id'] != $module_id)
+				{
+					// Try to delete childrens
+					if($this->get_module_row($module['module_id'], $class))
+					{
+						$acp_tools->delete_module($module['module_id']);
+					}
+
+				}
+			}
+			// Try to delete parent
+			if($this->get_module_row($module_id, $class)) // module exits?
+			{
+				$acp_tools->delete_module($module_id);
+			}
+		}
+		else
+		{
+			// No, hasn't cgildrens
+			// Try to delete, but first check if nodule exists
+			if($this->get_module_row($module_id, $class)) // module exits?
+			{
+				$acp_tools->delete_module($module_id);
+			}
+		}
+	}
+
+	/**
+	* Check if module exists
+	*/
+	function get_module_row($module_id, $module_class)
+	{
+		global $db;
+
+		$sql = 'SELECT module_id
+			FROM ' . MODULES_TABLE . "
+			WHERE module_class = '" . $db->sql_escape($module_class) . "'
+				AND module_id = $module_id";
+		$result = $db->sql_query($sql);
+		$row = $db->sql_fetchrow($result);
+		$db->sql_freeresult($result);
+
+		if (!$row)
+		{
+			return false;
+		}
+		return true;
 	}
 }
