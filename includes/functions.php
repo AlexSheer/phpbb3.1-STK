@@ -557,7 +557,7 @@ function stk_version_check()
 		}
 
 		// Lets collect the latest version data. We can use UMIL for this
-		$info = $umil->version_check('version.phpbb.com', '/stk', ((defined('STK_QA') && STK_QA) ? 'stk_qa.txt' : 'stk.txt'));
+		$info = $umil->version_check('sheer.phpbbguru.net', '/stk', ((defined('STK_QA') && STK_QA) ? 'stk_qa.txt' : 'stk.txt'));
 
 		// Compare it and cache the info
 		$version_check = array();
@@ -769,7 +769,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 			// Try to not call the adm page data...
 
 			echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-			echo '<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">';
+			echo '<html xmlns="http://www.w3.org/1999/xhtml" dir="' . $user->lang['DIRECTION'] . '" lang="' . $user->lang['USER_LANG'] . '" xml:lang="' . $user->lang['USER_LANG'] . '">';
 			echo '<head>';
 			echo '<meta http-equiv="content-type" content="text/html; charset=utf-8" />';
 			echo '<title>' . $msg_title . '</title>';
