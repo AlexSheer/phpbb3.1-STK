@@ -36,6 +36,7 @@ if (!class_exists('database_cleaner'))
 			'groups',
 			'roles',
 			'role_data',
+			'acp_modules',
 			'modules',
 			'bots',
 			'report_reasons',
@@ -168,7 +169,7 @@ if (!class_exists('database_cleaner'))
 			// Setup
 			$this->_setup();
 
-			$selected = request_var('items', array('' => ''));
+			$selected = request_var('items', array('' => ''), true);
 
 			if ($this->step > 0 && !check_form_key('database_cleaner'))
 			{
