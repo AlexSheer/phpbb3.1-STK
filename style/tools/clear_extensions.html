@@ -2,6 +2,7 @@
 
 	<h1>{L_CLEAR_EXTENSIONS}</h1>
 	<p>{L_CLEAR_EXTENSIONS_EXPLAIN}</p>
+	<!-- IF .row -->
 	<form method="post" id="select_action" action="{S_ACTION}">
 	<table cellspacing="1">
 		<tr>
@@ -26,5 +27,11 @@
 		<label for="submit">{L_CLICK_TO_OFF}</label> <input type="submit" name="off" class="button2" value="{L_OFF_EXT}" />
 	</fieldset>
 	</form>
+	<!-- ELSE -->
+	<fieldset>
+		<legend>{L_NO_EXTENSIONS_TITLE}</legend>
+		<p>{L_NO_EXTENSIONS_TEXT}</p>
+	</fieldset>
+	<!-- ENDIF -->
 </div>
 <!-- INCLUDE overall_footer.html -->
