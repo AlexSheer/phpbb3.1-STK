@@ -49,7 +49,7 @@ else
 
 // phpBBs common.php registers hooks, these hooks tend to cause problems with the
 // support toolkit. Therefore we unset the `$phpbb_hook` object here
-unset($phpbb_hook);  
+unset($phpbb_hook);
 
 // When not in the ERK we setup the user at this point
 // and load UML.
@@ -76,16 +76,13 @@ if (!isset($stk_config))
 $action = request_var('action', '');
 $submit = request_var('submit', false);
 
-// Try to determine the phpBB version number, we might need that down the road
-// `PHPBB_VERSION` was added in 3.0.3, for older versions just rely on the config
-if ((defined('PHPBB_VERSION') && PHPBB_VERSION == $config['version']) || !defined('PHPBB_VERSION'))
-{
-	define('PHPBB_VERSION_NUMBER', $config['version']);
-}
-// Cant correctly determine the version, let the user define it.
-// As the `perform_unauthed_quick_tasks` function is used skip this
-// if there is already an action to be performed.
-else if (empty($action))
+$version = PHPBB_VERSION;
+
+// Try to determine the phpBB actually version number
+$version_helper = $phpbb_container->get('version_helper');
+$recheck = $request->variable('versioncheck_force', true);
+$updates_available = $version_helper->get_suggested_updates(true);
+if ($updates_available)
 {
 	$action = 'request_phpbb_version';
 }
