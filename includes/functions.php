@@ -381,7 +381,7 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 
 		// Can't rely on phpBB to get the phpBB version.
 		case 'request_phpbb_version' :
-			global $cache, $config;
+			global $cache, $config, $phpbb_container, $request;
 
 			$_version_number = $cache->get('_stk_phpbb_version_number');
 			if ($_version_number === false)
@@ -400,18 +400,29 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 				{
 					add_form_key('request_phpbb_version');
 					page_header($user->lang['REQUEST_PHPBB_VERSION'], false);
+					$version_helper = $phpbb_container->get('version_helper');
+					$recheck = $request->variable('versioncheck_force', false);
+					$updates_available = $version_helper->get_suggested_updates($recheck);
+					if ($updates_available)
+					{
+						foreach ($updates_available as $branch => $version_data)
+						{
+							if ($config['version'] < $version_data['current'])
+							{
+								trigger_error(sprintf($user->lang['INCORRECT_PHPBB_VERSION'], $version_data['current']), E_USER_WARNING);
+							}
+						}
+					}
 
 					// Grep the latest phpBB version number
-					$info = $umil->version_check('version.phpbb.com', '/phpbb', '30x.txt');
-					list(,, $_phpbb_version) = explode('.', $info[0]);
+					list(,, $_phpbb_version) = explode('.', $version_data['current']);
 
 					// Build the options
 					$version_options = '';
-					for ($i = $_phpbb_version; $i > -1; $i--)
+					for ($i = $_phpbb_version; $i > 1; $i--)
 					{
-						$v = "3.0.{$i}";
+						$v = "3.1.{$i}";
 						$d = ($v == $config['version']) ? " default='default'" : '';
-
 						$version_options .= "<option value='{$v}'{$d}>{$v}</option>";
 					}
 
