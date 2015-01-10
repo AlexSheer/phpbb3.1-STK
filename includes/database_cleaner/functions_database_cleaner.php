@@ -380,6 +380,9 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		$data->module_extras		= array_merge($data->module_extras, $_datafile->module_extras);
 		$data->groups				= array_merge($data->groups, $_datafile->groups);
 		$data->report_reasons		= array_merge($data->report_reasons, $_datafile->report_reasons);
+		$data->acp_modules			= array_merge($data->acp_modules, $_datafile->acp_modules);
+		$data->module_categories_basenames			= array_merge($data->module_categories_basenames, $_datafile->module_categories_basenames);
+
 		$_datafile->get_schema_struct($data->schema_data);
 
 		// Just make sure that nothing sticks
@@ -430,4 +433,104 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 
 	// Call init
 	$data->init();
+
+/**
+* Find any non standart modules in database
+*/
+	function get_acp_modules($acp_modules, &$acp_rows)
+	{
+		global $db, $user, $phpEx, $phpbb_root_path;
+
+		$main_modules = array('acp', 'ucp', 'mcp');
+		$i = 0;
+		foreach($main_modules as $main)
+		{
+			$sql = 'SELECT *
+				FROM ' . MODULES_TABLE . '
+				WHERE module_class = \''. $main .'\'';
+			$result = $db->sql_query($sql);
+			while ($row = $db->sql_fetchrow($result))
+			{
+				if(!array_find($acp_modules, $row['module_langname']))
+				{
+					$module = $row['module_langname'];
+					$module_id = $row['module_id'];
+					$sql = 'SELECT *
+						FROM ' . MODULES_TABLE . '
+						WHERE module_id = ' . $row['parent_id'] . '';
+					$res = $db->sql_query($sql);
+					$row = $db->sql_fetchrow($res);
+					$parent = $row['module_langname'];
+					$parent_id = $row['module_id'];
+					if ($parent)
+					{
+						$link = append_sid("{$phpbb_root_path}adm/index.$phpEx", 'i=acp_modules&amp;sid=' . $user->data['session_id'] .'&amp;mode=' . $main . '&parent_id='. $parent_id .'');
+						$module_mame = (isset($user->lang[$parent])) ? '<b>' . $user->lang[$parent] . '</b>' : '<i>' . $user->lang['UNDEFINED'] . '</i>';
+
+					}
+					else
+					{
+						$link = append_sid("{$phpbb_root_path}adm/index.$phpEx", 'i=acp_modules&amp;sid=' . $user->data['session_id'] .'&amp;mode=' . $main . '');
+						$module_mame = '';
+					}
+					$acp_rows[$i]['class'] = $main;
+					$acp_rows[$i]['name'] = $module_id;
+					$acp_rows[$i]['acp_name'] = $module;
+					$acp_rows[$i]['module_name'] = $module_mame;
+					$acp_rows[$i]['link'] = $link;
+					$acp_rows[$i]['parent_id'] = $parent_id;
+					$acp_rows[$i]['parent_module_name'] = $parent;
+					$db->sql_freeresult($res);
+					$i++;
+
+				}
+			}
+			$db->sql_freeresult($result);
+		}
+	}
+
+/**
+* Find element in multidimensional associative array
+*/
+	function array_find($array, $needle)
+	{
+		foreach($array as $cat)
+		{
+			if (array_key_exists($needle, $cat))
+			{
+				return true;
+			}
+			if (in_array($needle, $cat))
+			{
+				return true;
+			}
+
+			foreach($cat as $main_module)
+			{
+				if (array_key_exists($needle, $main_module))
+				{
+					return true;
+				}
+				if (in_array($needle, $main_module))
+				{
+					return true;
+				}
+				foreach($main_module as $module)
+				{
+					if(is_array($module))
+					{
+						if (array_key_exists($needle, $module))
+						{
+							return true;
+						}
+						if (in_array($needle, $module))
+						{
+							return true;
+						}
+					}
+				}
+			}
+		}
+		return false;
+	}
 }
