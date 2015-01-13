@@ -270,7 +270,7 @@ class profile_list
 			'S_DISPLAY_ALL'			=> (!isset($options[$display])) ? true : false,
 			'S_DISPLAY_SIG'			=> ($display == 'user_sig') ? true : false,
 			'S_EMPTY_CHECKED'		=> $empty_only,
-			'A_BASE_URL'			=> append_sid(STK_INDEX, array('c' => 'admin', 't' => 'profile_list', 'limit' => 2, 'go' => 1)),
+			'A_BASE_URL'			=> append_sid(STK_INDEX, array('c' => 'admin', 't' => 'profile_list', 'limit' => '' . $limit . '', 'go' => 1)),
 		));
 
 		$template->set_filenames(array(
