@@ -68,9 +68,6 @@ stk_add_lang('common');
 $umil = new umil(true);
 $umil->cache_purge(array(
 	'data',
-//	'template',
-//	'theme',
-//	'imageset',
 ));
 
 
