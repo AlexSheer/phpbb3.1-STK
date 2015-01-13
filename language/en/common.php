@@ -123,4 +123,7 @@ $lang = array_merge($lang, array(
 	'CONFIG_REPAIR_NO_DBMS'				=> 'Unable to determine any suitable type of database.',
 	'CONFIG_REPAIR_CONNECT_FAIL'		=> 'Database Connection failed.',
 	'CONFIG_REPAIR_WRITE_ERROR'			=> '<strong style="color: #ff0000;">ERROR: Could not write config file.</strong><br />Please copy the text below, put it in a file named config.php, and place it in the root directory of your forum.<br /><br />',
+
+	'CONFIG_LIST'						=> 'Configuration parameters',
+	'CONFIG_LIST_EXPLAIN'				=> 'Here you can view and change the configuration .',
 ));
