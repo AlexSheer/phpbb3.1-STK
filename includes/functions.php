@@ -707,7 +707,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 				{
 					add_log('critical', 'LOG_IMAGE_GENERATION_ERROR', $errfile, $errline, $msg_text);
 				}
-				// echo '<br /><br />BACKTRACE<br />' . get_backtrace() . '<br />' . "\n";
+				echo '<br /><br />BACKTRACE<br />' . get_backtrace() . '<br />' . "\n";
 			}
 
 			return;
