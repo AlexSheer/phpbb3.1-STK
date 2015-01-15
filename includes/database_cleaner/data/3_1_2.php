@@ -73,7 +73,7 @@ class datafile_3_1_2
 	);
 
 	/**
-	* @var Array 3.0.0 config data
+	* @var Array 3.1.2 config data
 	*/
 	var $config = array(
 		'active_sessions'				=> array('config_value' => '0', 'is_dynamic' => '0'),
@@ -352,7 +352,7 @@ class datafile_3_1_2
 		'tpl_allow_php'					=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'upload_icons_path'				=> array('config_value' => 'images/upload_icons', 'is_dynamic' => '0'),
 		'upload_path'					=> array('config_value' => 'files', 'is_dynamic' => '0'),
-		'version'						=> array('config_value' => '3.0.0', 'is_dynamic' => '0'),
+		'version'						=> array('config_value' => '3.1.2', 'is_dynamic' => '0'),
 		'warnings_expire_days'			=> array('config_value' => '90', 'is_dynamic' => '0'),
 		'warnings_gc'					=> array('config_value' => '14400', 'is_dynamic' => '0'),
 		'cache_last_gc'					=> array('config_value' => '0', 'is_dynamic' => '1'),
