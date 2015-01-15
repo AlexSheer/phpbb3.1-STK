@@ -98,6 +98,18 @@ function get_extensions($group, &$group_id)
 	}
 	$db->sql_freeresult($result);
 
+	// # Bugfix from previous verson for phpBB 3.0
+	// # extension_id in extensions table assigned a NULL value
+	if(!sizeof($set))
+	{
+		$sql = 'SELECT group_id FROM '. EXTENSION_GROUPS_TABLE .'
+			WHERE group_name = \''. $db->sql_escape($group) .'\'';
+		$result = $db->sql_query($sql);
+		$id = $db->sql_fetchrow($result);
+		$group_id = $id['group_id'];
+		$db->sql_freeresult($res);
+	}
+
 	return $set;
 }
 
