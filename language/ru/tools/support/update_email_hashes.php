@@ -38,8 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'UPDATE_EMAIL_HASHES'				=> 'Обновление хеш настроек для email',
-	'UPDATE_EMAIL_HASHES_CONFIRM'		=> 'В версиях phpBB более ранних, чем 3.0.7, переход от 32 разрядной операционной системы к 64 разрядной нарушает хеш email. <em>(<a href="http://tracker.phpbb.com/browse/PHPBB3-9072">Смотри сообщение о соответствующем баге</a>)</em><br />Этот инструмент позволяет вам обновить хеш в базе данных для корректной работы.',
+	'UPDATE_EMAIL_HASHES'				=> 'Обновление хешей email',
+	'UPDATE_EMAIL_HASHES_CONFIRM'		=> 'В версиях phpBB более ранних, чем 3.0.7, переход от 32 разрядной операционной системы к 64 разрядной нарушает хеш email.<br /><em>(<a href="http://tracker.phpbb.com/browse/PHPBB3-9072" target="_blank">Смотри сообщение об этой ошибке</a>)</em><br />Этот инструмент позволяет обновить хешы email в базе данных для корректной работы.',
 	'UPDATE_EMAIL_HASHES_COMPLETE'		=> 'Все хешы email успешно обновлены!',
 	'UPDATE_EMAIL_HASHES_NOT_COMPLETE'	=> 'Проводится обновление хеша email.',
 ));
