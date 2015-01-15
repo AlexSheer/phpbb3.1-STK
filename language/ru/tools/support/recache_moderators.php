@@ -41,7 +41,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'RECACHE_MODERATORS'				=> 'Ре-кеширование всех прав модераторов',
-	'RECACHE_MODERATORS_COMPLETE'		=> 'Права модераторов ре-кешированы.',
-	'RECACHE_MODERATORS_CONFIRM'		=> 'Вы уверены, что хотите провести ре-кеширование прав модераторов?',
+	'RECACHE_MODERATORS'				=> 'Пересоздание кеша модераторов',
+	'RECACHE_MODERATORS_COMPLETE'		=> 'Новый кеш модераторов был успешно создан.',
+	'RECACHE_MODERATORS_CONFIRM'		=> '(<em>Информация о назначении модераторов на форумы и отображении их на главной странице)</em><br /><br />Вы уверены, что хотите пересоздать кеш модераторов?',
 ));
