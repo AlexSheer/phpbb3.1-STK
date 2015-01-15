@@ -267,7 +267,6 @@ function stk_add_lang($lang_file, $fore_lang = false)
 	// Internally cache some data
 	static $lang_data	= array();
 	static $lang_dirs	= array();
-	static $is_302		= null;
 
 	// Store current phpBB data
 	if (empty($lang_data))
@@ -299,27 +298,6 @@ function stk_add_lang($lang_file, $fore_lang = false)
 		$lang_dirs = array_unique($lang_dirs);
 	}
 
-	// Which phpBB version is the user using
-	if (is_null($is_302))
-	{
-		// Guess the version based upon behavior, at this point a version
-		// check isn't sufficient as there are cases where the version
-		// information isn't available or isn't reliable.
-		/*
-		 * // There are different ways of handling language paths due to the changes
-		 * // made in phpBB 3.0.3 (set custom lang path)
-		 * if (version_compare(PHPBB_VERSION_NUMBER, '3.0.2', '<='))
-		 * {
-		 *	$is_302 = true;
-		 * }
-		 * else
-		 * {
-		 *	$is_302 = false;
-		 * }
-		 */
-		$is_302 = (file_exists($user->lang_path . 'common.' . PHP_EXT)) ? true : false;
-	}
-
 	// Switch to the STK language dir
 	$user->lang_path = STK_ROOT_PATH . 'language/';
 
@@ -343,12 +321,6 @@ function stk_add_lang($lang_file, $fore_lang = false)
 	if (empty($user->lang_name))
 	{
 		trigger_error("Language file: {$lang_file}." . PHP_EXT . ' missing!', E_USER_ERROR);
-	}
-
-	// In phpBB <= 3.0.2 the lang_name is stored in the lang_path
-	if ($is_302)
-	{
-		$user->lang_path .= $user->lang_name . '/';
 	}
 
 	// Add the file
