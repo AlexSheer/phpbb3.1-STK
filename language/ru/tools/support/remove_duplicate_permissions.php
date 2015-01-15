@@ -44,5 +44,5 @@ $lang = array_merge($lang, array(
 	'DUPLICATES_FOUND'						=> 'Инструмент для нахождения и удаления дубликатов прав доступа',
 	'NO_DUPLICATES_FOUND'					=> 'Проверка закончена, дубликатов прав доступа не найдено.',
 	'REMOVE_DUPLICATE_PERMISSIONS'			=> 'Удаление дубликатов прав доступа',
-	'REMOVE_DUPLICATE_PERMISSIONS_CONFIRM'	=> 'Вы готовы удалить дубликаты прав доступа?',
+	'REMOVE_DUPLICATE_PERMISSIONS_CONFIRM'	=> 'Вы уверены, что желаете удалить дубликаты прав доступа?',
 ));
