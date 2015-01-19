@@ -126,4 +126,5 @@ $lang = array_merge($lang, array(
 
 	'CONFIG_LIST'						=> 'Configuration parameters',
 	'CONFIG_LIST_EXPLAIN'				=> 'Here you can view and change the configuration .',
+	'CLOSE'								=> 'Close',
 ));
