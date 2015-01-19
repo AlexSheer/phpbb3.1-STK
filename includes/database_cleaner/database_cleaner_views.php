@@ -119,6 +119,7 @@ class database_cleaner_views
 						'NAME'			=> user_lang($item['NAME']),
 						'FIELD_NAME'	=> user_lang($item['FIELD_NAME']),
 						'MISSING'		=> $item['MISSING'],
+						'FIND'			=> (isset($item['FIND'])) ? $item['FIND'] : '',
 					));
 				}
 			}
@@ -243,6 +244,7 @@ class database_cleaner_views
 						'NAME'			=> $column,
 						'FIELD_NAME'	=> $table_name . '_' . $column,
 						'MISSING'		=> (!in_array($column, $existing_columns)) ? true : false,
+						'FIND'			=> append_sid("" . STK_ROOT_PATH . "finder." . PHP_EXT . "", 'col=' . $column . ''),
 					);
 
 					if ($this->_has_changes === false)
@@ -285,6 +287,7 @@ class database_cleaner_views
 				'NAME'			=> $name,
 				'FIELD_NAME'	=> $name,
 				'MISSING'		=> (!in_array($name, $existing_config)) ? true : false,
+				'FIND'		=> append_sid("" . STK_ROOT_PATH . "finder." . PHP_EXT . "", 'c=' . $name . ''),
 			);
 
 			if ($this->_has_changes === false)
@@ -501,6 +504,7 @@ class database_cleaner_views
 				'NAME'			=> $name,
 				'FIELD_NAME'	=> $name,
 				'MISSING'		=> (!in_array($name, $existing_permissions)) ? true : false,
+				'FIND'			=> append_sid("" . STK_ROOT_PATH . "finder." . PHP_EXT . "", 'p=' . $name . ''),
 			);
 
 			if ($this->_has_changes === false)
@@ -617,6 +621,7 @@ class database_cleaner_views
 						'NAME'			=> $table,
 						'FIELD_NAME'	=> $table,
 						'MISSING'		=> isset($req_tables[$table]) ? true : false,
+						'FIND'		=> append_sid("" . STK_ROOT_PATH . "finder." . PHP_EXT . "", 't=' . $table . ''),
 					);
 
 					if ($this->_has_changes === false)
@@ -689,6 +694,7 @@ class database_cleaner_views
 				'NAME'			=> '' . $acp_name . ' (' .$name. ')' . $user->lang['GO_TO_ACP'] . ' <a href="' . $value['link'] . '" target="_blank">' . $value['module_name'] . '</a> [' . $value['parent_module_name'] . ' (' . $value['parent_id'] . ')]',
 				'FIELD_NAME'	=> $name,
 				'MISSING'		=> false,
+				'FIND'			=> append_sid("" . STK_ROOT_PATH . "finder." . PHP_EXT . "", 'm=' . $acp_name . ''),
 			);
 
 			if ($this->_has_changes === false)
