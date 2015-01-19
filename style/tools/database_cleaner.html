@@ -38,7 +38,7 @@
 				<!-- BEGIN items -->
 					<tr class="<!-- IF items.MISSING -->missing<!-- ELSE --><!-- IF items.S_ROW_COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF --><!-- ENDIF -->">
 						<td style="font-weight: bold;">{items.NAME}</td>
-						<td style="font-weight: bold;"><!-- IF items.MISSING -->{L_MISSING}<!-- ELSE -->{L_EXTRA}<!-- ENDIF --></td>
+						<td style="font-weight: bold;"><!-- IF items.MISSING -->{L_MISSING}<!-- ELSE --><!-- IF items.FIND --><a href="{items.FIND}" onclick="popup(this.href, 820, 300, name); return false;">{L_EXTRA}</a><!-- ELSE -->{L_EXTRA}<!-- ENDIF --><!-- ENDIF --></td>
 						<td><!-- IF items.MISSING -->{L_ADD}<!-- ELSE -->{L_REMOVE}<!-- ENDIF --></td>
 						<td style="text-align: center;"><input type="checkbox" class="radio" name="items[{items.FIELD_NAME}]" <!-- IF items.DISABLED -->disabled="disabled"<!-- ELSE -->checked="checked"<!-- ENDIF --> /></td>
 					</tr>
