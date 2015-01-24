@@ -314,7 +314,7 @@ class database_cleaner_controller
 						WHERE group_id = ' . (int) $group_id . "
 							AND extension = '" . $db->sql_escape($extension) . '\'');
 				}
-				else if (in_array($extension, $data) && !in_array($extension, $existing_extensions))
+				else if ($group_id && in_array($extension, $data) && !in_array($extension, $existing_extensions))
 				{
 					$insert = array(
 						'group_id'	=> $group_id,
