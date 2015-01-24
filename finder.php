@@ -99,79 +99,82 @@ if (!$extra_data)
 		}
 	}
 
-	foreach($extensions as $vendor => $ext)
+	if (!empty($extensions))
 	{
-		foreach($ext as $key => $extension)
+		foreach($extensions as $vendor => $ext)
 		{
-			$ext_dir = '' . $vendor . '\\'. $extension . '\\migrations\\';
-			$migrations = array_diff(scandir('' . $phpbb_root_path . 'ext/' . $ext_dir . ''), array('..', '.'));
-
-			$table_extra = $column_extra = $config_extra = $module_extra = $permissions_extra = array();
-			foreach($migrations as $file)
+			foreach($ext as $key => $extension)
 			{
-				$configs = $module_names = $permissions = $columns = array();
-				$file = str_replace('.' . PHP_EXT . '', '', $file);
-				$class = '' . $vendor . '\\' . $extension . '\\migrations\\' . $file . '';
-				$phpbb_ext = new $class($config, $db, $db_tools, $table_prefix, $phpEx, $errors);
-				if (!empty($phpbb_ext))
+				$ext_dir = '' . $vendor . '\\'. $extension . '\\migrations\\';
+				$migrations = array_diff(scandir('' . $phpbb_root_path . 'ext/' . $ext_dir . ''), array('..', '.'));
+
+				$table_extra = $column_extra = $config_extra = $module_extra = $permissions_extra = array();
+				foreach($migrations as $file)
 				{
-					// Search tables used for extension
-					$table_data = $phpbb_ext->revert_schema();
-					if (isset($table_data['drop_tables']))
+					$configs = $module_names = $permissions = $columns = array();
+					$file = str_replace('.' . PHP_EXT . '', '', $file);
+					$class = '' . $vendor . '\\' . $extension . '\\migrations\\' . $file . '';
+					$phpbb_ext = new $class($config, $db, $db_tools, $table_prefix, $phpEx, $errors);
+					if (!empty($phpbb_ext))
 					{
-						$table_extra = array_merge($table_extra, $table_data['drop_tables']);
-					}
-					// Search columns used for extension
-					if (isset($table_data['drop_columns']))
-					{
-						foreach($table_data['drop_columns'] as $drop_columns)
+						// Search tables used for extension
+						$table_data = $phpbb_ext->revert_schema();
+						if (isset($table_data['drop_tables']))
 						{
-							$columns[] = $drop_columns[0];
+							$table_extra = array_merge($table_extra, $table_data['drop_tables']);
 						}
-					}
+						// Search columns used for extension
+						if (isset($table_data['drop_columns']))
+						{
+							foreach($table_data['drop_columns'] as $drop_columns)
+							{
+								$columns[] = $drop_columns[0];
+							}
+						}
 
-					$update_data = $phpbb_ext->update_data();
-					foreach($update_data as $key => $alue)
-					{
-						// Search config data
-						if ($alue[0] == 'config.add' || $alue[0] == 'config.update')
+						$update_data = $phpbb_ext->update_data();
+						foreach($update_data as $key => $alue)
 						{
-							$configs[] = $alue[1][0];
-						}
-						// Search modules used for extension
-						if($alue[0] == 'module.add')
-						{
-							$ext_module_name = $alue[1];
-							$name = isset($ext_module_name[2]) ? $ext_module_name[2] :  '';
-							if (is_array($name))
+							// Search config data
+							if ($alue[0] == 'config.add' || $alue[0] == 'config.update')
 							{
-								$module_names[] = (isset($name['module_langname'])) ? $name['module_langname'] : $ext_module_name[1];
+								$configs[] = $alue[1][0];
 							}
-							else
+							// Search modules used for extension
+							if($alue[0] == 'module.add')
 							{
-								$module_names[] = $name;
+								$ext_module_name = $alue[1];
+								$name = isset($ext_module_name[2]) ? $ext_module_name[2] :  '';
+								if (is_array($name))
+								{
+									$module_names[] = (isset($name['module_langname'])) ? $name['module_langname'] : $ext_module_name[1];
+								}
+								else
+								{
+									$module_names[] = $name;
+								}
+							}
+							// Search permissions used for extension
+							if($alue[0] == 'permission.add')
+							{
+								$permissions[] = $alue[1][0];
 							}
 						}
-						// Search permissions used for extension
-						if($alue[0] == 'permission.add')
-						{
-							$permissions[] = $alue[1][0];
-						}
+						$configs = array_unique($configs);
+						$config_extra = array_merge($config_extra, $configs);
+						$module_extra = array_merge($module_extra, $module_names);
+						$permissions_extra = array_merge($permissions_extra, $permissions);
+						$column_extra = array_merge($column_extra, $columns);
+						unset($phpbb_ext);
 					}
-					$configs = array_unique($configs);
-					$config_extra = array_merge($config_extra, $configs);
-					$module_extra = array_merge($module_extra, $module_names);
-					$permissions_extra = array_merge($permissions_extra, $permissions);
-					$column_extra = array_merge($column_extra, $columns);
-					unset($phpbb_ext);
 				}
-			}
 
-			$extra_data['tables'][$vendor][$extension] = $table_extra;
-			$extra_data['colimns'][$vendor][$extension] = $column_extra;
-			$extra_data['configs'][$vendor][$extension] = $config_extra;
-			$extra_data['modules'][$vendor][$extension] = $module_extra;
-			$extra_data['permissions'][$vendor][$extension] = $permissions_extra;
+				$extra_data['tables'][$vendor][$extension] = $table_extra;
+				$extra_data['colimns'][$vendor][$extension] = $column_extra;
+				$extra_data['configs'][$vendor][$extension] = $config_extra;
+				$extra_data['modules'][$vendor][$extension] = $module_extra;
+				$extra_data['permissions'][$vendor][$extension] = $permissions_extra;
+			}
 		}
 	}
 
@@ -182,7 +185,7 @@ $info = $row = array();
 
 if ($table)
 {
-	$info = finder($extra_data['tables'], $table);
+	$info = (isset($extra_data['tables'])) ? finder($extra_data['tables'], $table) : '';
 	$extra = (isset($info['data'])) ? '' . $table_prefix . '' . $info['data'] . '' : '' . $table_prefix . '' . $table. '';
 	$template->assign_vars(array(
 		'L_EXTRA_DATA_UNIT'		=> $user->lang['TABLE'],
@@ -192,7 +195,7 @@ if ($table)
 }
 else if($column)
 {
-	$info = finder($extra_data['colimns'], $column);
+	$info = (isset($extra_data['colimns'])) ? finder($extra_data['colimns'], $column) : '';
 	$extra = (isset($info['data'])) ? $info['data'] : $column;
 	$template->assign_vars(array(
 		'L_EXTRA_DATA_UNIT'		=> $user->lang['COLUMN'],
@@ -202,7 +205,7 @@ else if($column)
 }
 else if($_config)
 {
-	$info = finder($extra_data['configs'], $_config);
+	$info = (isset($extra_data['configs'])) ? finder($extra_data['configs'], $_config) : '';
 	$extra = (isset($info['data'])) ? $info['data'] : $_config;
 	$template->assign_vars(array(
 		'L_EXTRA_DATA_UNIT'		=> $user->lang['CONFIG'],
@@ -212,7 +215,7 @@ else if($_config)
 }
 else if($module)
 {
-	$info = finder($extra_data['modules'], $module);
+	$info = (isset($extra_data['modules'])) ? finder($extra_data['modules'], $module) : '';
 	$extra = (isset($info['data'])) ? $info['data'] : $module;
 	$template->assign_vars(array(
 		'L_EXTRA_DATA_UNIT'		=> $user->lang['MODULE'],
@@ -222,7 +225,7 @@ else if($module)
 }
 else if($permission)
 {
-	$info = finder($extra_data['permissions'], $permission);
+	$info = (isset($extra_data['permissions'])) ? finder($extra_data['permissions'], $permission) : '';
 	$extra = (isset($info['data'])) ? $info['data'] : $permission;
 	$template->assign_vars(array(
 		'L_EXTRA_DATA_UNIT'		=> $user->lang['PERMISSION'],
