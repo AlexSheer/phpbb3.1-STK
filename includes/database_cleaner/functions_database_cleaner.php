@@ -107,7 +107,7 @@ function get_extensions($group, &$group_id)
 		$result = $db->sql_query($sql);
 		$id = $db->sql_fetchrow($result);
 		$group_id = $id['group_id'];
-		$db->sql_freeresult($res);
+		$db->sql_freeresult($result);
 	}
 
 	return $set;
