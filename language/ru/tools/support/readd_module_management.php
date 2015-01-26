@@ -38,7 +38,7 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'READD_MODULE_MANAGEMENT'			=> 'Пересоздание раздела модулей в Администраторском разделе конференции',
+	'READD_MODULE_MANAGEMENT'			=> 'Пересоздание модуля управления модулями',
 	'READD_MODULE_MANAGEMENT_CONFIRM'	=> 'Вы уверены, что хотите пересоздать модуль управления модулями?',
 	'READD_MODULE_MANAGEMENT_SUCCESS'	=> 'Модуль управления модулями был успешно пересоздан или исправлен!',
 ));
