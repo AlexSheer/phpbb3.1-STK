@@ -50,6 +50,7 @@ class sql_query
 			return;
 		}
 
+		$show_results = request_var('show_results', false);
 		$sql_query = utf8_normalize_nfc(request_var('sql_query', '', true));
 		$sql_query = htmlspecialchars_decode($sql_query);	// Need special chars like < and > see bug #59755
 
@@ -69,7 +70,7 @@ class sql_query
 
 		$dbms=  str_replace('phpbb\\db\\driver\\', '', $dbms);
 		$dbmd = get_available_dbms($dbms);
-		if ($dbms == 'mysql' || $dbms == 'mysqli' || $dbms == 'firebird' || $dbms == 'sqlite')
+		if ($dbms == 'mysql' || $dbms == 'mysqli' || $dbms == 'sqlite')
 		{
 			$remove_remarks = 'phpbb_remove_comments';
 		}
@@ -97,7 +98,7 @@ class sql_query
 				continue;
 			}
 
-			if (isset($_POST['show_results']))
+			if ($show_results)
 			{
 				// Display the query
 				$template->assign_block_vars('queries', array('QUERY' => $sql));
