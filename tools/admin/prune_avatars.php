@@ -46,9 +46,6 @@ class prune_avatars
 			{
 				// No data in cache
 				$files = array_diff(scandir($dir), array('..', '.', '.htaccess', 'index.htm'));
-				$files = array_diff($files, $bd_files);
-				array_map('trim', array_unique($files));
-				sort($files);
 
 				$sql = 'SELECT user_id, user_avatar
 						FROM ' . USERS_TABLE . '
@@ -62,6 +59,8 @@ class prune_avatars
 				}
 				$db->sql_freeresult($result);
 				$files = array_diff($files, $bd_files);
+				array_map('trim', array_unique($files));
+				sort($files);
 				$cache->put('_stk_prune_avatar', $files);
 			}
 
