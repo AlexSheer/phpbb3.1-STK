@@ -99,7 +99,7 @@ $lang = array_merge($lang, array(
 	'RESET_ROLE_DATA_EXPLAIN'		=> 'This step will reset the phpBB system roles back to their original state, its highly advised to run this if you made changes in the previous step.',
 	'ROLE_SETTINGS'					=> 'Role Settings',
 	'ROWS'							=> 'Rows',
-	
+
 	'ACP_MODULES_SETTINGS'			=> 'Search for additional modules',
 	'UNDEFINED'						=> 'undefined',
 	'RESET_ACP_MODULES_SKIP'		=> 'Checking of additional modules skipped',
@@ -116,7 +116,7 @@ $lang = array_merge($lang, array(
 		'groups'			=> 'Groups not changed',
 		'roles'				=> 'Roles not changed',
 		'final_step'		=> 'Final step',
-		'acp_modules'		=> 'Search for additional modules',
+		'acp_modules'		=> 'Search for additional or missing modules',
 	),
 	'SECTION_NOT_CHANGED_EXPLAIN'	=> array(
 		'tables'			=> 'The database tables haven’t been changed',
@@ -128,9 +128,12 @@ $lang = array_merge($lang, array(
 		'groups'			=> 'There were no changes in the phpBB system groups',
 		'roles'				=> 'There were no roles added or removed',
 		'final_step'		=> 'This last step will clear the cache and re-enable the board.',
-		'acp_modules'		=> 'Not found any additional modules',
+		'acp_modules'		=> 'Not found any additional or missing modules',
 	),
 	'SUCCESS'						=> 'Success',
+	'MODULE_ADD'					=> 'Module add',
+	'MODULE_ALREADY_EXIST'			=> 'Module already exist',
+	'NO_PARENT'						=> 'Parent module not exists.<br />Failed',
 	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'The system groups have been reset successfully',
 	'TYPE'							=> 'Type',
 	'UNSTABLE_DEBUG_ONLY'			=> 'The database cleaner can only run on unstable phpBB versions <em>(dev, a, b, RC)</em>, when "DEBUG" is enabled through the phpBB config file.',
