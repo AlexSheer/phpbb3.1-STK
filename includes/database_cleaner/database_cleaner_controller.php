@@ -1167,8 +1167,8 @@ class database_cleaner_controller
 		}
 		else
 		{
-			// No, hasn't cgildrens
-			// Try to delete, but first check if nodule exists
+			// No, hasn't childrens
+			// Try to delete, but first check if module exists
 			if($this->get_module_row($module_id, $class)) // module exits?
 			{
 				$acp_tools->delete_module($module_id);
