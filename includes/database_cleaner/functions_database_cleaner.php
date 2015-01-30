@@ -445,104 +445,112 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 
 	// Call init
 	$data->init();
+}
 
 /**
-* Find any non standart modules in database
+* Find modules in database
 */
-	function get_acp_modules($acp_modules, &$acp_rows)
+function get_acp_modules($acp_modules, &$modules)
+{
+	global $db;
+
+	$existing_modules = array();
+	$main_modules = array('acp', 'ucp', 'mcp');
+	$modules_flat_array = array_values_recursive($acp_modules);
+	$keys_array = recursive_keys ($acp_modules);
+
+	$keys = array();
+	foreach($keys_array as $k)
 	{
-		global $db, $user, $phpEx, $phpbb_root_path;
-
-		$main_modules = array('acp', 'ucp', 'mcp');
-		$i = 0;
-		foreach($main_modules as $main)
+		if(!is_numeric($k))
 		{
-			$sql = 'SELECT *
-				FROM ' . MODULES_TABLE . '
-				WHERE module_class = \''. $main .'\'';
-			$result = $db->sql_query($sql);
-			while ($row = $db->sql_fetchrow($result))
-			{
-				if(!array_find($acp_modules, $row['module_langname']))
-				{
-					$module = $row['module_langname'];
-					$module_id = $row['module_id'];
-					$sql = 'SELECT *
-						FROM ' . MODULES_TABLE . '
-						WHERE module_id = ' . $row['parent_id'] . '';
-					$res = $db->sql_query($sql);
-					$row = $db->sql_fetchrow($res);
-					$parent = $row['module_langname'];
-					$parent_id = $row['module_id'];
-					if ($parent)
-					{
-						$link = append_sid("{$phpbb_root_path}adm/index.$phpEx", 'i=acp_modules&amp;sid=' . $user->data['session_id'] .'&amp;mode=' . $main . '&parent_id='. $parent_id .'');
-						$module_mame = (isset($user->lang[$parent])) ? '<b>' . $user->lang[$parent] . '</b>' : '<i>' . $user->lang['UNDEFINED'] . '</i>';
-
-					}
-					else
-					{
-						$link = append_sid("{$phpbb_root_path}adm/index.$phpEx", 'i=acp_modules&amp;sid=' . $user->data['session_id'] .'&amp;mode=' . $main . '');
-						$module_mame = '';
-					}
-					$acp_rows[$i]['class'] = $main;
-					$acp_rows[$i]['name'] = $module_id;
-					$acp_rows[$i]['acp_name'] = $module;
-					$acp_rows[$i]['module_name'] = $module_mame;
-					$acp_rows[$i]['link'] = $link;
-					$acp_rows[$i]['parent_id'] = $parent_id;
-					$acp_rows[$i]['parent_module_name'] = $parent;
-					$db->sql_freeresult($res);
-					$i++;
-
-				}
-			}
-			$db->sql_freeresult($result);
+			$keys[] = $k;
 		}
 	}
+	$keys = array_diff($keys, $main_modules);
+	$modules = array_merge($modules_flat_array, $keys);
+	return $modules;
+}
 
 /**
-* Find element in multidimensional associative array
+* Find keys in multidimensional associative array
 */
-	function array_find($array, $needle)
+function array_find($array, $needle)
+{
+	foreach($array as $cat)
 	{
-		foreach($array as $cat)
+		if(isset($needle) && $needle != '')
 		{
 			if (array_key_exists($needle, $cat))
 			{
-				return true;
+				return array_search($cat, $array);
 			}
 			if (in_array($needle, $cat))
 			{
-				return true;
+				return array_search($cat, $array);
 			}
+		}
+		else
+		{
+			return false;
+		}
 
-			foreach($cat as $main_module)
+		foreach($cat as $main_module)
+		{
+			if (array_key_exists($needle, $main_module))
 			{
-				if (array_key_exists($needle, $main_module))
+				return array_search($main_module, $cat);
+			}
+			if (in_array($needle, $main_module))
+			{
+				return array_search($main_module, $cat);
+			}
+			foreach($main_module as $module)
+			{
+				if(is_array($module))
 				{
-					return true;
-				}
-				if (in_array($needle, $main_module))
-				{
-					return true;
-				}
-				foreach($main_module as $module)
-				{
-					if(is_array($module))
+					if (array_key_exists($needle, $module))
 					{
-						if (array_key_exists($needle, $module))
-						{
-							return true;
-						}
-						if (in_array($needle, $module))
-						{
-							return true;
-						}
+						return array_search($module, $main_module);
+					}
+					if (in_array($needle, $module))
+					{
+						return array_search($module, $main_module);
 					}
 				}
 			}
 		}
-		return false;
 	}
+	return false;
+}
+
+function array_values_recursive($ary)
+{
+	$lst = array();
+	foreach( array_keys($ary) as $k)
+	{
+		$v = $ary[$k];
+		if (is_scalar($v))
+		{
+			$lst[] = $v;
+		}
+		elseif (is_array($v))
+		{
+			$lst = array_merge($lst, array_values_recursive($v));
+		}
+		}
+	return $lst;
+}
+
+function recursive_keys($input, $search_value = null){
+
+	$output = ($search_value !== NULL ? array_keys($input, $search_value) : array_keys($input)) ;
+	foreach($input as $sub)
+	{
+		if(is_array($sub))
+		{
+			$output = ($search_value !== NULL ? array_merge($output, recursive_keys($sub, $search_value)) : array_merge($output, recursive_keys($sub)));
+		}
+	}
+	return $output;
 }
