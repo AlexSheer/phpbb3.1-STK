@@ -1033,11 +1033,11 @@ class database_cleaner_controller
 	}
 
 	/**
-	* Delete non standart phpBB modules
+	* Delete non standart and add native phpBB modules
 	*/
 	function acp_modules($error, $selected)
 	{
-		global $db, $phpbb_root_path, $phpEx;
+		global $db, $user, $phpbb_root_path, $phpEx, $umil;
 
 		if (sizeof($selected))
 		{
@@ -1068,7 +1068,68 @@ class database_cleaner_controller
 
 			foreach (array_keys($selected) as $module_id)
 			{
-				$this->delete_module($module_id, $acp_tools, $class[$module_id]);
+				if(is_numeric($module_id))
+				{
+					// Delete module
+					$this->delete_module($module_id, $acp_tools, $class[$module_id]);
+				}
+				else
+				{
+					// Add module
+					$module_langname = strtoupper($module_id);
+					$key = array_find($this->db_cleaner->data->acp_modules, $module_langname);
+					if($key)
+					{
+						$sql = 'SELECT module_class, module_id
+							FROM ' . MODULES_TABLE . '
+							WHERE module_langname = \'' . $key . '\'';
+						$result = $db->sql_query($sql);
+						$row = $db->sql_fetchrow($result);
+						$module_class = $row['module_class'];
+						if (!$module_class)
+						{
+							$error[] = '' . $user->lang['MODULE_ADD'] . ' &laquo;' . $module_langname . '&raquo; ' . $user->lang['NO_PARENT'] . '';
+							continue;
+						}
+						$parent_id = $row['module_id'];
+						$k_ary = explode('_', $key);
+						$base_name = '' . $module_class . '_' . strtolower(array_pop(explode('_', $key))) . '';
+						if ($module_langname == 'ACP_SEARCH_INDEX')
+						{
+							$base_name = 'acp_search';
+						}
+						$info_file = "$module_class/info/$base_name.$phpEx";
+						$module_mode = $module_auth = '';
+
+						if (file_exists($phpbb_root_path . 'includes/'. $info_file))
+						{
+							include_once($phpbb_root_path . 'includes/'. $info_file);
+							$classname = ''.$base_name.'_info';
+							$info = new $classname;
+							$module = $info->module();
+							unset($info);
+
+							foreach($module['modes'] as $key => $value)
+							{
+								if ($value['title'] == $module_langname)
+								{
+									$module_mode = $key;
+									$module_auth = $value['auth'];
+								}
+							}
+						}
+					}
+
+					$data = array(
+						'module_langname'		=> $module_langname,
+						'module_basename'		=> $base_name,
+						'module_mode'			=> $module_mode,
+						'module_auth'			=> $module_auth,
+					);
+
+					$result = $umil->module_add($module_class, $parent_id, $data);
+					$error[] = '&laquo;' . $user->lang[$module_langname] . '&raquo; ' . $result . '';
+				}
 			}
 		}
 		return $error;
