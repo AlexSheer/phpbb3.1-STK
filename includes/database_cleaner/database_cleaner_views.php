@@ -670,32 +670,111 @@ class database_cleaner_views
 	*/
 	function acp_modules()
 	{
-		global $user, $template;
+		global $db, $user, $template, $phpEx, $phpbb_root_path;
 
 		$this->_section_data['acp_modules'] = array(
 			'NAME'		=> 'ACP_MODULES_SETTINGS',
 			'TITLE'		=> 'ROWS',
 		);
 
-		$module_rows = $existing_modules = array();
+		$modules = $existing_modules = array();
+		get_acp_modules($this->db_cleaner->data->acp_modules, $modules);
 
-		get_acp_modules($this->db_cleaner->data->acp_modules, $module_rows);
-
-		foreach ($module_rows as $key => $value)
+		// Find extra modules
+		$sql = 'SELECT *
+			FROM ' . MODULES_TABLE;
+		$result = $db->sql_query($sql);
+		while ($row = $db->sql_fetchrow($result))
 		{
-			$name = $value['name'];
-			$acp_name = $value['acp_name'];
-			if (in_array($acp_name, $existing_modules))
+			$existing_modules[] = $row['module_langname'];
+			if(in_array($row['module_langname'], $modules))
 			{
 				continue;
 			}
 
+			$module = $row['module_langname'];
+			$module_id = $row['module_id'];
+
+			$sql = 'SELECT *
+				FROM ' . MODULES_TABLE . '
+				WHERE module_id = ' . $row['parent_id'] . '';
+			$res = $db->sql_query($sql);
+			$row = $db->sql_fetchrow($res);
+			$parent = $row['module_langname'];
+			$class = $row['module_class'];
+			$parent_id = $row['module_id'];
+
+			if ($parent)
+			{
+				$link = append_sid("{$phpbb_root_path}adm/index.$phpEx", 'i=acp_modules&amp;sid=' . $user->data['session_id'] .'&amp;mode=' . $class . '&parent_id='. $parent_id .'');
+				$module_mame = (isset($user->lang[$parent])) ? '<b>' . $user->lang[$parent] . '</b>' : '<i>' . $user->lang['UNDEFINED'] . '</i>';
+			}
+			else
+			{
+				$link = append_sid("{$phpbb_root_path}adm/index.$phpEx", 'i=acp_modules&amp;sid=' . $user->data['session_id'] .'&amp;mode=' . $main . '');
+				$module_mame = '';
+			}
+			$db->sql_freeresult($res);
+
 			$this->_section_data['acp_modules']['ITEMS'][] = array(
-				'NAME'			=> '' . $acp_name . ' (' .$name. ')' . $user->lang['GO_TO_ACP'] . ' <a href="' . $value['link'] . '" target="_blank">' . $value['module_name'] . '</a> [' . $value['parent_module_name'] . ' (' . $value['parent_id'] . ')]',
-				'FIELD_NAME'	=> $name,
+				'NAME'			=> '' . $module . ' (' . $module_id . ')' . $user->lang['GO_TO_ACP'] . ' <a href="' . $link . '" target="_blank">' . $module_mame . '</a> [' . $parent . ' (' . $parent_id . ')]',
+				'FIELD_NAME'	=> $module_id,
 				'MISSING'		=> false,
-				'FIND'			=> append_sid("" . STK_ROOT_PATH . "finder." . PHP_EXT . "", 'm=' . $acp_name . ''),
+				'FIND'			=> append_sid("" . STK_ROOT_PATH . "finder." . PHP_EXT . "", 'm=' . $module . ''),
 			);
+
+			if ($this->_has_changes === false)
+			{
+				$this->_has_changes = true;
+			}
+		}
+		$db->sql_freeresult($result);
+
+		//Find missing modules
+		foreach($modules as $module)
+		{
+			if (!in_array($module, $existing_modules))
+			{
+				$key = array_find($this->db_cleaner->data->acp_modules, $module);
+				if ($key)
+				{
+					$parent_key = array_find($this->db_cleaner->data->acp_modules, $key);
+				}
+				if (isset($parent_key))
+				{
+					$cat_key = array_find($this->db_cleaner->data->acp_modules, $parent_key);
+				}
+
+				if($cat_key)
+				{
+					$mode = $cat_key;
+				}
+
+				if (!$cat_key)
+				{
+					$cat_key = $key;
+					$mode = $parent_key;
+				}
+
+				$sql = 'SELECT module_id FROM ' . MODULES_TABLE . '
+					WHERE module_langname = \''. $key .'\'';
+				$res = $db->sql_query($sql);
+				$row = $db->sql_fetchrow($res);
+				$parent_id = $row['module_id'];
+
+				$db->sql_freeresult($result);
+
+				// Link to ACP manage module
+				$link = ($parent_id) ? '<a style="color:#70AED3;" href="'. append_sid("{$phpbb_root_path}adm/index.$phpEx", 'i=acp_modules&amp;sid=' . $user->data['session_id'] .'&amp;mode=' . $mode . '&parent_id='. $parent_id .'') .'" " target="_blank">' : '';
+				$module_langname = $user->lang($module);
+				$parent_module_langname = $user->lang($key);
+
+				$this->_section_data['acp_modules']['ITEMS'][] = array(
+					'NAME'			=> '' . $module_langname . ' ('.$module.')' . $user->lang['GO_TO_ACP'] .  $link . ''. $parent_module_langname .'</a>',
+					'FIELD_NAME'	=> strtolower($module),
+					'MISSING'		=> true,
+				);
+			}
 
 			if ($this->_has_changes === false)
 			{
