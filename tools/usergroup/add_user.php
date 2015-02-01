@@ -37,7 +37,6 @@ class add_user
 				'new_password'		=> array('lang' => 'PASSWORD', 'explain' => false, 'type' => 'password:40:255'),
 				'password_confirm'	=> array('lang' => 'PASSWORD_CONFIRM', 'explain' => false, 'type' => 'password:40:255'),
 				'email'				=> array('lang' => 'EMAIL_ADDRESS', 'explain' => false, 'type' => 'text:40:255'),
-				'email_confirm'		=> array('lang' => 'CONFIRM_EMAIL', 'explain' => false, 'type' => 'text:40:255'),
 				'lang'				=> array('lang' => 'LANGUAGE', 'explain' => false, 'type' => 'select', 'function' => 'language_select'),
 				'tz'				=> array('lang' => 'TIMEZONE', 'explain' => false, 'type' => 'select', 'function' => 'tz_select'),
 
@@ -74,7 +73,6 @@ class add_user
 			'new_password'		=> request_var('new_password', '', true),
 			'password_confirm'	=> request_var('password_confirm', '', true),
 			'email'				=> strtolower(request_var('email', '')),
-			'email_confirm'		=> strtolower(request_var('email_confirm', '')),
 			'lang'				=> basename(request_var('lang', $user->lang_name)),
 			'tz'				=> request_var('tz', $timezone),
 		);
@@ -211,18 +209,12 @@ class add_user
 			'email'				=> array(
 				array('string', false, 6, 60),
 				array('email')),
-			'email_confirm'		=> array('string', false, 6, 60),
 			'tz'				=> array('num', false, -14, 14),
 			'lang'				=> array('match', false, '#^[a-z_\-]{2,}$#i'),
 		));
 		if ($data['new_password'] != $data['password_confirm'])
 		{
 			$error[] = $user->lang['NEW_PASSWORD_ERROR'];
-		}
-
-		if ($data['email'] != $data['email_confirm'])
-		{
-			$error[] = $user->lang['NEW_EMAIL_ERROR'];
 		}
 	}
 
