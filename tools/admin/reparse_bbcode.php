@@ -116,8 +116,10 @@ class reparse_bbcode
 			'title'	=> 'REPARSE_BBCODE',
 			'vars'	=> array(
 				'legend1'			=> 'REPARSE_BBCODE',
+				'create_backup'		=> array('lang' => 'CREATE_BACKUP_TABLE', 'validate' => 'bool',	'type' => 'radio:yes_no', 'explain' => true),
 				'reparseids'		=> array('lang'	=> 'REPARSE_POST_IDS', 'type' => 'textarea:3:255', 'explain' => 'true'),
 				'reparsepms'		=> array('lang' => 'REPARSE_PM_IDS', 'type' => 'textarea:3:255', 'explain' => 'true'),
+				'reparseforums'		=> array('lang' => 'REPARSE_FORUMS', 'explain' => true, 'type' => 'select_multiple', 'function' => 'get_forums'),
 				'reparseall'		=> array('lang' => 'REPARSE_ALL', 'type' => 'checkbox', 'explain' => true),
 			),
 		);
@@ -136,10 +138,23 @@ class reparse_bbcode
 		$last_batch			= false;
 		$reparse_id 		= request_var('reparseids', '');
 		$reparse_pm_id		= request_var('reparsepms', '');
+		$reparse_forum_ids	= request_var('reparseforums', array(0));
+		$create_backup 		= request_var('create_backup', false);
+		$all 				= request_var('reparseall', false);
 		$mode				= request_var('mode', BBCODE_REPARSE_POSTS);
 		$step				= request_var('step', 0);
 		$start				= $step * $this->step_size;
 		$cnt				= 0;
+
+		if (sizeof($reparse_forum_ids))
+		{
+			$reparse_id = '';
+		}
+
+		if (!sizeof($reparse_forum_ids) && !$reparse_id && !$reparse_pm_id && !$all && $step == 0)
+		{
+			trigger_error('REPARSE_IDS_EMPTY', E_USER_WARNING);
+		}
 
 		// If post IDs or PM IDs were specified, we need to make sure the list is valid.
 		$reparse_posts = array();
@@ -148,10 +163,11 @@ class reparse_bbcode
 		if (!empty($reparse_id))
 		{
 			$reparse_posts = explode(',', $reparse_id);
+			$reparse_forum_ids = array();
 
 			if (!sizeof($reparse_posts))
 			{
-				trigger_error('REPARSE_IDS_INVALID');
+				trigger_error('REPARSE_IDS_INVALID', E_USER_WARNING);
 			}
 
 			// Make sure there's no extra whitespace
@@ -174,6 +190,11 @@ class reparse_bbcode
 			if (!sizeof($reparse_pms))
 			{
 				trigger_error('REPARSE_IDS_INVALID');
+			}
+
+			if (!$all)
+			{
+				$mode = BBCODE_REPARSE_PMS;
 			}
 
 			// Again, make sure the format is okay
@@ -209,15 +230,12 @@ class reparse_bbcode
 		}
 
 		// First step? Prepare the backup
-		// For now disabled. Have to see how to implement this with regards to sigs and pms
-//		if ($step == 0)
-//		{
-//			$this->_prepare_backup();
-//			$this->_next_step($step);
-//		}
+		if ($create_backup && $step == 0 && $mode == BBCODE_REPARSE_POSTS)
+		{
+			$this->_prepare_backup();
+		}
 
 		// Greb our batch
-		$all = request_var('reparseall', false);
 		$bitfield = ($all) ? true : false;
 
 		// The MSSQL DBMS doesn't break correctly out of the loop
@@ -285,9 +303,22 @@ class reparse_bbcode
 		switch ($mode)
 		{
 			case BBCODE_REPARSE_POSTS :
+				if(sizeof($reparse_forum_ids))
+				{
+					$sql_where = ' AND ' . $db->sql_in_set('f.forum_id', $reparse_forum_ids);
+				}
+				else if(sizeof($reparse_posts))
+				{
+					$sql_where = ' AND ' . $db->sql_in_set('p.post_id', $reparse_posts);
+				}
+				else
+				{
+					$sql_where = '';
+				}
+
 				$sql_ary = array(
 					'SELECT'	=> 'f.forum_id, f.enable_indexing, f.forum_name,
-									p.post_id, p.poster_id, p.icon_id, p.post_text, p.post_subject, p.post_username, p.post_time, p.post_edit_reason, p.bbcode_uid, p.enable_sig, p.post_edit_locked, p.enable_bbcode, p.enable_magic_url, p.enable_smilies, p.post_attachment, p.post_edit_user,
+									p.post_id, p.poster_id, p.icon_id, p.post_text, p.post_subject, p.post_username, p.post_time, p.post_edit_reason, p.bbcode_uid, p. bbcode_bitfield, p.post_checksum, p.enable_sig, p.post_edit_locked, p.enable_bbcode, p.enable_magic_url, p.enable_smilies, p.post_attachment, p.post_edit_user,
 									t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_type, t.topic_status, t.topic_title, t.poll_title, t.topic_time_limit, t.poll_start, t.poll_length, t.poll_max_options, t.poll_last_vote, t.poll_vote_change, t.topic_posts_approved, topic_posts_unapproved, topic_posts_softdeleted,
 									u.username',
 					'FROM'		=> array(
@@ -296,7 +327,7 @@ class reparse_bbcode
 						TOPICS_TABLE	=> 't',
 						USERS_TABLE		=> 'u',
 					),
-					'WHERE'		=> (($bitfield) ? "p.bbcode_bitfield <> '' AND " : '') . 't.topic_id = p.topic_id AND u.user_id = p.poster_id AND f.forum_id = t.forum_id' . (sizeof($reparse_posts) ? ' AND ' . $db->sql_in_set('p.post_id', $reparse_posts) : ''),
+					'WHERE'		=> (($bitfield) ? "p.bbcode_bitfield <> '' AND " : '') . 't.topic_id = p.topic_id AND u.user_id = p.poster_id AND f.forum_id = t.forum_id' . $sql_where . '',
 				);
 			break;
 
@@ -327,8 +358,10 @@ class reparse_bbcode
 		$db->sql_freeresult($result);
 
 		// Backup
-		// For now disabled. Have to see how to implement this with regards to sigs and pms
-//		$this->_backup($batch);
+		if ($create_backup && $mode == BBCODE_REPARSE_POSTS)
+		{
+			$this->_backup($batch);
+		}
 
 		// User object used to store a second user object used when parsing signatures. (#62451)
 		$_user2 = new \phpbb\user('');
@@ -420,7 +453,7 @@ class reparse_bbcode
 		}
 
 		// Finished?
-		if ($last_batch && $mode == BBCODE_REPARSE_SIGS)
+		if ($last_batch && ($mode == BBCODE_REPARSE_SIGS || !$all))
 		{
 			// Done!
 			$cache->destroy('_stk_reparse_posts');
@@ -448,6 +481,7 @@ class reparse_bbcode
 		global $template, $user;
 
 		$all = request_var('reparseall', false);
+		$create_backup = request_var('create_backup', false);
 
 		$_next_mode	= ($next_mode === false) ? $mode : ++$mode;
 		$_next_step	= ($next_mode === false) ? ++$step : 0;
@@ -462,6 +496,7 @@ class reparse_bbcode
 			'mode'		=> $_next_mode,
 			'step'		=> $_next_step,
 			'reparseall'	=> ($all) ? true : false,
+			'create_backup'	=> ($create_backup) ? true : false,
 		);
 
 		meta_refresh(1, append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, $params));
@@ -469,7 +504,7 @@ class reparse_bbcode
 
 		if ($next_mode === false)
 		{
-			trigger_error(user_lang('REPARSE_BBCODE_PROGRESS', ($step - 1), $step));
+			trigger_error('' . user_lang('REPARSE_BBCODE_MODE', $mode) . '<br />' . user_lang('REPARSE_BBCODE_PROGRESS', ($_next_step * $this->step_size), $this->max) . '');
 		}
 		else
 		{
@@ -749,4 +784,9 @@ class reparse_bbcode
 		// This is difficult, no?
 		$post_id = (int) trim($post_id);
 	}
+}
+
+function get_forums()
+{
+	return make_forum_select(false, false, false, false, false);
 }
