@@ -37,8 +37,8 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
-	'NO_CONFIG_TITLE'					=> 'Нет параметров',
-	'NO_CONFIG_TEXT'					=> 'Нет параметров для отображения',
+	'NO_CONFIG_TITLE'					=> 'No params',
+	'NO_CONFIG_TEXT'					=> 'No params to display',
 
 	'CONFIG_PURPOSE'					=> 'Purpose',
 	'CONFIG_NAME'						=> 'Parameter',
