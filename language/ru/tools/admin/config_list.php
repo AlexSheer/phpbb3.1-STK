@@ -37,7 +37,7 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
-	'NO_CONFIG_TITLE' 					=> 'Нет параметров',
+	'NO_CONFIG_TITLE'					=> 'Нет параметров',
 	'NO_CONFIG_TEXT'					=> 'Нет параметров для отображения',
 
 	'CONFIG_PURPOSE'					=> 'Назначение',
@@ -104,7 +104,7 @@ $lang = array_merge($lang, array(
 	'allow_sig_smilies'					=> 'Разрешить смайлики в подписях пользователей',
 	'allow_smilies'						=> 'Разрешить смайлики',
 	'allow_topic_notify'				=> 'Разрешить подписку на темы',
-	'assets_version'					=> 'Счетчик загрузки новых css и javscript скриптов при включении/отключении/удалении данных расширений',
+	'assets_version'					=> 'Счетчик загрузки новых css и java-скриптов при включении/отключении/удалении данных расширений',
 	'attachment_quota'					=> 'Общая квота вложений:',
 	'auth_bbcode_pm'					=> 'Разрешить BBCode в ЛС',
 	'auth_flash_pm'						=> 'Разрешить тег BBCode <code>[FLASH]</code>',
