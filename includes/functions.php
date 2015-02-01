@@ -264,6 +264,57 @@ function stk_add_lang($lang_file, $fore_lang = false)
 {
 	global $config, $user;
 
+	if (!isset($user))
+	{
+		if (file_exists(STK_ROOT_PATH . 'default_lang.txt'))
+		{
+			$default_lang = file_get_contents(STK_ROOT_PATH . 'default_lang.txt');
+		}
+		else
+		{
+			$default_lang = 'en';
+		}
+
+		if (!class_exists('phpbb\session'))
+		{
+			include(PHPBB_ROOT_PATH . 'phpbb/session.' . PHP_EXT);
+		}
+		if (!class_exists('phpbb\user'))
+		{
+			include(PHPBB_ROOT_PATH . 'phpbb/user.' . PHP_EXT);
+		}
+
+		$dir = @opendir(PHPBB_ROOT_PATH . 'language');
+		if (!$dir)
+		{
+			die('Unable to access the language directory');
+			exit;
+		}
+
+		while (($file = readdir($dir)) !== false)
+		{
+			$path = STK_ROOT_PATH . 'language/' . $file;
+			if (!is_file($path) && !is_link($path) && $file == strtolower($default_lang))
+			{
+				$language = $file;
+				break;
+			}
+		}
+		closedir($dir);
+
+		if (!file_exists(PHPBB_ROOT_PATH . 'language/' . $language) || !is_dir(PHPBB_ROOT_PATH . 'language/' . $language))
+		{
+			die('No language found!');
+		}
+
+		$user = new \phpbb\user('\phpbb\datetime');
+
+		$lang_path = $user->lang_path;
+		$lang_path = '' . $lang_path . '' . $language . '';
+		$user->lang_path = ''.PHPBB_ROOT_PATH.''.$lang_path.'';
+		$user->data['user_lang'] = $default_lang;
+	}
+
 	// Internally cache some data
 	static $lang_data	= array();
 	static $lang_dirs	= array();
@@ -327,8 +378,8 @@ function stk_add_lang($lang_file, $fore_lang = false)
 	$user->add_lang($lang_file);
 
 	// Now reset the paths so phpBB can continue to operate as usual
-	$user->lang_path = $lang_data['lang_path'];
-	$user->lang_name = $lang_data['lang_name'];
+	$user->lang_path = (isset($lang_data['lang_path'])) ? $lang_data['lang_path'] : '' . PHPBB_ROOT_PATH . 'language/';
+	$user->lang_name = (isset($lang_data['lang_name'])) ? $lang_data['lang_name'] : $default_lang;
 }
 
 /**
