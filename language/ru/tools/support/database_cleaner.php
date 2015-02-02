@@ -137,4 +137,14 @@ $lang = array_merge($lang, array(
 	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'Системные группы переустановлены успешно',
 	'TYPE'							=> 'Тип',
 	'UNSTABLE_DEBUG_ONLY'			=> 'Очистка базы данных на нестабильных версиях phpBB (dev, a, b, RC), может выполняться только когда включен режим "DEBUG" в файле конфигурации.',
+
+	'ARCHIVES'				=> 'Архивы',
+	'DOCUMENTS'				=> 'Документы',
+	'DOWNLOADABLE_FILES'	=> 'Скачиваемые файлы',
+	'FLASH_FILES'			=> 'Файлы Flash',
+	'IMAGES'				=> 'Изображения',
+	'PLAIN_TEXT'			=> 'Текстовые файлы',
+	'QUICKTIME_MEDIA'		=> 'Файлы Quicktime',
+	'REAL_MEDIA'			=> 'Файлы RealMedia',
+	'WINDOWS_MEDIA'			=> 'Файлы Windows Media',
 ));
