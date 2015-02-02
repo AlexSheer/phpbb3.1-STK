@@ -137,4 +137,14 @@ $lang = array_merge($lang, array(
 	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'The system groups have been reset successfully',
 	'TYPE'							=> 'Type',
 	'UNSTABLE_DEBUG_ONLY'			=> 'The database cleaner can only run on unstable phpBB versions <em>(dev, a, b, RC)</em>, when "DEBUG" is enabled through the phpBB config file.',
+
+	'ARCHIVES'				=> 'Archives',
+	'DOCUMENTS'				=> 'Documents',
+	'DOWNLOADABLE_FILES'	=> 'Downloadable files',
+	'FLASH_FILES'			=> 'Flash files',
+	'IMAGES'				=> 'Images',
+	'PLAIN_TEXT'			=> 'Plain text files',
+	'QUICKTIME_MEDIA'		=> 'Quicktime files',
+	'REAL_MEDIA'			=> 'RealMedia files',
+	'WINDOWS_MEDIA'			=> 'Windows Media files',
 ));
