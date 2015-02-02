@@ -59,7 +59,6 @@ function get_extension_groups_rows(&$extension_groups_data, &$extension_groups_r
 	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result	= $db->sql_query($sql);
 	while ($row = $db->sql_fetchrow($result))
-	while ($row = $db->sql_fetchrow($result))
 	{
 		// Since phpBB 3.0.8 the module extensions are translatable,
 		// but now module extensions are NOT translatable and we need convert group_name into native
