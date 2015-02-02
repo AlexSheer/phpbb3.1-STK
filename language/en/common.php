@@ -102,7 +102,6 @@ $lang = array_merge($lang, array(
 	'USING_STK_LOGIN'					=> 'You are logged in using the internal STK authentication method. It is advised to use this method <strong>only</strong> when you are unable to login to phpBB.<br />To disable this authentication method click <a href="%1$s">here</a>.',
 	'VISITED'							=> 'Last visit',
 	'TOTAL'								=> 'Total',
-	'CONFIRM_EMAIL'						=> 'Confirm email',
 
 	'ERK_OK'							=> 'The Emergency Repair Kit hasn\'t found any critical issues within your phpBB installation.',
 	'RELOAD_STK'						=> 'Click <a href="%s"><b>here</b></a> to reload STK.',
@@ -116,7 +115,7 @@ $lang = array_merge($lang, array(
 	'STK_FATAL_ERROR'					=> '<strong style="color: #ff0000;">The Support Toolkit encountered a fatal error.</strong><br /><br />
 											 The Support Toolkit includes an Emergency Repair Kit (ERK), a tool designed to resolve certain errors that prevent phpBB from functioning.
 											 It is advised that you run the ERK now so it can attempt to repair the error it has detected.<br />
-											 To run the ERK, click <a href="' . STK_ROOT_PATH . 'erk.'.$phpEx.'"><b>here</b></a>.',
+											 To run the ERK, click <a href="' . STK_ROOT_PATH . 'erk.' . PHP_EXT . '"><b>here</b></a>.',
 	'CONFIG_REPAIR'						=> 'Repair config.php',
 	'CONFIG_REPAIR_EXPLAIN'				=> 'Through this tool you can regenerate your configuration file',
 	'CONFIG_REPAIR_NO_TABLES'			=> 'phpBB3 tables could not be found on this database with this table prefix.',
@@ -127,4 +126,5 @@ $lang = array_merge($lang, array(
 	'CONFIG_LIST'						=> 'Configuration parameters',
 	'CONFIG_LIST_EXPLAIN'				=> 'Here you can view and change the configuration .',
 	'CLOSE'								=> 'Close',
+	'UPDATES_AVAILABLE'					=> 'Your version of phpBB is not the latest. Available version for updates is %1$s<br />Follow this link <a href="%2$s" target="_blank" />%2$s</a> to the release announcement for the latest version, which contains additional information, as well as instructions for updating phpBB',
 ));
