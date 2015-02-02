@@ -47,7 +47,7 @@ function get_config_rows(&$phpbb_config, &$config_rows, &$existing_config)
 */
 function get_extension_groups_rows(&$extension_groups_data, &$extension_groups_rows, &$existing_extension_groups)
 {
-	global $db;
+	global $db, $user;
 
 	$existing_extension_groups = array();
 	$sql_ary = array(
@@ -59,8 +59,18 @@ function get_extension_groups_rows(&$extension_groups_data, &$extension_groups_r
 	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result	= $db->sql_query($sql);
 	while ($row = $db->sql_fetchrow($result))
+	while ($row = $db->sql_fetchrow($result))
 	{
-		$existing_extension_groups[] = $row['group_name'];
+		// Since phpBB 3.0.8 the module extensions are translatable,
+		// but now module extensions are NOT translatable and we need convert group_name into native
+		$extension_group_name = $row['group_name'];
+		if (in_array($row['group_name'], $user->lang))
+		{
+			$key = array_keys($user->lang, $row['group_name']);
+			$extension_group_name = $key[0];
+			unset ($key);
+		}
+		$existing_extension_groups[] = $extension_group_name;
 	}
 	$db->sql_freeresult($result);
 
@@ -73,7 +83,7 @@ function get_extension_groups_rows(&$extension_groups_data, &$extension_groups_r
 */
 function get_extensions($group, &$group_id)
 {
-	global $db;
+	global $db, $user;
 
 	$sql_ary = array(
 		'SELECT'	=> 'e.extension, eg.group_id',
@@ -82,7 +92,7 @@ function get_extensions($group, &$group_id)
 			EXTENSION_GROUPS_TABLE	=> 'eg',
 		),
 		'WHERE'		=> "e.group_id = eg.group_id
-							AND eg.group_name = '" . $db->sql_escape($group) . "'",
+			AND eg.group_name = '" . $db->sql_escape($group) . "'",
 	);
 	$sql = $db->sql_build_query('SELECT', $sql_ary);
 	$result	= $db->sql_query($sql);
@@ -97,6 +107,38 @@ function get_extensions($group, &$group_id)
 		}
 	}
 	$db->sql_freeresult($result);
+
+	// Since phpBB 3.0.8 the module extensions are translatable,
+	// but now module extensions are NOT translatable and we need convert group_name into native
+	if(!sizeof($set))
+	{
+		if (in_array($user->lang[$group], $user->lang))
+		{
+			$sql_ary = array(
+				'SELECT'	=> 'e.extension, eg.group_id',
+				'FROM'		=> array(
+					EXTENSIONS_TABLE		=> 'e',
+					EXTENSION_GROUPS_TABLE	=> 'eg',
+				),
+				'WHERE'		=> "e.group_id = eg.group_id
+					AND eg.group_name = '" . $db->sql_escape($user->lang[$group]) . "'",
+			);
+
+			$sql = $db->sql_build_query('SELECT', $sql_ary);
+			$result	= $db->sql_query($sql);
+			$set	= array();
+			while ($row = $db->sql_fetchrow($result))
+			{
+				$set[] = $row['extension'];
+
+				if (empty($group_id))
+				{
+					$group_id = $row['group_id'];
+				}
+			}
+			$db->sql_freeresult($result);
+		}
+	}
 
 	// # Bugfix from previous verson for phpBB 3.0
 	// # extension_id in extensions table assigned a NULL value
