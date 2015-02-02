@@ -77,13 +77,23 @@ if (!isset($stk_config))
 $action = request_var('action', '');
 $submit = request_var('submit', false);
 
-$version = PHPBB_VERSION;
-
-// Try to determine the phpBB actually version number
-$version_helper = $phpbb_container->get('version_helper');
-$recheck = $request->variable('versioncheck_force', true);
-$updates_available = $version_helper->get_suggested_updates(true);
-if ($updates_available)
+// Try to determine the phpBB version number, we might need that down the road
+// `PHPBB_VERSION` was added in 3.0.3, for older versions just rely on the config
+if ((defined('PHPBB_VERSION') && PHPBB_VERSION == $config['version']) || !defined('PHPBB_VERSION'))
+{
+	define('PHPBB_VERSION_NUMBER', $config['version']);
+	// Try to determine the phpBB actually version number
+	$version_helper = $phpbb_container->get('version_helper');
+	$updates_available = $version_helper->get_suggested_updates(false);
+	if ($updates_available)
+	{
+		$action = 'check_phpbb_version';
+	}
+}
+// Cant correctly determine the version, let the user define it.
+// As the `perform_unauthed_quick_tasks` function is used skip this
+// if there is already an action to be performed.
+else if (empty($action))
 {
 	$action = 'request_phpbb_version';
 }
