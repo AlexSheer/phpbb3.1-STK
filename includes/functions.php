@@ -309,9 +309,7 @@ function stk_add_lang($lang_file, $fore_lang = false)
 
 		$user = new \phpbb\user('\phpbb\datetime');
 
-		$lang_path = $user->lang_path;
-		$lang_path = '' . $lang_path . '' . $language . '';
-		$user->lang_path = ''.PHPBB_ROOT_PATH.''.$lang_path.'';
+		$user->lang_path = $user->lang_path.$language;
 		$user->data['user_lang'] = $default_lang;
 	}
 
@@ -378,8 +376,8 @@ function stk_add_lang($lang_file, $fore_lang = false)
 	$user->add_lang($lang_file);
 
 	// Now reset the paths so phpBB can continue to operate as usual
-	$user->lang_path = (isset($lang_data['lang_path'])) ? $lang_data['lang_path'] : '' . PHPBB_ROOT_PATH . 'language/';
-	$user->lang_name = (isset($lang_data['lang_name'])) ? $lang_data['lang_name'] : $default_lang;
+	$user->lang_path = PHPBB_ROOT_PATH . 'language/';
+	$user->lang_name = (!isset($user->lang_name)) ? $user->lang_name : $user->data['user_lang'];
 }
 
 /**
@@ -404,7 +402,7 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 
 		// Can't rely on phpBB to get the phpBB version.
 		case 'request_phpbb_version' :
-			global $cache, $config, $phpbb_container, $request;
+			global $cache, $config, $phpbb_container;
 
 			$_version_number = $cache->get('_stk_phpbb_version_number');
 			if ($_version_number === false)
@@ -424,16 +422,12 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 					add_form_key('request_phpbb_version');
 					page_header($user->lang['REQUEST_PHPBB_VERSION'], false);
 					$version_helper = $phpbb_container->get('version_helper');
-					$recheck = $request->variable('versioncheck_force', false);
-					$updates_available = $version_helper->get_suggested_updates($recheck);
+					$updates_available = $version_helper->get_suggested_updates(false);
 					if ($updates_available)
 					{
 						foreach ($updates_available as $branch => $version_data)
 						{
-							if ($config['version'] < $version_data['current'])
-							{
-							//	trigger_error(sprintf($user->lang['INCORRECT_PHPBB_VERSION'], $version_data['current']), E_USER_WARNING);
-							}
+							$announcement = $version_data['announcement'];
 						}
 					}
 
@@ -450,6 +444,7 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 					}
 
 					$template->assign_vars(array(
+						'UPDATES_AVAILABLE'				=> (PHPBB_VERSION < $version_data['current'] || $config['version'] < $version_data['current']) ? sprintf($user->lang['UPDATES_AVAILABLE'], $version_data['current'], $announcement) : false,
 						'PROCEED_TO_STK'				=> $user->lang('PROCEED_TO_STK', '', ''),
 						'REQUEST_PHPBB_VERSION_OPTIONS'	=> $version_options,
 						'U_ACTION'						=> append_sid(STK_INDEX, array('action' => 'request_phpbb_version')),
@@ -461,8 +456,30 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 					page_footer(false);
 				}
 			}
-
+			if ($config['version'] < '3.1.2')
+			{
+				trigger_error(sprintf($user->lang['INCORRECT_PHPBB_VERSION'], $version_data['current']), E_USER_WARNING);
+			}
 			define('PHPBB_VERSION_NUMBER', $_version_number);
+		break;
+		case 'check_phpbb_version' :
+			global $phpbb_container;
+
+			$version_helper = $phpbb_container->get('version_helper');
+			$updates_available = $version_helper->get_suggested_updates(false);
+			if ($updates_available)
+			{
+				foreach ($updates_available as $branch => $version_data)
+				{
+					$announcement = $version_data['announcement'];
+					$version = $version_data['current'];
+				}
+
+				$template->assign_vars(array(
+					'UPDATES_AVAILABLE'		=> (PHPBB_VERSION < $version_data['current'] || $config['version'] < $version_data['current']) ? sprintf($user->lang['UPDATES_AVAILABLE'], $version_data['current'], $announcement) : false,
+				));
+			}
+
 		break;
 
 		// Generate the passwd file
