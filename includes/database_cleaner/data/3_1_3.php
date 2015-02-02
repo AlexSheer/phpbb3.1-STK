@@ -84,9 +84,15 @@ class datafile_3_1_3
 	var $module_categories = array(
 		// No Module categories changes 3.1.2 -> 3.1.3
 	);
+
 	var $module_extras = array(
 		// No Module extra changes 3.1.2 -> 3.1.3
 	);
+
+	var $module_categories_basenames = array(
+		// No Categories basenames changes 3.1.2 -> 3.1.3
+	);
+
 	/**
 	* @var Array All default groups
 	*/
