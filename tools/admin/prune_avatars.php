@@ -49,13 +49,14 @@ class prune_avatars
 
 				$sql = 'SELECT user_id, user_avatar
 						FROM ' . USERS_TABLE . '
-						WHERE user_avatar != \'\'';
+						WHERE user_avatar_type = \'avatar.driver.upload\'';
 				$result = $db->sql_query($sql);
 
 				while($data = $db->sql_fetchrow($result))
 				{
 					$ext = explode('.', $data['user_avatar']);
-					$bd_files[] = ''.$config['avatar_salt'].'_'.$data['user_id'].'.'.$ext[1].'';
+					$filename = explode('_', $data['user_avatar']);
+					$bd_files[] = '' . $config['avatar_salt'] . '_' . $filename[0] . '.' . $ext[1] . '';
 				}
 				$db->sql_freeresult($result);
 				$files = array_diff($files, $bd_files);
