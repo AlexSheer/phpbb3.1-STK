@@ -60,7 +60,7 @@ class resync_avatars
 			break;
 
 			case RESYNC_USER_AVATARS :
-				$sql = 'SELECT user_id as id, user_avatar as avatar, user_avatar_type as avatar_type
+				$sql = 'SELECT user_id as id, user_avatar as avatar, user_avatar_type as avatar_type, group_id
 					FROM ' . USERS_TABLE . '
 					WHERE ' . $db->sql_in_set('user_avatar_type', array('avatar.driver.upload', 'avatar.driver.gallery')) .'ORDER BY user_id';
 			break;
@@ -94,7 +94,7 @@ class resync_avatars
 				$avatar_group = (isset($row['avatar'][0]) && $row['avatar'][0] === 'g') ? true : false;
 
 				$ext		= substr(strrchr($row['avatar'], '.'), 1);
-				$filename	= (int) $row['id'];
+				$filename	= ($avatar_group) ? $row['group_id'] : $row['id'];
 				$path		= PHPBB_ROOT_PATH . $config['avatar_path'] . '/' . $config['avatar_salt'] . '_' . (($avatar_group) ? 'g' : '') . $filename . '.' . $ext;
 			}
 			else if ($row['avatar_type'] == AVATAR_GALLERY)
