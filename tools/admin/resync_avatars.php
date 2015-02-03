@@ -56,13 +56,13 @@ class resync_avatars
 			case RESYNC_GROUP_AVATARS :
 				$sql = 'SELECT group_id as id, group_avatar as avatar, group_avatar_type as avatar_type
 					FROM ' . GROUPS_TABLE . '
-					WHERE ' . $db->sql_in_set('group_avatar_type', array('avatar.driver.upload', 'avatar.driver.gallery'));
+					WHERE ' . $db->sql_in_set('group_avatar_type', array('avatar.driver.upload', 'avatar.driver.gallery')) .'ORDER BY group_id';
 			break;
 
 			case RESYNC_USER_AVATARS :
 				$sql = 'SELECT user_id as id, user_avatar as avatar, user_avatar_type as avatar_type
 					FROM ' . USERS_TABLE . '
-					WHERE ' . $db->sql_in_set('user_avatar_type', array('avatar.driver.upload', 'avatar.driver.gallery'));
+					WHERE ' . $db->sql_in_set('user_avatar_type', array('avatar.driver.upload', 'avatar.driver.gallery')) .'ORDER BY user_id';
 			break;
 		}
 		$result	= $db->sql_query_limit($sql, $this->_batch_size, $begin);
@@ -91,15 +91,11 @@ class resync_avatars
 			if ($row['avatar_type'] == 'avatar.driver.upload')
 			{
 				// Group avatars are handled slightly different
-				if (isset($row['avatar'][0]) && $row['avatar'][0] === 'g')
-				{
-					$avatar_group = true;
-					$user['avatar'] = substr($row['avatar'], 1);
-				}
+				$avatar_group = (isset($row['avatar'][0]) && $row['avatar'][0] === 'g') ? true : false;
 
 				$ext		= substr(strrchr($row['avatar'], '.'), 1);
-				$filename	= (int) $row['avatar'];
-				$path		= PHPBB_ROOT_PATH . $config['avatar_path'] . '/' . $config['avatar_salt'] . '_' . ((isset($avatar_group)) ? 'g' : '') . $filename . '.' . $ext;
+				$filename	= (int) $row['id'];
+				$path		= PHPBB_ROOT_PATH . $config['avatar_path'] . '/' . $config['avatar_salt'] . '_' . (($avatar_group) ? 'g' : '') . $filename . '.' . $ext;
 			}
 			else if ($row['avatar_type'] == AVATAR_GALLERY)
 			{
