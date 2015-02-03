@@ -54,7 +54,7 @@ class resync_avatars
 		switch ($mode)
 		{
 			case RESYNC_GROUP_AVATARS :
-				$sql = 'SELECT group_id as id, group_avatar as avatar, group_avatar_type as avatar_type
+				$sql = 'SELECT group_id, group_avatar as avatar, group_avatar_type as avatar_type
 					FROM ' . GROUPS_TABLE . '
 					WHERE ' . $db->sql_in_set('group_avatar_type', array('avatar.driver.upload', 'avatar.driver.gallery')) .'ORDER BY group_id';
 			break;
@@ -142,7 +142,7 @@ class resync_avatars
 
 		// Next step
 		$template->assign_var('U_BACK_TOOL', false);
-		meta_refresh(3, append_sid(STK_INDEX, array('c' => 'admin', 't' => 'resync_avatars', 'step' => ++$step, 'submit' => true)));
+		meta_refresh(3, append_sid(STK_INDEX, array('c' => 'admin', 't' => 'resync_avatars', 'step' => ++$step, 'mode' => $mode, 'submit' => true)));
 		trigger_error('RESYNC_AVATARS_PROGRESS');
 	}
 }
