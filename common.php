@@ -77,14 +77,20 @@ if (!isset($stk_config))
 $action = request_var('action', '');
 $submit = request_var('submit', false);
 
-// Try to determine the phpBB version number, we might need that down the road
-// `PHPBB_VERSION` was added in 3.0.3, for older versions just rely on the config
-if ((defined('PHPBB_VERSION') && PHPBB_VERSION == $config['version']) || !defined('PHPBB_VERSION'))
-{
-	define('PHPBB_VERSION_NUMBER', $config['version']);
-	// Try to determine the phpBB actually version number
+// Try to determine the phpBB actually version number
+	$updates_available = false;
 	$version_helper = $phpbb_container->get('version_helper');
-	$updates_available = $version_helper->get_suggested_updates(false);
+	try
+	{
+		$updates_available = $version_helper->get_suggested_updates(false);
+	}
+	catch (\RuntimeException $e)
+	{
+		$template->assign_vars(array(
+			'S_VERSIONCHECK_FAIL'		=> true,
+			'VERSIONCHECK_FAIL_REASON'	=> $user->lang('VERSIONCHECK_FAIL'),
+		));
+	}
 	if ($updates_available)
 	{
 		$action = 'check_phpbb_version';
