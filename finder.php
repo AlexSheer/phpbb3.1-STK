@@ -106,7 +106,7 @@ if (!$extra_data)
 			foreach($ext as $key => $extension)
 			{
 				$ext_dir = '' . $vendor . '\\'. $extension . '\\migrations\\';
-				$migrations = array_diff(scandir('' . $phpbb_root_path . 'ext/' . $ext_dir . ''), array('..', '.'));
+				$migrations = array_diff(scandir('' . $phpbb_root_path . 'ext\' . $ext_dir . ''), array('..', '.'));
 
 				$table_extra = $column_extra = $config_extra = $module_extra = $permissions_extra = array();
 				foreach($migrations as $file)
