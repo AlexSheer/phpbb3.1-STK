@@ -685,7 +685,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 		return true;
 	}
 
-		// We encounter an error while in the ERK, this need some special treatment
+	// We encounter an error while in the ERK, this need some special treatment
 
 	$error_level = array(E_ERROR => 'Fatal error', E_WARNING => 'Runtime Error', E_PARSE => 'Parse error', E_NOTICE => 'Notice', );
 
