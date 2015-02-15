@@ -258,7 +258,7 @@ if($info)
 }
 
 $template->assign_vars(array(
-	'EXTRA_DATA'	=> $extra,
+	'EXTRA_DATA'	=> (isset($extra)) ? $extra : '',
 	'PATH'			=> (isset($info['ext'])) ? $path : '',
 	'INFO'			=> (isset($info['ext'])) ? '<b style="color: '. $color .'">' . $display_name . '</b>/'.$version.' - '. $description .'' : $user->lang['NOT_IN_EXT'],
 ));
