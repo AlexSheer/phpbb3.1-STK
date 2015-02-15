@@ -685,7 +685,27 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 		return true;
 	}
 
-	// We encounter an error while in the ERK, this need some special treatment
+		// We encounter an error while in the ERK, this need some special treatment
+
+	$error_level = array(E_ERROR => 'Fatal error', E_WARNING => 'Runtime Error', E_PARSE => 'Parse error', E_NOTICE => 'Notice', );
+
+	switch ($errno)
+	{
+		case E_ERROR:
+		case E_PARSE:
+		case E_WARNING:
+		case E_NOTICE:
+		case E_CORE_ERROR:
+		case E_COMPILE_ERROR:
+		case E_USER_ERROR:
+		case E_RECOVERABLE_ERROR:
+			$backtrace = get_backtrace();
+			$msg_text = '<br /><b>[phpBB Debug] PHP '.$error_level[$errno].':</b> in file ' . phpbb_filter_root_path($errfile) . ' on line <b>'. $errline .': ' . $msg_text . '</b><br />'.$backtrace.'';
+		break;
+		default:
+		break;
+	}
+
 	if (defined('IN_ERK'))
 	{
 		$critical_repair->trigger_error($msg_text, ($errno == E_USER_ERROR ? false : true));
