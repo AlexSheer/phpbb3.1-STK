@@ -1,0 +1,75 @@
+<!-- INCLUDE overall_header.html -->
+<!-- IF TREE -->
+<link rel="stylesheet" href="style/dtree.css" type="text/css" />
+<script type="text/javascript" src="style/dtree.js"></script>
+<h1>{L_PHPBB}</h1>
+<div class="dtree">
+	<p><a style="font-size: 1.2em; font-weight: bold; line-height: 1.6em;" href="javascript: d.openAll();">{L_EXPAND_VIEW}</a> | <a style="font-size: 1.2em; font-weight: bold; line-height: 1.6em;" href="javascript: d.closeAll();">{L_COLLAPSE_VIEW}</a></p>
+	<script type="text/javascript">
+		<!--
+		d = new dTree('d');
+		d.add(0,-1,'{ROOT}');
+		{TREE}
+		document.write(d);
+		//-->
+	</script>
+</div>
+<br /><p style="font-size: 0.8em;">{TIME}</p>
+<!-- ELSE -->
+
+<a href="#" onclick="goBack()" style="float: right;">&laquo; {L_BACK}</a>
+<h1>{FILE_NAME}</h1><br />
+
+<script type="text/javascript">
+//<![CDATA[
+var onload_functions = new Array();
+var expand_collapse = ['{L_EXPAND_VIEW}', '{L_COLLAPSE_VIEW}'];
+
+window.onload = function()
+{
+	for (var i = 0; i < onload_functions.length; i++)
+	{
+		eval(onload_functions[i]);
+	}
+};
+
+function expand_code(e) {
+	var c = e.parentNode.nextSibling;
+	if (c.style.maxHeight == 'none') {
+		c.style.maxHeight = '400px';
+		e.innerHTML = expand_collapse[0];
+	}
+	else {
+		c.style.maxHeight = 'none';
+		e.innerHTML = expand_collapse[1];
+	}
+}
+function expand_code_init() {
+	var boxes = document.getElementsByTagName('pre');
+	for (i = 0; i < boxes.length; i++) {
+		if (boxes[i].scrollHeight > boxes[i].offsetHeight + 1) {
+			boxes[i].previousSibling.innerHTML += ' &middot; <a href="#" onclick="expand_code(this); return false;">' + expand_collapse[0] + '</a>';
+		}
+	}
+}
+onload_functions.push('expand_code_init()');
+
+function setSelectOptions(the_form, the_select, do_check)
+{
+	var selectObject = document.forms[the_form].elements[the_select];
+	var selectCount  = selectObject.length;
+	for (var i = 0; i < selectCount; i++) {
+		selectObject.options[i].selected = do_check;
+	}
+	return true;
+}
+
+function goBack() {
+	window.history.back()
+}
+//]]>
+</script>
+<div class="codebox">
+<div><a href="#" onclick="selectCode(this); return false;">{L_SELECT_ALL_CODE}</a></div><pre><code>{TEXT}</code></pre></div>
+<!-- ENDIF -->
+<!-- INCLUDE overall_footer.html -->
