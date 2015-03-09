@@ -132,8 +132,8 @@ class restore_deleted_users
 	{
 		global $config, $db, $umil;
 
-		$post		= request_var('post', false);
-		$conflicted	= request_var('conflicted', false);
+		$post		= request_var('post', array(0));
+		$conflicted	= request_var('conflicted', array(0 => 0));
 
 		if (!check_form_key('restore_deleted_users'))
 		{
@@ -141,13 +141,13 @@ class restore_deleted_users
 			return;
 		}
 
-		if (!$post && !$conflicted)
+		if (empty($post) && empty($conflicted))
 		{
 			$error[] = 'NO_USER_SELECTED';
 			return;
 		}
 
-		if ($post)
+		if (!empty($post))
 		{
 			// Get the selected users
 			$posts = array_keys(request_var('post', array(0 => 0)));
