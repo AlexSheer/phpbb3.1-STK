@@ -372,5 +372,5 @@ $lang = array_merge($lang, array(
 	'warnings_expire_days'				=> 'Durée de l’avertissement',
 	'warnings_gc'						=> '',
 	'warnings_last_gc'					=> '',
-	'UNKNOWN'							=> '<span style="color:#FF5D00"><em>unknown</em></span>',
+	'UNKNOWN'							=> '<span style="color:#FF5D00"><em>Paramètre inconnu</em></span>',
 ));
