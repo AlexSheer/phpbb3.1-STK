@@ -123,14 +123,6 @@ if (!$extra_data)
 						{
 							$table_extra = array_merge($table_extra, $table_data['drop_tables']);
 						}
-						// Search columns used for extension
-						if (isset($table_data['drop_columns']))
-						{
-							foreach($table_data['drop_columns'] as $drop_columns)
-							{
-								$columns[] = $drop_columns[0];
-							}
-						}
 
 						$update_data = $phpbb_ext->update_data();
 						foreach($update_data as $key => $alue)
@@ -160,6 +152,18 @@ if (!$extra_data)
 								$permissions[] = $alue[1][0];
 							}
 						}
+						// Search columns used for extension
+						$update_schema = $phpbb_ext->update_schema();
+						foreach($update_schema as $key => $value)
+						{
+							if ($key == 'add_columns')
+							{
+								$k = array_keys($value);
+								$cols = $value[$k[0]];
+								$columns = array_keys($cols);
+							}
+						}
+
 						$configs = array_unique($configs);
 						$config_extra = array_merge($config_extra, $configs);
 						$module_extra = array_merge($module_extra, $module_names);
