@@ -21,7 +21,7 @@ function fatal_error_handler()
 				case E_USER_ERROR:
 				case E_RECOVERABLE_ERROR:
 				{
-					echo '<html><head></head><body style="color:#F00"><b>Error ' . $last_error['type'] . ': ' . $last_error['message'] . ' at file ' . $last_error['file'] . ' line ' . $last_error['line'] . '</b><br /><br /></body></html>';
+					echo '<html><head></head><body><b style="color:#F00">Error ' . $last_error['type'] . ': ' . $last_error['message'] . ' at file ' . $last_error['file'] . ' line ' . $last_error['line'] . '</b><br /><br /></body></html>';
 					break;
 				}
 				default:
