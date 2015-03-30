@@ -70,7 +70,7 @@ class sql_query
 
 		$dbms=  str_replace('phpbb\\db\\driver\\', '', $dbms);
 		$dbmd = get_available_dbms($dbms);
-		if ($dbms == 'mysql' || $dbms == 'mysqli' || $dbms == 'sqlite')
+		if ($dbms == 'mysql' || $dbms == 'mysqli' || $dbms == 'sqlite' || $dbms == 'sqlite3')
 		{
 			$remove_remarks = 'phpbb_remove_comments';
 		}
