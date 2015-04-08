@@ -1,12 +1,14 @@
 <?php
 /**
 *
-* @package Support Toolkit - phpbb Russian language Sheer
+* @package Support Toolkit - Extensions
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @French translation by Galixte (http://www.galixte.com)
 *
 */
+
 /**
 * DO NOT CHANGE
 */
@@ -36,32 +38,32 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'EXTENSIONS'			=> 'Develop extensions',
-	'EXTENSIONS_EXPLAIN'	=> 'Creating a workpiece extension. After performing the necessary actions will be established minimum extension structure. To create a full-fledged extension you need to edit the generated files and add new ones that will be required for the extension.',
-	'DEVELOPER'				=> 'Name (nickname) Developer',
-	'DEVELOPER_EXPLAIN'		=> 'This is the name of the extension, which will be displayed in the ACP in tab <strong>&laquo;Customise-->Extensions Manager-->Details&raquo;</strong> together with other optional parameters that you can enter below.',
-	'AUTHOR_EXPLAIN'		=> 'Vendor name.<br />In folder ./ext/ folder will be created (if it does not already exist) with the same name as this parameter. All extensions of the author must be inside this folder. The names of folders not allowed hyphens, and underscores. In the name of the vendor should be at least 3 characters.',
-	'EXT_EXPLAIN'			=> 'Extension name.<br />In folder ./ext/_vendor_name_/ folder will be created with the same name as this parameter. All folders and files of this extension will be placed inside this folder. The name of the extension should be at least 3 characters.',
-	'DISPLAY_NAME'			=> 'Display Name',
+	'EXTENSIONS'			=> 'Développer des extensions',
+	'EXTENSIONS_EXPLAIN'	=> 'Création des éléments de l’extension. Une fois les actions nécessaires réalisées la structure minimale de l’extension sera mise en place. Pour créer une extension à part entière vous devez modifier les fichiers générés et en ajouter de nouveaux si nécessaire.',
+	'DEVELOPER'				=> 'Nom (surnom) du développeur',
+	'DEVELOPER_EXPLAIN'		=> 'Il s’agit du nom (surnom) du développeur de l’extension, qui sera affiché dans le PCA, dans l’onglet <strong>&laquo;Personnaliser-->Gestionnaire d’extensions-->Détails&raquo;</strong> ainsi que d’autres paramètres facultatifs que vous pouvez saisir ci-dessous.',
+	'AUTHOR_EXPLAIN'		=> 'Nom du répertoire de l’auteur.<br />Dans le répertoire ./ext/ un dossier sera créé (si il n’existe pas déjà) portant le nom saisi pour ce paramètre. Toutes les extensions de l’auteur doivent être à situées dans ce répertoire. Les noms des dossiers n’acceptent pas les traits d’union, et les tirets du 8. Le nom du répertoire de l’auteur doit être composé d’au moins 3 caractères.',
+	'EXT_EXPLAIN'			=> 'Nom du répertoire de l’extension.<br />Dans le répertoire ./ext/nomdelauteur/ un répertoire sera crée portant le nom saisi pour ce paramètre. Tous les fichiers et répertoires de l’extension doivent être à situés dans ce répertoire. Le nom du répertoire de l’extension doit être composé d’au moins 3 caractères.',
+	'DISPLAY_NAME'			=> 'Nom de l’extension',
 	'DESCRIPTION'			=> 'Description',
-	'VERSION'				=> 'Version of the extension',
-	'DESCRIPTION_EXPLAIN'	=> 'Brief description of the expansion.',
-	'ROLE'					=> 'Developer role',
-	'ROLE_EXPLAIN'			=> 'A brief description of the author\'s contribution to the development of expansion.',
-	'HOMEPAGE'				=> 'Developer\'s web site',
+	'VERSION'				=> 'Version de l’extension',
+	'DESCRIPTION_EXPLAIN'	=> 'Description courte de l’extension.',
+	'ROLE'					=> 'Fonction du développeur',
+	'ROLE_EXPLAIN'			=> 'Description courte de la contribution de l’auteur au développement de l’extension.',
+	'HOMEPAGE'				=> 'Site Internet du développeur',
 
-	'EMPTY_VENDOR'			=> 'No vendor name',
-	'EMPTY_EXT_NAME'		=> 'Name of extension is not specified',
-	'EMPTY_AUTHOR'			=> 'No Developer name (nickname)',
-	'EMPTY_DISPLAY_NAME'	=> 'No Display Name',
-	'EMPTY_VERSION'			=> 'Version is not specified',
-	'VENDOR_NAME_TOO_SHORT'	=> 'Vendor name must be at least 3 characters long.',
-	'EXT_NAME_TOO_SHORT'	=> 'Extension name must be at least 3 characters long.',
+	'EMPTY_VENDOR'			=> 'Aucun nom spécifié pour le répertoire de l’auteur',
+	'EMPTY_EXT_NAME'		=> 'Aucun nom spécifié pour le répertoire de l’extension',
+	'EMPTY_AUTHOR'			=> 'Aucun nom (surnom) spécifié pour le développeur',
+	'EMPTY_DISPLAY_NAME'	=> 'Aucun nom spécifié pour l’extension',
+	'EMPTY_VERSION'			=> 'Aucune version spécifiée pour l’extension',
+	'VENDOR_NAME_TOO_SHORT'	=> 'Le nom du répertoire de l’auteur doit être composé d’au moins 3 caractères.',
+	'EXT_NAME_TOO_SHORT'	=> 'Le nom du répertoire de l’extension doit être composé d’au moins 3 caractères.',
 
-	'ARE_REQUIRED'			=> '<hr>Fields marked with * are required.',
-	'SUCCESS'				=> 'Workpiece of extension successfully created. Now you can start real creation of extension.',
+	'ARE_REQUIRED'			=> '<hr>Les champs accompagnés d’un * sont nécessaires.',
+	'SUCCESS'				=> 'Les éléments de l’extension ont été crées avec succès. Maintenant, vous pouvez commencer le développement de l’extension.',
 ));
