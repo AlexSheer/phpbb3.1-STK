@@ -45,7 +45,7 @@ $lang = array_merge($lang, array(
 	'CAT_ADMIN'							=> 'Outils pour les administrateurs',
 	'CAT_ADMIN_EXPLAIN'					=> 'Les outils pour les administrateurs peuvent être utilisés par un administrateur afin de gérer des caractéristiques particulières de son forum et de résoudre des problèmes fréquents.',
 	'CAT_DEV'							=> 'Outils pour les développeurs',
-	'CAT_DEV_EXPLAIN'					=> 'Les outils pour les développeurs peuvent être utilisés par les développeurs ou les créateurs de MODs pour phpBB afin de réaliser des tâches fréquentes.',
+	'CAT_DEV_EXPLAIN'					=> 'Les outils pour les développeurs peuvent être utilisés par les développeurs ou les créateurs d’extensions pour phpBB afin de réaliser des tâches fréquentes.',
 	'CAT_ERK'							=> 'Kit de réparation d’urgence (ERK)',
 	'CAT_ERK_EXPLAIN'					=> 'Le kit de réparation d’urgence (ERK) est un outil séparé du STK qui a été conçu pour exécuter certains points de contrôle permettant de détecter des problèmes, liés à votre installation de phpBB, qui peuvent favoriser un dysfonctionnement sur votre forum. Cliquez <a href="%s">ici</a> afin d’exécuter le ERK.',
 	'CAT_MAIN'							=> 'Principal',
