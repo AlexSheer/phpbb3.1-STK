@@ -102,14 +102,13 @@ class extensions
 						$data .= "    \"time\": \"" . $user->format_date(time(), 'Y-m-d') . "\",\n";
 						$data .= "    \"license\": \"GPL-2.0\",\n";
 						$data .= "    \"authors\": [\n        {\n";
-						$data .= "            \"name\": \"" . $author . "\",\n";
-						$data .= ($homepage) ? "            \"homepage\": \"" . $homepage . "\",\n" : '';
-						$data .= ($role) ? "            \"role\": \"" . $role . "\"\n        }\n    ],\n" : '';
-						$data .= "    \"require\": {\n        \"php\": \">=5.3.3\"\n    },\n";
+						$data .= "            \"name\": \"" . $author . "\"";
+						$data .= ($homepage) ? ",\n            \"homepage\": \"" . $homepage . "\"" : '';
+						$data .= ($role) ? ",\n            \"role\": \"" . $role . "\"" : '';
+						$data .= "\n        }\n    ],\n    \"require\": {\n        \"php\": \">=5.3.3\"\n    },\n";
 						$data .= "    \"require-dev\": {\n      \"phpbb/epv\": \"dev-master\"\n    },\n";
 						$data .= "    \"extra\": {\n        \"display-name\": \"" . $display_name . "\",\n        \"soft-require\": {\n            \"phpbb/phpbb\": \"3.1.*@dev\"\n        }\n    }\n";
 						$data .= "}\n";
-
 						if (!($fp = fopen($new_dir . '/composer.json', 'w')))
 						{
 							// Something went wrong ... so let's try another method
@@ -121,13 +120,13 @@ class extensions
 							$written = false;
 						}
 						@fclose($fp);
-
 						// Create services.yml
 						$data = "services:\n";
 						$data .= "    " . $vendor . "." . $ext_name . ".listener:\n";
 						$data .= "        class: " . $vendor . "\\" . $ext_name . "\\event\\listener\n";
 						$data .= "        arguments:\n";
 						$data .= "            - %core.root_path%\n";
+						$data .= "            - @template\n";
 						$data .= "        tags:\n";
 						$data .= "            - { name: event.listener }\n";
 
@@ -142,7 +141,6 @@ class extensions
 							$written = false;
 						}
 						@fclose($fp);
-
 						// Create listener.php
 						$data = "<?php\n/**\n*\n* @package phpBB Extension - " . $display_name . "\n* @copyright (c) 2015 " . $author . "\n* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2\n*\n*/\n";
 						$data .= "namespace " . $vendor . "\\" . $ext_name . "\event;\n\n";
@@ -152,12 +150,17 @@ class extensions
 						$data .= "/**\n* Assign functions defined in this class to event listeners in the core\n*\n* @return array\n* @static\n* @access public\n*/\n";
 						$data .= "\tstatic public function getSubscribedEvents()\n\t{\n";
 						$data .= "\t\treturn array(\n\t\t);\n\t}\n\n";
+						$data .= "\t/** @var \phpbb\template\template */\n\tprotected $";
+						$data .= "template;\n\n";
 						$data .= "\t//** @var string phpbb_root_path */\n\tprotected $";
 						$data .= "phpbb_root_path;\n\n";
 						$data .= "\t/**\n\t* Constructor\n\t*/\n\tpublic function __construct($";
-						$data .= "phpbb_root_path)\n\t{\n\t\t$";
+						$data .= "phpbb_root_path, \\phpbb\\template\\template $";
+						$data .= "template)\n\t{\n\t\t$";
 						$data .= "this->phpbb_root_path = $";
-						$data .= "phpbb_root_path;\n\t}\n}\n";
+						$data .= "phpbb_root_path;\n\t\t$";
+						$data .= "this->template = $";
+						$data .= "template;\n\t}\n}\n";
 
 						if (!($fp = fopen($new_dir . '/event/listener.php', 'w')))
 						{
