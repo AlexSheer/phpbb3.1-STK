@@ -39,9 +39,16 @@ class phpbb
 			));
 			$ext = substr($file_name, strrpos($file_name, '.') + 1);
 			$file_name = ''. $dir . '' . $file_name . '';
-			$handle = fopen($file_name, 'r');
-			$contents = (filesize($file_name)) ? fread($handle, filesize($file_name)) : '';
-			fclose($handle);
+			$handle = @fopen($file_name, 'r');
+			if($handle)
+			{
+				$contents = (filesize($file_name)) ? fread($handle, filesize($file_name)) : '';
+				fclose($handle);
+			}
+			else
+			{
+				trigger_error($user->lang['FILE_NOT_FOUND']);
+			}
 
 			$template->assign_vars(array(
 				'TEXT'	=> ($contents) ? $this->hglights($contents, $ext) : '',
