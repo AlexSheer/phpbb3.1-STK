@@ -245,7 +245,7 @@ class critical_repair
 			$lang = array_diff($lang, array('index.htm', '.', '..'));
 			foreach($lang as $key => $value)
 			{
-				if ($value == $default_lang)
+				if ($value == strtolower($default_lang))
 				{
 					$language = $value;
 				}
