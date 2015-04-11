@@ -239,15 +239,24 @@ class critical_repair
 			while (($file = readdir($dir)) !== false)
 			{
 				$path = STK_ROOT_PATH . 'language/' . $file;
-				if (!is_file($path) && !is_link($path) && $file == strtolower($default_lang))
-				{
-					$language = $file;
-					break;
-				}
+				$lang[] = $file;
 			}
 			closedir($dir);
+			$lang = array_diff($lang, array('index.htm', '.', '..'));
+			foreach($lang as $key => $value)
+			{
+				if ($value == $default_lang)
+				{
+					$language = $value;
+				}
+			}
 
-			if (!file_exists(PHPBB_ROOT_PATH . 'language/' . $language) || !is_dir(PHPBB_ROOT_PATH . 'language/' . $language))
+			if (empty($language))
+			{
+				$language = $default_lang;
+			}
+
+			if (empty($lang))
 			{
 				die('No language found!');
 			}
@@ -256,10 +265,9 @@ class critical_repair
 			$lang_path = $user->lang_path;
 			$lang_path = '' . $lang_path . '' . $language . '';
 			$user->lang_path = ''.PHPBB_ROOT_PATH.''.$lang_path.'';
-			$user->add_lang('install.'. PHP_EXT . '');
-			$user->add_lang('common.'. PHP_EXT . '');
+			$user->add_lang(array(), array(), 'install.'. PHP_EXT . '');
+			$user->add_lang(array(), array(), 'common.'. PHP_EXT . '');
 			$user->lang_path = $lang_path;
-			$user->add_lang('common.'. PHP_EXT . '');
 		}
 		return $user;
 	}
