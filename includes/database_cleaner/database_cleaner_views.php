@@ -711,7 +711,7 @@ class database_cleaner_views
 			}
 			else
 			{
-				$link = append_sid("{$phpbb_root_path}adm/index.$phpEx", 'i=acp_modules&amp;sid=' . $user->data['session_id'] .'&amp;mode=' . $main . '');
+				$link = append_sid("{$phpbb_root_path}adm/index.$phpEx", 'i=acp_modules&amp;sid=' . $user->data['session_id'] .'&amp;mode=' . $class . '');
 				$module_mame = '';
 			}
 			$db->sql_freeresult($res);
