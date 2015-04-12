@@ -222,7 +222,7 @@ class critical_repair
 
 			if (file_exists(STK_ROOT_PATH . 'default_lang.txt'))
 			{
-				$default_lang = file_get_contents(STK_ROOT_PATH . 'default_lang.txt');
+				$default_lang = trim(file_get_contents(STK_ROOT_PATH . 'default_lang.txt'));
 			}
 			else
 			{
@@ -242,6 +242,7 @@ class critical_repair
 				$lang[] = $file;
 			}
 			closedir($dir);
+
 			$lang = array_diff($lang, array('index.htm', '.', '..'));
 			foreach($lang as $key => $value)
 			{
@@ -264,7 +265,8 @@ class critical_repair
 			$user = new \phpbb\user('\phpbb\datetime');
 			$lang_path = $user->lang_path;
 			$lang_path = '' . $lang_path . '' . $language . '';
-			$user->lang_path = ''.PHPBB_ROOT_PATH.''.$lang_path.'';
+			$user->lang_path = '' . PHPBB_ROOT_PATH . '' . $lang_path . '';
+			$user->data['user_lang'] = $language;
 			$user->add_lang(array(), array(), 'install.'. PHP_EXT . '');
 			$user->add_lang(array(), array(), 'common.'. PHP_EXT . '');
 			$user->lang_path = $lang_path;
