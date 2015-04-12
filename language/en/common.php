@@ -56,6 +56,7 @@ $lang = array_merge($lang, array(
 	'CONFIG_NOT_FOUND'					=> 'The STK configuration file couldn’t be loaded. Please check your installation',
 
 	'DOWNLOAD_PASS'						=> 'Download the password file.',
+	'STK_PASSWORD'						=> 'Password',
 
 	'EMERGENCY_LOGIN_NAME'				=> 'STK Emergency Login',
 	'ERK'								=> 'Emergency Repair Kit',
