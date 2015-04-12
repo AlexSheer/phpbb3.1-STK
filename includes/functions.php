@@ -169,7 +169,7 @@ function use_lang(&$lang_key)
 
 /**
 * A wrapper function for the phpBB $user->lang() call. This method was introduced
-* in phpBB 3.0.3. In all versions в‰Ґ 3.0.3 this function will simply call the method
+* in phpBB 3.0.3. In all versions > 3.0.3 this function will simply call the method
 * for the other versions this method will imitate the method as seen in 3.0.3.
 *
 * More advanced language substitution
