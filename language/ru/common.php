@@ -56,6 +56,7 @@ $lang = array_merge($lang, array(
 	'CONFIG_NOT_FOUND'					=> 'Не загружен файл конфигурации STK. Проверьте установку STK.',
 
 	'DOWNLOAD_PASS'						=> 'Загрузить файл пароля',
+	'STK_PASSWORD'						=> 'Пароль',
 
 	'EMERGENCY_LOGIN_NAME'				=> 'STK Аварийный вход',
 	'ERK'								=> 'Аварийный ремонтный комплект',
