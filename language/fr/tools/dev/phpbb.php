@@ -42,7 +42,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'PHPBB'		=> 'Fichiers de phpBB 3.1.x',
-	'ROOT'		=> 'phpBB 3.1.x',
-	'G_TIME'	=> 'Temps de génération de l’arborescence des fichiers : %01.2fs',
+	'PHPBB'				=> 'Fichiers de phpBB 3.1.x',
+	'ROOT'				=> 'phpBB 3.1.x',
+	'G_TIME'			=> 'Temps de génération de l’arborescence des fichiers : %01.2fs',
+	'FILE_NOT_FOUND'	=> 'Fichier non trouvé',
 ));
