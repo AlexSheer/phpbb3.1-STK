@@ -4,6 +4,7 @@
 * @package Support Toolkit - DB Optimizer
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @French translation by Galixte (http://www.galixte.com)
 *
 */
 
@@ -33,22 +34,22 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'OPTIMIZE_TABLES'			=> 'DB tables optimization',
-	'OPTIMIZE_TABLES_EXPLAIN'	=> 'Search the database tables that need defragmentation and optimization',
-	'GO'						=> 'Optimize',
-	'FRAGMENTED'				=> 'Fragmented',
-	'CREATE_TIME'				=> 'Created',
-	'UPDATE_TIME'				=> 'Latest update',
-	'CHECK_TIME'				=> 'Verified',
-	'NOT_FOUND' 				=> 'Tables requiring optimization is not detected',
+	'OPTIMIZE_TABLES'			=> 'Optimisation des tables de la BDD',
+	'OPTIMIZE_TABLES_EXPLAIN'	=> 'Cherche les tables de la base de données ayant besoin d’une défragmentation et une optimisation.',
+	'GO'						=> 'Optimiser',
+	'FRAGMENTED'				=> 'Fragmentés',
+	'CREATE_TIME'				=> 'Créée le',
+	'UPDATE_TIME'				=> 'Dernière mise à jour',
+	'CHECK_TIME'				=> 'Vérifiée le',
+	'NOT_FOUND' 				=> 'Aucune table ne requiert une optimisation',
 	'TABLE_NAME'				=> 'Table',
-	'TABLE_SIZE'				=> 'Used',
-	'ALL'						=> 'Total: ',
-	'SUCESS'					=> 'Selected tables were successfully optimized',
-	'NOTHING'					=> 'Nothing selected',
-	'OPTIMIZER_MESSAGE'			=> '<b>Caution!</b> Due to the large size of tables and strong fragmentation, the optimization process may take considerable time.<br />Please do not leave this page, do not wait until the results of the optimization.',
+	'TABLE_SIZE'				=> 'Utilisés',
+	'ALL'						=> 'Total : ',
+	'SUCESS'					=> 'Les tables sélectionnées ont été optimisées avec succès',
+	'NOTHING'					=> 'Aucune sélection',
+	'OPTIMIZER_MESSAGE'			=> '<b>Attention !</b> Selon la taille des tables et l’importance de la fragmentation, l’optimisation pourrait prendre un certain temps.<br /> Veuillez ne pas quitter cette page jusqu’à la fin de l’optimisation.',
 ));
