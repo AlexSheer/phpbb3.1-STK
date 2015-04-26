@@ -32,10 +32,23 @@ class clear_extensions
 
 		if (confirm_box(true))
 		{
+			$keyword = '*navlinks*';
+			$sql = 'SELECT ext_name FROM ' . EXT_TABLE . '
+				WHERE ' . $db->sql_in_set('ext_name', $uids, false);
+			$result = $db->sql_query($sql);
+			while ($row = $db->sql_fetchrow($result))
+			{
+				$ext_name = explode('/', $row['ext_name']);
+				$keyword = '*'. $ext_name[1] .'*';
+				$sql = 'DELETE FROM ' . MIGRATIONS_TABLE . '
+					WHERE migration_name ' . $db->sql_like_expression(str_replace('*', $db->get_any_char(), $keyword));
+				$db->sql_query($sql);
+			}
+			$db->sql_freeresult($result);
+
 			$sql = 'DELETE FROM ' . EXT_TABLE . '
 				WHERE ' . $db->sql_in_set('ext_name', $uids, false);
 			$db->sql_query($sql);
-
 			if (empty($error))
 			{
 				// Purge the cache
@@ -85,9 +98,7 @@ class clear_extensions
 
 		$sql = 'SELECT *
 			FROM ' . EXT_TABLE . '';
-
 		$result = $db->sql_query($sql);
-
 		while ($row = $db->sql_fetchrow($result))
 		{
 			$path = explode('/', $row['ext_name']);
