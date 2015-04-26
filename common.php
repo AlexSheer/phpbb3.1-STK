@@ -53,6 +53,10 @@ if (!defined('IN_ERK'))
 
 	$user->session_begin();
 	$auth->acl($user->data);
+	if (!empty($user) && $user->data['user_id'] == ANONYMOUS && isset($config['default_lang']))
+	{
+		$user->data['user_lang'] = $config['default_lang'];
+	}
 	$user->setup('acp/common', $config['default_style']);
 
 	$umil = new umil(true);
