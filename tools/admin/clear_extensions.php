@@ -32,7 +32,6 @@ class clear_extensions
 
 		if (confirm_box(true))
 		{
-			$keyword = '*navlinks*';
 			$sql = 'SELECT ext_name FROM ' . EXT_TABLE . '
 				WHERE ' . $db->sql_in_set('ext_name', $uids, false);
 			$result = $db->sql_query($sql);
