@@ -110,6 +110,21 @@ if (!$extra_data)
 				$table_extra = $column_extra = $config_extra = $module_extra = $permissions_extra = array();
 				foreach($migrations as $file)
 				{
+					$file = str_replace('.' . PHP_EXT . '', '', $file);
+					$sub_dir = '' . $phpbb_root_path . 'ext/' . $vendor . '/'. $extension . '/migrations/' . $file . '';
+					if (is_dir($sub_dir))
+					{
+						$migrations_subdir = (@opendir($sub_dir)) ? array_diff(scandir($sub_dir), array('..', '.')) : array();
+						foreach($migrations_subdir as $key => $value)
+						{
+							$migrations[] = ''.$file.'\\'.$value.'';
+						}
+						$migrations = array_diff($migrations, array($file));
+					}
+				}
+
+				foreach($migrations as $file)
+				{
 					$configs = $module_names = $permissions = array();
 					$file = str_replace('.' . PHP_EXT . '', '', $file);
 					$class = '' . $vendor . '\\' . $extension . '\\migrations\\' . $file . '';
