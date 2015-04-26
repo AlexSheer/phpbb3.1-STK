@@ -19,12 +19,13 @@
 			<td class="mark"><input type="checkbox" style="cursor:default;" name="marked_name[]" value="{row.EXT_NAME}" /></td>
 		</tr>
 		<!-- END row -->
-		</table>
-	<fieldset class="jumpbox" style="text-align: left;">
-		<label for="submit">{L_CLICK_TO_CLEAR}</label> <div style="text-align: right;"><input type="submit" name="submit" class="button2" value="{L_DELETE}" /></div>
+	</table>
+	<div class="rightside pagination"><a href="#" onclick="marklist('select_action', 'marked_name', true); return false;">{L_MARK_ALL}</a> :: <a href="#" onclick="marklist('select_action', 'marked_name', false); return false;">{L_UNMARK_ALL}</a></div>
+	<fieldset class="jumpbox">
+		<label for="submit">{L_CLICK_TO_CLEAR}</label> <div style="text-align: right;"><input type="submit" name="submit" class="button2" style="float: right;" value="{L_DELETE}" /></div>
 	</fieldset>
-	<fieldset class="jumpbox" style="text-align: right;">
-		<label for="submit">{L_CLICK_TO_OFF}</label> <input type="submit" name="off" class="button2" value="{L_OFF_EXT}" />
+	<fieldset class="jumpbox">
+		<label for="submit">{L_CLICK_TO_OFF}</label> <input type="submit" name="off" class="button2" style="float: right;" value="{L_OFF_EXT}" />
 	</fieldset>
 	</form>
 	<!-- ELSE -->
