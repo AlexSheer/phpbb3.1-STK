@@ -8,7 +8,7 @@
 <form id="stk_empty_topics" method="post" action="{U_EMPTY_TOPICS}">
 	<fieldset>
 	<legend>{L_EMPTY_TOPICS}</legend>
-	
+
 	<table cellspacing="1">
 		<tr>
 			<th width="70px">{L_TOPIC_ID}</th>
@@ -27,7 +27,7 @@
 		</tr>
 	<!-- END topics -->
 	</table>
-	
+
 	<div class="rightside pagination">
 		<a href="#" onclick="marklist('stk_empty_topics', 'topics', true); return false;">{L_MARK_ALL}</a> :: <a href="#" onclick="marklist('stk_empty_topics', 'topics', false); return false;">{L_UNMARK_ALL}</a><br /><br />
 		<label for="det">{L_DELETE_EMPTY_TOPICS}:</label> <input type="submit" name="submit" id="det" class="button2" value="{L_DELETE}" />
@@ -55,7 +55,7 @@
 <form id="stk_orphan_posts" method="post" action="{U_ORPHANED_POSTS}">
 	<fieldset>
 	<legend>{L_ORPHANED_POSTS}</legend>
-	
+
 	<table cellspacing="1">
 		<tr>
 			<th width="70px">{L_POST_ID}</th>
@@ -81,7 +81,7 @@
 		</tr>
 	<!-- END posts -->
 	</table>
-	
+
 	<div class="rightside pagination">
 		<input type="submit" name="reassign" class="button2" value="{L_REASSIGN}" />
 		<input type="submit" name="delete" class="button2" value="{L_DELETE}" />
@@ -100,6 +100,56 @@
 </fieldset>
 <!-- ENDIF -->
 
+<h1>{L_ORPHANED_FORUM_POSTS}</h1>
+<p>{L_ORPHANED_FORUM_POSTS_EXPLAIN}</p>
+
+<!-- IF .emptyforumposts -->
+<form id="stk_forum_orphan_posts" method="post" action="{U_FORUM_ORPHANED_POSTS}">
+	<fieldset>
+	<legend>{L_ORPHANED_FORUM_POSTS}</legend>
+	<table cellspacing="1">
+		<tr>
+			<th width="100px">{L_POST_ID}</th>
+			<th>{L_POST_SUBJECT}</th>
+			<th width="250px">{L_AUTHOR}</th>
+			<th width="80px">ID {L_FORUM}</th>
+			<th width="125px">{L_NEW_TOPIC_ID}</th>
+			<th width="125px" class="mark">{L_MARK}</th>
+		</tr>
+	<!-- BEGIN emptyforumposts -->
+		<tr class="<!-- IF emptyforumposts.S_ROW_COUNT is even -->row1<!-- ELSE -->row2<!-- ENDIF -->">
+			<td>{emptyforumposts.POST_ID}</td>
+			<td>{emptyforumposts.POST_SUBJECT}<span style="float: right"><a href="{emptyforumposts.SEARCH_URL}" target="_blank">{L_SEARCH}</a></span></td>
+			<td>{emptyforumposts.USER_FULL}</td>
+			<td>{emptyforumposts.FORUM_ID}</td>
+			<td><input type="text" name="posts[{emptyforumposts.POST_ID}]" /></td>
+			<td class="mark"><input type="checkbox" name="posts_del[]" value="{emptyforumposts.POST_ID}" /></td>
+		</tr>
+		<tr class="row3">
+			<td colspan="6">
+				{emptyforumposts.POST_TEXT}
+			</td>
+		</tr>
+	<!-- END emptyforumposts -->
+	</table>
+	<div class="rightside pagination">
+		<input type="submit" name="reassign" class="button2" value="{L_REASSIGN}" />
+		<input type="submit" name="delete" class="button2" value="{L_DELETE}" />
+	</div>
+	</fieldset>
+
+	{S_HIDDEN_FIELDS}
+	{S_FORM_TOKEN}
+</form>
+<!-- ELSE -->
+<fieldset>
+	<legend>{L_ORPHANED_FORUM_POSTS}</legend>
+	<dl>
+		<dd><b>{L_NO_FORUM_ORPHANED_POSTS}</b></dd>
+	</dl>
+</fieldset>
+<!-- ENDIF -->
+
 <br />
 
 <h1>{L_ORPHANED_SHADOWS}</h1>
@@ -107,9 +157,9 @@
 
 <!-- IF .shadows -->
 <form id="stk_empty_topics" method="post" action="{U_ORPHANED_SHADOWS}">
-    <fieldset>
+	<fieldset>
 	<legend>{L_ORPHANED_SHADOWS}</legend>
-	
+
 	<table cellspacing="1">
 		<tr>
 			<th width="70px">{L_TOPIC_ID}</th>
