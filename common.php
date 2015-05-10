@@ -94,13 +94,13 @@ if ((defined('PHPBB_VERSION') && PHPBB_VERSION == $config['version']) || !define
 	}
 	if ($updates_available)
 	{
-		$action = 'check_phpbb_version';
+		check_phpbb_version();
 	}
 }
 // Cant correctly determine the version, let the user define it.
 // As the `perform_unauthed_quick_tasks` function is used skip this
 // if there is already an action to be performed.
-else if (empty($action))
+else if ($action != 'genpasswdfile' || $action != 'downpasswdfile' || $action != 'stklogout' || $action != 'request_phpbb_version')
 {
 	$action = 'request_phpbb_version';
 }
