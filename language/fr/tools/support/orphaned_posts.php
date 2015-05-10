@@ -66,4 +66,8 @@ $lang = array_merge($lang, array(
 	'POSTS_DELETED'				=> '%d messages supprimés',
 	'POSTS_REASSIGNED'			=> '%d messages re-affectés',
 	'TOPICS_DELETED'			=> '%d sujets supprimés',
+	'ORPHANED_FORUM_POSTS'			=> 'Messages pas attaché à les forums',
+	'ORPHANED_FORUM_POSTS_EXPLAIN'	=> 'Ces messages ne sont pas attachés à un forum spécifique, il est donc considéré qu\'ils ne sont pas attachés à des sujets spécifiques. Spécifiez un nouvel ID de sujet pour attacher le message à ce sujet.',
+	'NO_FORUM_ORPHANED_POSTS'		=> 'Messages qui ne attachés aux forums introuvables',
+	'NO_POSTS_SELECTED'				=> 'Pas de messages sélectionnés',
 ));
