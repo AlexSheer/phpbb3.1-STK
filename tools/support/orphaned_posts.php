@@ -94,6 +94,31 @@ class orphaned_posts
 		}
 		$db->sql_freeresult($result);
 
+
+		$sql = 'SELECT post_id, post_time, post_username, post_subject, post_text, bbcode_uid, bbcode_bitfield, p.forum_id, u.user_id, u.username, u.user_colour
+			FROM ' . POSTS_TABLE . ' p
+			JOIN ' . USERS_TABLE . ' u ON (u.user_id = p.poster_id)
+			WHERE  NOT EXISTS (SELECT forum_id FROM ' . FORUMS_TABLE . ' WHERE forum_id = p.forum_id)';
+		$result = $db->sql_query($sql);
+		while ($row = $db->sql_fetchrow($result))
+		{
+			$message = generate_text_for_display($row['post_text'], $row['bbcode_uid'], $row['bbcode_bitfield'], OPTION_FLAG_BBCODE | OPTION_FLAG_SMILIES);
+			$search_keywords = urlencode((strpos($row['post_subject'], 'Re: ') === 0) ? utf8_substr($row['post_subject'], 4) : $row['post_subject']);
+			$template->assign_block_vars('emptyforumposts', array(
+				'FORUM_ID'		=> $row['forum_id'],
+				'FORUM_NAME'	=> '',
+				//'U_FORUM'		=> append_sid("{$phpbb_root_path}viewforum.$phpEx", 'f=' . $row['forum_id']),
+				'POST_ID'		=> $row['post_id'],
+				'POST_SUBJECT'	=> $row['post_subject'],
+				'POST_TEXT'		=> $message,
+				'SEARCH_URL'	=> append_sid("{$phpbb_root_path}search.$phpEx", 'keywords=' . $search_keywords . '&amp;terms=all&amp;sf=titleonly&amp;sr=topics&amp;submit=Search', true),
+				'USER_FULL'		=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+				'USER_ID'		=> $row['user_id'],
+			));
+		}
+		$db->sql_freeresult($result);
+
+//print "$sql<br />";
 		//
 		// Orphaned shadow topics
 		//
@@ -101,7 +126,7 @@ class orphaned_posts
 			FROM ' . TOPICS_TABLE . ' t
 			JOIN ' . USERS_TABLE . ' u ON (u.user_id = t.topic_poster)
 			JOIN ' . FORUMS_TABLE . ' f ON (f.forum_id = t.forum_id)
-			WHERE topic_moved_id <> 0 
+			WHERE topic_moved_id <> 0
 				AND NOT EXISTS (SELECT topic_id FROM ' . TOPICS_TABLE . ' WHERE topic_id = t.topic_moved_id)';
 		$result = $db->sql_query($sql);
 
@@ -120,9 +145,10 @@ class orphaned_posts
 		$db->sql_freeresult($result);
 
 		$template->assign_vars(array(
-			'U_EMPTY_TOPICS'	=> append_sid(STK_INDEX, array('c' => 'support', 't' => 'orphaned_posts', 'mode' => 'empty_topics')),
-			'U_ORPHANED_POSTS'	=> append_sid(STK_INDEX, array('c' => 'support', 't' => 'orphaned_posts', 'mode' => 'orphaned_posts', 'submit' => 1)),
-			'U_ORPHANED_SHADOWS'=> append_sid(STK_INDEX, array('c' => 'support', 't' => 'orphaned_posts', 'mode' => 'orphaned_shadows')),
+			'U_EMPTY_TOPICS'			=> append_sid(STK_INDEX, array('c' => 'support', 't' => 'orphaned_posts', 'mode' => 'empty_topics')),
+			'U_ORPHANED_POSTS'			=> append_sid(STK_INDEX, array('c' => 'support', 't' => 'orphaned_posts', 'mode' => 'orphaned_posts', 'submit' => 1)),
+			'U_ORPHANED_SHADOWS'		=> append_sid(STK_INDEX, array('c' => 'support', 't' => 'orphaned_posts', 'mode' => 'orphaned_shadows')),
+			'U_FORUM_ORPHANED_POSTS'	=> append_sid(STK_INDEX, array('c' => 'support', 't' => 'orphaned_posts', 'mode' => 'forum_orphaned_posts', 'submit' => 1)),
 		));
 
 		$template->set_filenames(array(
@@ -170,6 +196,8 @@ class orphaned_posts
 				trigger_error(sprintf($user->lang['TOPICS_DELETED'], $return['topics']));
 			break;
 
+			case 'forum_orphaned_posts':
+			// No break
 			case 'orphaned_posts':
 				if (isset($_POST['reassign']))
 				{
@@ -190,7 +218,7 @@ class orphaned_posts
 
 					// Make sure the specified topic IDs exist
 					$topic_ids = array_values($post_map);
-					$sql = 'SELECT topic_id FROM ' . TOPICS_TABLE . ' WHERE ' . $db->sql_in_set('topic_id', $topic_ids);
+					$sql = 'SELECT topic_id, forum_id FROM ' . TOPICS_TABLE . ' WHERE ' . $db->sql_in_set('topic_id', $topic_ids);
 					$result = $db->sql_query($sql);
 
 					$existing_topics = array();
@@ -198,17 +226,21 @@ class orphaned_posts
 					{
 						$existing_topics[] = (int) $row['topic_id'];
 					}
+					$db->sql_freeresult($result);
 
 					$missing_topics = array_diff($topic_ids, $existing_topics);
 					if (sizeof($missing_topics))
 					{
 						trigger_error(sprintf($user->lang['NONEXISTENT_TOPIC_IDS'], implode(', ', $missing_topics)));
 					}
-
 					// Update the topics with their new IDs
 					foreach ($post_map as $post_id => $topic_id)
 					{
-						$sql = 'UPDATE ' . POSTS_TABLE . ' SET topic_id = ' . (int) $topic_id . ' WHERE post_id = ' . (int) $post_id;
+						$sql = 'SELECT forum_id FROM ' . TOPICS_TABLE . ' WHERE topic_id = ' . (int) $topic_id . '';
+						$result = $db->sql_query_limit($sql, 1);
+						$forum_id = (int) $db->sql_fetchfield('forum_id');
+						$db->sql_freeresult($result);
+						$sql = 'UPDATE ' . POSTS_TABLE . ' SET topic_id = ' . (int) $topic_id . ', forum_id = ' . (int) $forum_id . ' WHERE post_id = ' . (int) $post_id;
 						$db->sql_query($sql);
 					}
 
