@@ -465,24 +465,10 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 			}
 			define('PHPBB_VERSION_NUMBER', $_version_number);
 		break;
+
+		// Check PHPBB version
 		case 'check_phpbb_version' :
-			global $phpbb_container;
-
-			$version_helper = $phpbb_container->get('version_helper');
-			$updates_available = $version_helper->get_suggested_updates(false);
-			if ($updates_available)
-			{
-				foreach ($updates_available as $branch => $version_data)
-				{
-					$announcement = $version_data['announcement'];
-					$version = $version_data['current'];
-				}
-
-				$template->assign_vars(array(
-					'UPDATES_AVAILABLE'		=> (PHPBB_VERSION < $version_data['current'] || $config['version'] < $version_data['current']) ? sprintf($user->lang['UPDATES_AVAILABLE'], $version_data['current'], $announcement) : false,
-				));
-			}
-
+			check_phpbb_version();
 		break;
 
 		// Generate the passwd file
@@ -1133,5 +1119,26 @@ function stk_send_status_line($code, $message)
 			$version = 'HTTP/1.0';
 		}
 		header("$version $code $message", true, $code);
+	}
+}
+
+// Check PHPBB version
+function check_phpbb_version()
+{
+	global $phpbb_container, $template, $config, $user;
+
+	$version_helper = $phpbb_container->get('version_helper');
+	$updates_available = $version_helper->get_suggested_updates(false);
+	if ($updates_available)
+	{
+		foreach ($updates_available as $branch => $version_data)
+		{
+			$announcement = $version_data['announcement'];
+			$version = $version_data['current'];
+		}
+
+		$template->assign_vars(array(
+			'UPDATES_AVAILABLE'		=> (PHPBB_VERSION < $version_data['current'] || $config['version'] < $version_data['current']) ? sprintf($user->lang['UPDATES_AVAILABLE'], $version_data['current'], $announcement) : false,
+		));
 	}
 }
