@@ -41,7 +41,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'CLEAR_EXTENSIONS'				=> 'Gérer les extensions',
 	'CLEAR_EXTENSIONS_EXPLAIN'		=> 'Ici vous pouvez gérer les extensions <b>installées</b>.',
-	'EXT_PATH'						=> 'Chemin relatif pour le répertoire ' . $phpbb_root_path . 'ext/',
+	'EXT_PATH'						=> 'Chemin relatif pour le répertoire ' . PHPBB_ROOT_PATH . 'ext/',
 	'MISSING_PATH'					=> 'Répertoire manquant',
 	'S_ACTIVE'						=> ' (activée) ',
 	'S_OFF'							=> ' (désactivée) ',
@@ -57,7 +57,7 @@ $lang = array_merge($lang, array(
 	'EXT_OFF'						=> 'Désactiver les extensions',
 	'EXT_OFF_CONFIRM'				=> 'Êtes-vous sûr de vouloir désactiver ces extensions ?',
 	'EXT_MISSING_PATH'				=> 'L’extension «%s» n’est pas compatible.<br />',
-	'NO_COMPOSER'					=> 'Fichier non trouvé : ' . $phpbb_root_path . 'ext/%s/composer.json',
+	'NO_COMPOSER'					=> 'Fichier non trouvé : ' . PHPBB_ROOT_PATH . 'ext/%s/composer.json',
 	'NO_EXTENSIONS_TITLE'			=> 'Extensions',
 	'NO_EXTENSIONS_TEXT'			=> 'Aucune extension installée',
 ));
