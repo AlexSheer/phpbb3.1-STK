@@ -25,8 +25,7 @@ class optimize_tables
 		$submit = request_var('sa', false);
 		$tables = request_var('tables_list', array(''));
 
-		$table_cout = 0;
-		$fragmented = 0;
+		$table_cout = $fragmented = 0;
 		$action = append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT, 'c=suppor&amp;t=optimize_tables');
 
 		if ($submit)
@@ -55,16 +54,19 @@ class optimize_tables
 			$result = $db->sql_query($sql);
 			while ($row = $db->sql_fetchrow($result))
 			{
-				$table_cout++;
-				$fragmented = $fragmented + $row['Data_free'];
-				$template->assign_block_vars('row', array(
-					'TABLE_NAME'	=> $row['Name'],
-					'TABLE_SIZE'	=> $row['Data_length'],
-					'FRAGMENTED'	=> $row['Data_free'],
-					'CREATE_TIME'	=> $row['Create_time'],
-					'UPDATE_TIME'	=> $row['Update_time'],
-					'CHECK_TIME'	=> $row['Check_time'],
-				));
+				if(($row['Engine'] != 'InnoDB'))
+				{
+					$table_cout++;
+					$fragmented = $fragmented + $row['Data_free'];
+					$template->assign_block_vars('row', array(
+						'TABLE_NAME'	=> $row['Name'],
+						'TABLE_SIZE'	=> $row['Data_length'],
+						'FRAGMENTED'	=> $row['Data_free'],
+						'CREATE_TIME'	=> $row['Create_time'],
+						'UPDATE_TIME'	=> $row['Update_time'],
+						'CHECK_TIME'	=> $row['Check_time'],
+					));
+				}
 			}
 			$db->sql_freeresult($result);
 
