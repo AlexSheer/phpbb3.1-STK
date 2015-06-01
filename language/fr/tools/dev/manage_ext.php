@@ -1,12 +1,14 @@
 <?php
 /**
 *
-* @package Support Toolkit - phpbb English language Sheer
-* @version $Id$
+* @package Support Toolkit - Manager Extensions files
+* @French translation by Galixte (http://www.galixte.com)
+*
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
+
 /**
 * DO NOT CHANGE
 */
@@ -15,9 +17,6 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-/**
-* DO NOT CHANGE
-*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -36,40 +35,40 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'MANAGE_EXT'				=> 'Manage extension\'s files',
-	'EXT_NAME'					=> 'Extension name',
-	'EXTENSIONS_FILES'			=> 'File extensions',
-	'EXTENSIONS_FILES_EXPLAIN'	=> 'Here you can view, rename, delete, or create new files or folders of your extensions.',
-	'EXPAND'					=> 'Expand/Collapse',
-	'SAVE'						=> 'Retenir',
-	'SAVED'						=> 'File %s has been successfully saved',
-	'EDITED'					=> 'File %s has been successfully changed',
-	'FAIL_CREATE_FILE'			=> 'Failed to create file %s',
-	'FAIL_EXISTS'				=> 'File %s already exists',
-	'FAIL_CREATE_DIR'			=> 'Failed to create folder %s',
-	'ADD_NEW'					=> 'Ajouter nouveau fichier',
-	'PATH'						=> 'Path relative to the folder %s/',
-	'PATH_EXPLAIN'				=> 'If folder does not exist, it will be created',
+	'MANAGE_EXT'				=> 'Gestionnaire de fichiers des extensions',
+	'EXT_NAME'					=> 'Nom de l’extension',
+	'EXTENSIONS_FILES'			=> 'Fichiers de l’extension',
+	'EXTENSIONS_FILES_EXPLAIN'	=> 'Ici vous pouvez voir, renommer supprimer ou créer de nouveaux fichiers ou répertoire pour votre extension.',
+	'EXPAND'					=> 'Étendre / réduire',
+	'SAVE'						=> 'Sauvegarder',
+	'SAVED'						=> 'Le fichier %s a été sauvegardé avec succès',
+	'EDITED'					=> 'Le fichier %s a été modifié avec succès',
+	'FAIL_CREATE_FILE'			=> 'Erreur de création du fichier %s',
+	'FAIL_EXISTS'				=> 'Le fichier %s existe déjà',
+	'FAIL_CREATE_DIR'			=> 'Erreur de création du répertoire %s',
+	'ADD_NEW'					=> 'Ajouter un nouveau fichier',
+	'PATH'						=> 'Chemin relatif vers le répertoire %s/',
+	'PATH_EXPLAIN'				=> 'Si le répertoire n’existe pas, il sera créé',
 	'FILE'						=> 'Nom du fichier',
-	'CONTENT'					=> 'Code',
-	'EXT_PATH'					=> 'Path relative to the folder ' . PHPBB_ROOT_PATH . 'ext/',
-	'DELETE'					=> 'Effacer',
-	'RENAME'					=> 'Rebaptiser',
-	'DELETE_OK'					=> 'File %s has been successfully removed',
-	'DELETE_FAIL'				=> 'Failed to remove file %s',
-	'DELETE_FOLDER_OK'			=> 'Folder %s has been successfully removed',
-	'DELETE_FOLDER_FAIL'		=> 'Failed to delete folder %s',
-	'NEW_NAME'					=> 'New fie name',
-	'RENAME_OK'					=> 'File %1s has been successfully renamed to %2s',
-	'RENAME_FAIL'				=> 'Failed to rename file %s',
-	'RENAME_FOLDER_OK'			=> 'Folder %1s has been successfully renamed to %2s',
-	'RENAME_FOLDER_FAIL'		=> 'Failed to rename folder %s',
+	'CONTENT'					=> 'Contenu du code',
+	'EXT_PATH'					=> 'Chemin relatif vers le répertoire ' . PHPBB_ROOT_PATH . 'ext/',
+	'DELETE'					=> 'Supprimer',
+	'RENAME'					=> 'Renommer',
+	'DELETE_OK'					=> 'Le fichier %s a été supprimé avec succès',
+	'DELETE_FAIL'				=> 'Erreur de suppression du fichier %s',
+	'DELETE_FOLDER_OK'			=> 'Le répertoire %s a été supprimé avec succès',
+	'DELETE_FOLDER_FAIL'		=> 'Erreur de suppression du répertoire %s',
+	'NEW_NAME'					=> 'Nouveau nom',
+	'RENAME_OK'					=> 'Le fichier %1s a été renommé en %2s',
+	'RENAME_FAIL'				=> 'Erreur pour renommer le fichier %s',
+	'RENAME_FOLDER_OK'			=> 'Le répertoire %1s a été renommé en %2s',
+	'RENAME_FOLDER_FAIL'		=> 'Erreur pour renommer le répertoire %s',
 
-	'ENABLED'					=> 'Active',
-	'DISABLED'					=> 'Disabled',
-	'NOT_INSTALLED'				=> 'Not installed',
+	'ENABLED'					=> 'Activée',
+	'DISABLED'					=> 'Désactivée',
+	'NOT_INSTALLED'				=> 'Pas installée',
 ));
