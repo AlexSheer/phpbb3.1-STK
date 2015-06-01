@@ -70,5 +70,5 @@ $lang = array_merge($lang, array(
 
 	'ENABLED'					=> 'Activée',
 	'DISABLED'					=> 'Désactivée',
-	'NOT_INSTALLED'				=> 'Pas installée,
+	'NOT_INSTALLED'				=> 'Pas installée',
 ));
