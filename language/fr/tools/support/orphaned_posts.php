@@ -5,7 +5,7 @@
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by phpBB-fr http://www.phpbb-fr.com
+* @French translation by phpBB-fr http://www.phpbb-fr.com & Galixte (http://www.galixte.com)
 *
 */
 
@@ -48,8 +48,8 @@ $lang = array_merge($lang, array(
 	'DELETE_EMPTY_TOPICS'		=> 'Supprimer tous les sujets sélectionnés en cliquant sur ce bouton. (Cette opération est irréversible !)',
 	'EMPTY_TOPICS'				=> 'Sujets vides',
 	'EMPTY_TOPICS_EXPLAIN'		=> 'Correspond à des sujets n’ayant pas de messages leur étant associés.',
-	'NO_EMPTY_TOPICS'			=> 'Aucun sujet vide trouvé',
-	'NO_TOPICS_SELECTED'		=> 'Aucun sujet sélectionné',
+	'NO_EMPTY_TOPICS'			=> 'Aucun sujet vide n’a été trouvé',
+	'NO_TOPICS_SELECTED'		=> 'Aucun sujet n’a été sélectionné',
 
 	'ORPHANED_POSTS'			=> 'Messages orphelins',
 	'ORPHANED_POSTS_EXPLAIN'	=> 'Correspond à des messages n’étant pas associés à un sujet. Spécifiez un nouvel ID de sujet pour attacher le message à ce sujet.',
@@ -61,13 +61,13 @@ $lang = array_merge($lang, array(
 	'DELETE_SHADOWS'			=> 'Supprimer tous les sujets fantômes sélectionnés en cliquant sur ce bouton. (Cette opération est irréversible !)',
 	'ORPHANED_SHADOWS'			=> 'Sujets fantômes orphelins',
 	'ORPHANED_SHADOWS_EXPLAIN'	=> 'Correspond à des sujets fantômes dont le sujet cible n’existe plus.',
-	'NO_ORPHANED_SHADOWS'		=> 'Pas de sujets fantômes orphelins trouvés',
+	'NO_ORPHANED_SHADOWS'		=> 'Aucun sujet fantôme orphelin n’a été trouvé',
 
 	'POSTS_DELETED'				=> '%d messages supprimés',
 	'POSTS_REASSIGNED'			=> '%d messages re-affectés',
 	'TOPICS_DELETED'			=> '%d sujets supprimés',
-	'ORPHANED_FORUM_POSTS'			=> 'Messages pas attaché à les forums',
-	'ORPHANED_FORUM_POSTS_EXPLAIN'	=> 'Ces messages ne sont pas attachés à un forum spécifique, il est donc considéré qu\'ils ne sont pas attachés à des sujets spécifiques. Spécifiez un nouvel ID de sujet pour attacher le message à ce sujet.',
-	'NO_FORUM_ORPHANED_POSTS'		=> 'Messages qui ne attachés aux forums introuvables',
-	'NO_POSTS_SELECTED'				=> 'Pas de messages sélectionnés',
+	'ORPHANED_FORUM_POSTS'			=> 'Messages non associés aux forums',
+	'ORPHANED_FORUM_POSTS_EXPLAIN'	=> 'Ces messages ne sont pas attachés à un forum spécifique, il sont donc considérés comme non attachés à des sujets spécifiques. Spécifiez un nouvel ID de sujet pour attacher le message à ce sujet.',
+	'NO_FORUM_ORPHANED_POSTS'		=> 'Aucun message non associé aux forums n’a été trouvé',
+	'NO_POSTS_SELECTED'				=> 'Aucun message n’a été sélectionné',
 ));
