@@ -44,6 +44,8 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'RECLEAN_USERNAMES'					=> 'Re-nettoyer les noms des utilisateurs',
 	'RECLEAN_USERNAMES_COMPLETE'		=> 'Tous les noms des utilisateurs ont été re-nettoyés.',
-	'RECLEAN_USERNAMES_CONFIRM'			=> 'Êtes-vous sûr(e) de vouloir re-nettoyer tous les noms des utilisateurs ?',
+	'RECLEAN_USERNAMES_CONFIRM'			=> 'Êtes-vous sûr(e) de vouloir re-nettoyer tous les noms des utilisateurs?',
 	'RECLEAN_USERNAMES_NOT_COMPLETE'	=> 'L’outil de re-nettoyage des noms des utilisateurs est en cours d’exécution… Veuillez ne pas interrompre cette opération.',
+	'USER_ALREADY_EXISTS'				=> 'Utilisateur avec pseudo <a href="%2$s" target="_blank" />%1$s</a> existe déjà.<br />Utilisateur avec identifiant propre mal <a href="%4$s" target="_blank" />%3$s</a>',
+
 ));
