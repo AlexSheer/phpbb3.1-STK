@@ -5,7 +5,7 @@
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by phpBB-fr http://www.phpbb-fr.com
+* @French translation by phpBB-fr http://www.phpbb-fr.com & Galixte (http://www.galixte.com)
 *
 */
 
@@ -17,9 +17,6 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-/**
-* DO NOT CHANGE
-*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -38,14 +35,14 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ « » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
 	'RECLEAN_USERNAMES'					=> 'Re-nettoyer les noms des utilisateurs',
 	'RECLEAN_USERNAMES_COMPLETE'		=> 'Tous les noms des utilisateurs ont été re-nettoyés.',
-	'RECLEAN_USERNAMES_CONFIRM'			=> 'Êtes-vous sûr(e) de vouloir re-nettoyer tous les noms des utilisateurs?',
+	'RECLEAN_USERNAMES_CONFIRM'			=> 'Êtes-vous sûr(e) de vouloir re-nettoyer tous les noms des utilisateurs ?',
 	'RECLEAN_USERNAMES_NOT_COMPLETE'	=> 'L’outil de re-nettoyage des noms des utilisateurs est en cours d’exécution… Veuillez ne pas interrompre cette opération.',
-	'USER_ALREADY_EXISTS'				=> 'Utilisateur avec pseudo <a href="%2$s" target="_blank" />%1$s</a> existe déjà.<br />Utilisateur avec identifiant propre mal <a href="%4$s" target="_blank" />%3$s</a>',
+	'USER_ALREADY_EXISTS'				=> 'Un utilisateur ayant le nom d’utilisateur <a href="%2$s" target="_blank" />%1$s</a> existe déjà.<br />Voici l’utilisateur ayant le mauvais nom d’utilisateur nettoyé : <a href="%4$s" target="_blank" />%3$s</a>',
 
 ));
