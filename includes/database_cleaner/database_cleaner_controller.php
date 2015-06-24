@@ -753,7 +753,6 @@ class database_cleaner_controller
 	function permissions($error, $selected)
 	{
 		global $umil;
-
 		$data = $permission_rows = $existing_permissions = array();
 		get_permission_rows($data, $permission_rows, $existing_permissions);
 		foreach ($permission_rows as $name)
@@ -764,20 +763,18 @@ class database_cleaner_controller
 				continue;
 			}
 
-			if (isset($selected[$name]))
+			if (isset($selected[$name]) && !isset($this->db_cleaner->data->acl_options[$name]) && in_array($name, $existing_permissions))
 			{
-				if (isset($this->db_cleaner->data->acl_options[$name]) && !in_array($name, $existing_permissions))
-				{
-					// Add it with the default settings we've got...
-					$umil->permission_add($name, (($this->db_cleaner->data->acl_options[$name]['is_global']) ? true : false));
-				}
-				else if (!isset($this->db_cleaner->data->acl_options[$name]) && in_array($name, $existing_permissions))
-				{
-					// Remove it
-					$umil->permission_remove($name, true);
-					$umil->permission_remove($name, false);
-				}
+				// Remove it
+				$umil->permission_remove($name, true);
+				$umil->permission_remove($name, false);
+				unset($selected[$name]);
 			}
+		}
+		foreach($selected as $name => $settings)
+		{
+			// Add it with the default settings we've got...
+			$umil->permission_add($name, (($this->db_cleaner->data->acl_options[$name]['is_global']) ? true : false));
 		}
 
 		return $error;
