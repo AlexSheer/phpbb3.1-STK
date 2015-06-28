@@ -26,8 +26,9 @@ class remove_orphaned_permissions
 	function run_tool()
 	{
 		global $db, $user, $cache;
-		$orphaned_permissions = array();
+		$orphaned_permissions = $orphaned_users_permissions = array();
 
+		// Find orphaned_permissions from groups
 		$sql = 'SELECT DISTINCT auth_option_id
 			FROM ' . ACL_GROUPS_TABLE . '
 			ORDER BY auth_option_id ASC';
@@ -48,11 +49,48 @@ class remove_orphaned_permissions
 			}
 		}
 		$db->sql_freeresult($result);
-		if(sizeof($orphaned_permissions))
+
+		// Find orphaned_permissions from users
+		$sql = 'SELECT DISTINCT auth_option_id
+			FROM ' . ACL_USERS_TABLE . '
+			ORDER BY auth_option_id ASC';
+		$result = $db->sql_query($sql);
+
+		while ($row = $db->sql_fetchrow($result))
 		{
-			$sql = 'DELETE FROM ' . ACL_GROUPS_TABLE . '
-				WHERE ' . $db->sql_in_set('auth_option_id', $orphaned_permissions, false);
-			$db->sql_query($sql);
+			$auth_option_id = $row['auth_option_id'];
+			$sql = 'SELECT auth_option_id
+				FROM ' . ACL_OPTIONS_TABLE . '
+				WHERE auth_option_id = ' . $auth_option_id;
+			$res = $db->sql_query($sql);
+			$auth = $db->sql_fetchrow($res);
+			$db->sql_freeresult($res);
+
+			if(empty($auth))
+			{
+				$orphaned_users_permissions[] = $row['auth_option_id'];
+			}
+		}
+		$db->sql_freeresult($result);
+
+		if(sizeof($orphaned_permissions) || sizeof($orphaned_users_permissions))
+		{
+			// Delete groups permissions
+			if(sizeof($orphaned_permissions))
+			{
+				$sql = 'DELETE FROM ' . ACL_GROUPS_TABLE . '
+					WHERE ' . $db->sql_in_set('auth_option_id', $orphaned_permissions, false);
+				$db->sql_query($sql);
+			}
+
+			// Delete users permissions
+			if(sizeof($orphaned_users_permissions))
+			{
+				$sql = 'DELETE FROM ' . ACL_USERS_TABLE . '
+					WHERE ' . $db->sql_in_set('auth_option_id', $orphaned_users_permissions, false);
+				$db->sql_query($sql);
+			}
+
 			$cache->purge();
 			$message = $user->lang['ORPHANED_PERMISSIONS_DELETED'];
 		}
@@ -60,7 +98,7 @@ class remove_orphaned_permissions
 		{
 			$message = $user->lang['ORPHANED_PERMISSIONS_NOT_FIND'];
 		}
-		$url =
+
 		meta_refresh(3, append_sid("" . STK_ROOT_PATH . "index." . PHP_EXT . "", 'c=support'));
 		trigger_error($message);
 	}
