@@ -1,10 +1,11 @@
 <?php
 /**
 *
-* @package Support Toolkit - Orphaned permissions England language Sheer
+* @package Support Toolkit - Orphaned permissions
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+* @French translation by Galixte (http://www.galixte.com)
 *
 */
 
@@ -34,12 +35,12 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'REMOVE_ORPHANED_PERMISSIONS'			=> 'Remove orphaned permissions',
-	'ORPHANED_PERMISSIONS_DELETED'			=> 'Orphaned permissions was sucessfully removed.',
-	'ORPHANED_PERMISSIONS_NOT_FIND'			=> 'Orphaned permissions are not found.',
-	'REMOVE_ORPHANED_PERMISSIONS_CONFIRM'	=> 'Are you sure you want to delete the orphaned permissions?',
+	'REMOVE_ORPHANED_PERMISSIONS'			=> 'Supprimer les permissions orphelines',
+	'ORPHANED_PERMISSIONS_DELETED'			=> 'Les permissions orphelines ont été supprimées avec succès.',
+	'ORPHANED_PERMISSIONS_NOT_FIND'			=> 'Aucune permission orpheline n’ a été toruvée.',
+	'REMOVE_ORPHANED_PERMISSIONS_CONFIRM'	=> 'Êtes-vous sûr de vouloir supprimer les permissons orphelines ?',
 ));
