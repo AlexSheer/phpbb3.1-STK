@@ -141,7 +141,7 @@ class extensions
 					@fclose($fp);
 					// Create listener.php
 					$data = "<?php\n/**\n*\n* @package phpBB Extension - " . $display_name . "\n* @copyright (c) " . date('Y') . " " . $author . "\n* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2\n*\n*/\n";
-					$data .= "namespace " . $vendor . "\\" . $ext_name . "\event;\n\n";
+					$data .= "namespace " . $vendor . "\\" . $ext_name . "\\event;\n\n";
 					$data .= "use Symfony\Component\EventDispatcher\EventSubscriberInterface;\n";
 					$data .= "\n/**\n* Event listener\n*/\n";
 					$data .= "class listener implements EventSubscriberInterface\n{\n";
