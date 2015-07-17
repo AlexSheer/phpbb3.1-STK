@@ -63,6 +63,6 @@ $lang = array_merge($lang, array(
 	'EXT_NAME_TOO_SHORT'	=> 'Extension name must be at least 3 characters long.',
 
 	'ARE_REQUIRED'			=> '<hr>Fields marked with * are required.',
-	'SUCCESS'				=> 'Les éléments de l’extension ont été crées avec succès. Maintenant, vous pouvez commencer le développement de l’extension.',
+	'SUCCESS'				=> 'Workpiece of extension successfully created. Now you can start real creation of extension.',
 	'ALREADY_EXISTS'		=> 'This extension already exists!',
 ));
