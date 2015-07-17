@@ -66,4 +66,5 @@ $lang = array_merge($lang, array(
 
 	'ARE_REQUIRED'			=> '<hr>Les champs accompagnés d’un * sont nécessaires.',
 	'SUCCESS'				=> 'Les éléments de l’extension ont été crées avec succès. Maintenant, vous pouvez commencer le développement de l’extension.',
+	'ALREADY_EXISTS'		=> 'This extension already exists!',
 ));
