@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @package Support Toolkit - phpbb Russian language Sheer
+* @package Support Toolkit - phpbb English language Sheer
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
@@ -63,5 +63,6 @@ $lang = array_merge($lang, array(
 	'EXT_NAME_TOO_SHORT'	=> 'Extension name must be at least 3 characters long.',
 
 	'ARE_REQUIRED'			=> '<hr>Fields marked with * are required.',
-	'SUCCESS'				=> 'Workpiece of extension successfully created. Now you can start real creation of extension.',
+	'SUCCESS'				=> 'Les éléments de l’extension ont été crées avec succès. Maintenant, vous pouvez commencer le développement de l’extension.',
+	'ALREADY_EXISTS'		=> 'This extension already exists!',
 ));
