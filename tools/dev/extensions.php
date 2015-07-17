@@ -76,7 +76,7 @@ class extensions
 				}
 				if(@opendir($new_dir))
 				{
-					$error[] = 'ALREADY_EXISTS';
+					$error[] = $user->lang['ALREADY_EXISTS'];
 				}
 				if(empty($error))
 				{
@@ -148,7 +148,7 @@ class extensions
 					$data .= "/**\n* Assign functions defined in this class to event listeners in the core\n*\n* @return array\n* @static\n* @access public\n*/\n";
 					$data .= "\tstatic public function getSubscribedEvents()\n\t{\n";
 					$data .= "\t\treturn array(\n\t\t);\n\t}\n\n";
-					$data .= "\t/** @var \phpbb\template\template */\n\tprotected $";
+					$data .= "\t/** @var \phpbb\\template\\template */\n\tprotected $";
 					$data .= "template;\n\n";
 					$data .= "\t//** @var string phpbb_root_path */\n\tprotected $";
 					$data .= "phpbb_root_path;\n\n";
