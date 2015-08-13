@@ -1,13 +1,13 @@
 <?php
 /**
 *
-* @package Support Toolkit - User Options English language Sheer
+* @package Support Toolkit - User Copy Permissions
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @
+* @French translation by Galixte (http://www.galixte.com)
+*
 */
-
 /**
 * DO NOT CHANGE
 */
@@ -15,12 +15,10 @@ if (!defined('IN_PHPBB'))
 {
 	exit;
 }
-
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
 }
-
 // DEVELOPERS PLEASE NOTE
 //
 // All language files should use UTF-8 as their encoding and the files must not contain a BOM.
@@ -34,17 +32,16 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
-
 $lang = array_merge($lang, array(
-	'USER_COPY_PERM'					=> 'Copy user\'s permissions',
-	'USER_COPY_PERM_EXPLAIN'			=> 'Note that will be copied to all permissions: users, moderators, administratosr and local.',
-	'COPY_USER_PERMISSIONS_EXPLAIN'		=> 'Select user whose permissions will be copied',
-	'COPY_USER_PERMISSIONS_OK'			=> 'Permissions successfully copied.',
-	'USERS_IDENTICAL'					=> 'It is not possible to transfer permissions.',
-	'FIND_FROM_USER'					=> 'Username whose permissions will be copied',
-	'ID_FROM'							=> 'User ID whose permissions will be copied',
-	'FIND_TO_USER'						=> 'Username that you want to transfer permissionss',
-	'ID_TO'								=> 'User ID that you want to transfer permissionss',
+	'USER_COPY_PERM'					=> 'Copier les permissions des utilisateurs',
+	'USER_COPY_PERM_EXPLAIN'			=> 'Permet de copier toutes les permissions des utilisateurs : utilisateurs, modérateurs, administrateurs et locales.',
+	'COPY_USER_PERMISSIONS_EXPLAIN'		=> 'Sélectionner l’utilisateur dont les permissions seront copiées',
+	'COPY_USER_PERMISSIONS_OK'			=> 'Les permissions ont été copiées avec succès.',
+	'USERS_IDENTICAL'					=> 'Il n’est pas pas possible de transférer les permissions.',
+	'FIND_FROM_USER'					=> 'Nom d’utilisateur dont les permissions seront copiées',
+	'ID_FROM'							=> 'ID de l’utilisateur dont les permissions seront copiees',
+	'FIND_TO_USER'						=> 'Nom d’utilisateur vers qui les permissions seront transférées',
+	'ID_TO'								=> 'ID de l’utilisateur vers qui les permissions seront transférées',
 ));
