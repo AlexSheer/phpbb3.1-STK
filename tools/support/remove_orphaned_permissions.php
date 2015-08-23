@@ -43,7 +43,7 @@ class remove_orphaned_permissions
 			$res = $db->sql_query($sql);
 			$auth = $db->sql_fetchrow($res);
 			$db->sql_freeresult($res);
-			if(empty($auth))
+			if(empty($auth) && $row['auth_option_id'] != 0)
 			{
 				$orphaned_permissions[] = $row['auth_option_id'];
 			}
@@ -66,7 +66,7 @@ class remove_orphaned_permissions
 			$auth = $db->sql_fetchrow($res);
 			$db->sql_freeresult($res);
 
-			if(empty($auth))
+			if(empty($auth) && $row['auth_option_id'] != 0)
 			{
 				$orphaned_users_permissions[] = $row['auth_option_id'];
 			}
