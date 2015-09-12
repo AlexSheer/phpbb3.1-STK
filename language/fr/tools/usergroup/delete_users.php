@@ -1,13 +1,13 @@
 <?php
 /**
 *
-* @package Support Toolkit - Delete Usetrs English language Sheer
+* @package Support Toolkit - Delete Users
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @
+* @French translation by Galixte (http://www.galixte.com)
+*
 */
-
 /**
 * DO NOT CHANGE
 */
@@ -15,12 +15,10 @@ if (!defined('IN_PHPBB'))
 {
 	exit;
 }
-
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
 }
-
 // DEVELOPERS PLEASE NOTE
 //
 // All language files should use UTF-8 as their encoding and the files must not contain a BOM.
@@ -34,14 +32,13 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
-
 $lang = array_merge($lang, array(
-	'DELETE_USERS'				=> 'Removing users',
-	'DELETE_USERS_EXPLAIN'		=> 'Here you can delete users have left no message and did not attend the board for the selected period.',
-	'INACTIVE_PERIOD'			=> 'Inactivity period',
-	'DELETE_USERS_SUCESS'		=> 'Users have been successfully removed.',
-	'DELETE_USERS_NOT_FOUND'	=> 'Users who want to remove, not found.',
-	'DELETE_USERS_CONFIRM'		=> 'Are you sure you wish to delete these users?<br />(<strong>Attention!</strong>Removal of a large number of users can take a long time. Do not leave and do not close this page up until the operation is completed.)',
+	'DELETE_USERS'				=> 'Suppression d’utilisateurs',
+	'DELETE_USERS_EXPLAIN'		=> 'Sur cette page il est possible de supprimer les utilisateurs n’ayant rédigé aucun message et n’ayant pas participé depuis une période sélectionnée.',
+	'INACTIVE_PERIOD'			=> 'Période d’inactivité',
+	'DELETE_USERS_SUCESS'		=> 'Les utilisateurs ont été supprimés avec succès.',
+	'DELETE_USERS_NOT_FOUND'	=> 'Les utilisateurs devant être supprimés n’ont pas été trouvés.',
+	'DELETE_USERS_CONFIRM'		=> 'Confirmer la suppression de ces utilisateurs ?<br />(<strong>Attention !</strong> Supprimer un grand nombre d’utilisateurs peut prendre un certain temps. Il est nécessaire que cette page ne soit pas fermée jusqu’à la fin du traitement.)',
 ));
