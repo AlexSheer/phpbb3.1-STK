@@ -6,7 +6,7 @@
 // license http://opensource.org/licenses/gpl-license.php GNU Public License
 //
 
-function fatal_error_handler()
+function fatal_error_handler_stk()
 {
 	if(function_exists('error_get_last'))
 	{
@@ -33,5 +33,4 @@ function fatal_error_handler()
 	}
 }
 
-register_shutdown_function('fatal_error_handler');
-?>
+register_shutdown_function('fatal_error_handler_stk');
