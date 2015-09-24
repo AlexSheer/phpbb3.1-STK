@@ -78,6 +78,7 @@ $submit = request_var('submit', false);
 if ((defined('PHPBB_VERSION') && PHPBB_VERSION == $config['version']) || !defined('PHPBB_VERSION'))
 {
 	define('PHPBB_VERSION_NUMBER', $config['version']);
+	stk_add_lang('common');
 	// Try to determine the phpBB actually version number
 	$updates_available = false;
 	$version_helper = $phpbb_container->get('version_helper');
