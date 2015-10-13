@@ -75,7 +75,7 @@ $submit = request_var('submit', false);
 
 // Try to determine the phpBB version number, we might need that down the road
 // `PHPBB_VERSION` was added in 3.0.3, for older versions just rely on the config
-if ((defined('PHPBB_VERSION') && PHPBB_VERSION == $config['version']) || !defined('PHPBB_VERSION'))
+if (!defined('IN_ERK') && (defined('PHPBB_VERSION') && PHPBB_VERSION == $config['version']) || !defined('PHPBB_VERSION'))
 {
 	define('PHPBB_VERSION_NUMBER', $config['version']);
 	stk_add_lang('common');
