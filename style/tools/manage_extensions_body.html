@@ -1,5 +1,6 @@
 <!-- INCLUDE overall_header.html -->
 <!-- IF S_TREE or S_EDIT -->
+<!-- IF .row -->
 <link rel="stylesheet" href="style/codemirror/lib/codemirror.css">
 <script src="style/codemirror/lib/codemirror.js"></script>
 <script src="style/codemirror/htmlmixed/htmlmixed.js"></script>
@@ -26,8 +27,10 @@
 .cm-s-default .cm-string {color: #DD0000;}
 </style>
 <!-- ENDIF -->
+<!-- ENDIF -->
 	<h1>{L_EXTENSIONS_FILES}</h1>
 	<p>{L_EXTENSIONS_FILES_EXPLAIN}</p>
+	<!-- IF .row -->
 	<form id="acp_styles" method="post" action="{S_ACTION}">
 	<!-- IF S_TREE -->
 	<link rel="stylesheet" href="style/dtree.css" type="text/css" />
@@ -92,7 +95,6 @@
 			<p class="submit-buttons"><input class="button1" id="save" name="save" value="{L_SAVE}" type="submit"></p>
 		</fieldset>
 	<!-- ELSE -->
-		<!-- IF .row -->
 		<table cellspacing="1">
 			<tr>
 				<th>{L_EXT_NAME}</th>
@@ -109,11 +111,9 @@
 			</tr>
 			<!-- END row -->
 		</table>
-		<!-- ENDIF -->
 	<!-- ENDIF -->
 	</form>
 	<!-- IF S_TREE or S_EDIT -->
-
 <script>
 	var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
 		lineNumbers: true,
@@ -124,5 +124,7 @@
 	});
 </script>
 <!-- ENDIF -->
-
+<!-- ELSE -->
+<div class="errorbox"><p>{L_NO_EXTENSIONS_FILES}</p></div>
+<!-- ENDIF -->
 <!-- INCLUDE overall_footer.html -->
