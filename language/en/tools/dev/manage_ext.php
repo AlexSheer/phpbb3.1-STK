@@ -72,4 +72,5 @@ $lang = array_merge($lang, array(
 	'ENABLED'					=> 'Active',
 	'DISABLED'					=> 'Disabled',
 	'NOT_INSTALLED'				=> 'Not installed',
+	'NO_EXTENSIONS_FILES'		=> '<strong>Files not found</strong>.<br />Probably not installed any extensions, either missing files and folders installed extensions',
 ));
