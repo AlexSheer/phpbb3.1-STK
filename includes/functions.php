@@ -432,10 +432,27 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 						{
 							$announcement = $version_data['announcement'];
 						}
+						// Grep the latest phpBB version number
+						list(,, $_phpbb_version) = explode('.', $version_data['current']);
 					}
-
-					// Grep the latest phpBB version number
-					list(,, $_phpbb_version) = explode('.', $version_data['current']);
+					elseif ($config['version'] != PHPBB_VERSION)
+					{
+						$config['version'] = PHPBB_VERSION;
+						$version_helper = $phpbb_container->get('version_helper');
+						$updates_available = $version_helper->get_suggested_updates(false);
+						if ($updates_available)
+						{
+							foreach ($updates_available as $branch => $version_data)
+							{
+								$announcement = $version_data['announcement'];
+							}
+						}
+						else
+						{
+							$version_data['current'] = $config['version'];
+						}
+						list(,, $_phpbb_version) = explode('.', PHPBB_VERSION);
+					}
 
 					// Build the options
 					$version_options = '';
