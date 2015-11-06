@@ -107,6 +107,8 @@ $lang = array_merge($lang, array(
 	'ERK_OK'							=> 'The Emergency Repair Kit hasn\'t found any critical issues within your phpBB installation.',
 	'RELOAD_STK'						=> 'Click <a href="%s"><b>here</b></a> to reload STK.',
 	'RELOAD_ARK'						=> 'Click <a href="%s"><b>here</b></a> to reload ARK.',
+	'ANONYMOUS_MISSING'					=> 'Support Toolkit determined that Anonymous user is missing in your database, so your board can\'t function properly.<br />
+											Click <a href="%s"><b>here</b></a> and go to Emergency Repair Kit - Anonymous user will be automatically restored.',
 
 	'ERK_NO_WHITELIST'					=> 'The BOM sniffer couldn\'t read the whitelist, and can\'t run the tests. Please seek assistance in the <a href="%s">Support Forums</a>.',
 	'ERK_ISSUE_FOUND'					=> 'As part of the “Emergency Repair Kit” of the Support Toolkit the ERK has checked your phpBB files and determined that some of the files contain invalid content that potentially could stop the board from operating. The Support Toolkit has tried to resolve these issues and created a package with the corrected files <em>(backed up versions can be found in <c>store/bom_sniffer_backup/</c>)</em>. This package is stored in the <c>store/bom_sniffer/</c> directory. To apply the changed files to your board please <strong>move</strong> the files from the “store” to their correct location and load the Support Toolkit again. The toolkit will check these files again and will redirect you to the ERK if no flaws are found.<br /><br /><strong style="color: #ff0000;">Before moving the generated files, please make sure that the generated files are correct!</strong> When in doubt please seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">support forum</a>.',
