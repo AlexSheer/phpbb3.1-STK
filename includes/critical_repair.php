@@ -174,6 +174,15 @@ class critical_repair
 								foreach ($msg as $m)
 								{
 									echo "<p>{$m}</p>";
+									$pos = strripos($m, 'Undefined index: user_id');
+									if($pos)
+									{
+										$msg = sprintf($user->lang['ANONYMOUS_MISSING'], ''.STK_ROOT_PATH.'erk.'.PHP_EXT.'');
+										?><hr><?php
+										echo $msg;
+										?><hr><?php
+									}
+
 								}
 								?>
 								<p>
