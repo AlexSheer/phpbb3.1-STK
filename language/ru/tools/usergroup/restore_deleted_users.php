@@ -39,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'DAMAGED_POSTS'								=> 'Поврежденнные сообщения',
-	'DAMAGED_POSTS_EXPLAIN'						=> 'Следующие идентификаторы сообщений относятся к несуществующим пользователям. Посетите <a href="http://www.phpbbguru.net/community/forum47.html">форумо поддержки</a> для получения помощи в решении этой проблемы.',
+	'DAMAGED_POSTS_EXPLAIN'						=> 'Следующие идентификаторы сообщений относятся к несуществующим пользователям. Посетите <a href="http://www.phpbbguru.net/community/forum47.html">форум поддержки</a> для получения помощи в решении этой проблемы.',
 
 	'NO_DELETED_USERS'							=> 'Нет удалённых пользователей, которых можно было бы восстановить',
 	'NO_USER_SELECTED'							=> 'Пользователи не выбраны!',
