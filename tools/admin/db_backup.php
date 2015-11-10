@@ -81,13 +81,23 @@ class db_backup
 		));
 
 		$db_name = $db->get_db_name();
-		$sql = 'SHOW TABLE STATUS FROM '. $db_name;
+
+		if ($sql_layer == 'sqlite' || $sql_layer == 'sqlite3')
+		{
+			$sql = 'SELECT name FROM sqlite_master WHERE type="table" ORDER BY name';
+			$row_name = 'name';
+		}
+		else
+		{
+			$sql = 'SHOW TABLE STATUS FROM '. $db_name;
+			$row_name = 'Name';
+		}
 		$result = $db->sql_query($sql);
 		$option_list = '';
 		while ($row = $db->sql_fetchrow($result))
 		{
-			$table_name = $row['Name'];
-			$option_list .= "<option value='{$row['Name']}'>{$table_name}</option>";
+			$table_name = $row[$row_name];
+			$option_list .= "<option value='{$row[$row_name]}'>{$table_name}</option>";
 		}
 		$db->sql_freeresult($result);
 
