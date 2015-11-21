@@ -137,6 +137,11 @@ class database_cleaner_views
 		// Determine the link for the next step
 		if (!isset($this->_u_next_step))
 		{
+			if ($this->db_cleaner->step == 1)
+			{
+				set_config('board_disable', 1);
+				set_config('board_disable_msg', user_lang('BOARD_DISABLE_REASON'));
+			}
 			if ($this->_has_changes || !empty($this->_confirm_box))
 			{
 				$_u_next_step = append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->db_cleaner->step, 'submit' => true));
