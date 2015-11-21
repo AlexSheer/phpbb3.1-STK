@@ -142,7 +142,7 @@ class flash_checker
 		{
 			foreach ($matches[3] as $flash_url)
 			{
-				if (!@preg_match("#^($url_regex|$www_url_regex)$#i", $flash_url))
+				if (!preg_match("#^($url_regex|$www_url_regex)$#iu", $flash_url))
 				{
 					return false;
 				}
