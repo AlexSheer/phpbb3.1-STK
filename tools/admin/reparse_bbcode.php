@@ -796,5 +796,5 @@ class reparse_bbcode
 
 function get_forums()
 {
-	return make_forum_select(false, false, false, false, false);
+	return make_forum_select(false, false, false, true, true);
 }
