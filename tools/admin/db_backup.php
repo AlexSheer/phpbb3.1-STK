@@ -80,24 +80,53 @@ class db_backup
 			'TYPE'	=> $user->lang['NO']
 		));
 
-		$db_name = $db->get_db_name();
+		switch ($sql_layer)
+		{
+			case 'mysql':
+			case 'mysql4':
+			case 'mysqli':
+				$sql = 'SHOW TABLES';
+			break;
 
-		if ($sql_layer == 'sqlite' || $sql_layer == 'sqlite3')
-		{
-			$sql = 'SELECT name FROM sqlite_master WHERE type="table" ORDER BY name';
-			$row_name = 'name';
+			case 'sqlite':
+				$sql = 'SELECT name
+					FROM sqlite_master
+					WHERE type = "table"';
+			break;
+
+			case 'sqlite3':
+				$sql = 'SELECT name
+					FROM sqlite_master
+					WHERE type = "table"
+						AND name <> "sqlite_sequence"';
+			break;
+
+			case 'mssql':
+			case 'mssql_odbc':
+			case 'mssqlnative':
+				$sql = "SELECT name
+					FROM sysobjects
+					WHERE type='U'";
+			break;
+
+			case 'postgres':
+				$sql = 'SELECT relname
+					FROM pg_stat_user_tables';
+			break;
+
+			case 'oracle':
+				$sql = 'SELECT table_name
+					FROM USER_TABLES';
+			break;
 		}
-		else
-		{
-			$sql = 'SHOW TABLE STATUS FROM '. $db_name;
-			$row_name = 'Name';
-		}
+
 		$result = $db->sql_query($sql);
+
 		$option_list = '';
 		while ($row = $db->sql_fetchrow($result))
 		{
-			$table_name = $row[$row_name];
-			$option_list .= "<option value='{$row[$row_name]}'>{$table_name}</option>";
+			$name = current($row);
+			$option_list .= "<option value='{$name}'>{$name}</option>";
 		}
 		$db->sql_freeresult($result);
 
