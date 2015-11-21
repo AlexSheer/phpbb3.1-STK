@@ -149,6 +149,7 @@ class reparse_bbcode
 		if (sizeof($reparse_forum_ids))
 		{
 			$reparse_id = '';
+			$sql_forum_where = ' WHERE ' . $db->sql_in_set('forum_id', $reparse_forum_ids);
 		}
 
 		if (!sizeof($reparse_forum_ids) && !$reparse_id && !$reparse_pm_id && !$all && $step == 0)
@@ -284,7 +285,7 @@ class reparse_bbcode
 
 				$sql = "SELECT COUNT({$ccol}) AS cnt
 					FROM {$ctab}
-					{$sql_where}";
+					{$sql_where}{$sql_forum_where}";
 				$result		= $db->sql_query($sql);
 				$this->max	= $db->sql_fetchfield('cnt', false, $result);
 				$db->sql_freeresult($result);
@@ -297,6 +298,13 @@ class reparse_bbcode
 
 				// Make sure that the loop is finished
 				$last_batch = true;
+				if(!$reparse_id)
+				{
+					// Done!
+					$cache->destroy('_stk_reparse_posts');
+					$cache->destroy('_stk_reparse_pms');
+					trigger_error($user->lang['REPARSE_BBCODE_COMPLETE']);
+				}
 			}
 		}
 
