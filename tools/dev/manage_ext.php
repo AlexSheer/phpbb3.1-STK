@@ -125,6 +125,7 @@ class manage_ext
 			break;
 
 			case 'edit':
+				$template->assign_block_vars('row', array());
 				if($save)
 				{
 					$fp = fopen($phpbb_root_path.$file_name, 'w');
@@ -168,6 +169,7 @@ class manage_ext
 				foreach($reversed as $item)
 				{
 					$code .= "\t\t$item\n";
+					$template->assign_block_vars('row', array());
 				}
 
 				$template->assign_vars(array(
