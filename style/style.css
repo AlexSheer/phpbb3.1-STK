@@ -517,6 +517,19 @@ th {
 	text-transform: uppercase;
 }
 
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+}
+
+table.tablesorter thead tr .headerSortDown {
+	background-image: url("../images/desc.gif");
+}
+table.tablesorter thead tr .header {
+	background-image: url("../images/bg.gif");
+	background-repeat: no-repeat;
+	background-position: right center;
+	cursor: pointer;
+}
+
 td {
 	text-align: left;
 	font-size: 0.85em;
