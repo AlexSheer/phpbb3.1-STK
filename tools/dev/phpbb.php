@@ -51,7 +51,7 @@ class phpbb
 			}
 
 			$template->assign_vars(array(
-				'TEXT'	=> ($contents) ? $contents : '',
+				'TEXT'	=> ($contents) ? str_replace('</textarea>', '&lt;/textarea&gt;', $contents) : '',
 			));
 		}
 		else
