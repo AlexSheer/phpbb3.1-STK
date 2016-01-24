@@ -84,8 +84,13 @@ class datafile_3_1_7_pl1
 	var $module_categories = array(
 		// No Module categories changes 3.1.7 -> 3.1.7-pl1
 	);
+
 	var $module_extras = array(
 		// No Module extra changes 3.1.7 -> 3.1.7-pl1
+	);
+
+	var $module_categories_basenames = array(
+		// No Categories basenames changes 3.1.7 -> 3.1.7-pl1
 	);
 
 	/**
@@ -94,12 +99,15 @@ class datafile_3_1_7_pl1
 	var $groups = array(
 		// No Group changes 3.1.7 -> 3.1.7-pl1
 	);
-
 	/**
 	* @var Array All default report reasons
 	*/
 	var $report_reasons = array(
 		// No reason changes 3.1.7 -> 3.1.7-pl1
+	);
+
+	var $acp_modules = array(
+		// No ACP modules changes 3.1.7 -> 3.1.7-pl1
 	);
 
 	/**
