@@ -458,6 +458,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		case '3_1_6'	:
 		case '3_1_7'	:
 		case '3_1_7_pl1':
+		case '3_1_8'	:
 			// The extension group names have been changed, remove the old ones
 			foreach ($data->extension_groups as $key => $null)
 			{
