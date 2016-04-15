@@ -401,6 +401,20 @@ table.zebra tr:hover td {
 		<td>3.1.0-a1</td>
 		<td>{L_COMMON}</td>
 	</tr>
+	<tr id="core.decode_message_after">
+		<td><a href="#core.decode_message_after">core.decode_message_after</a> </td>
+		<td><a href="{PATH}&amp;f=/includes/functions_content.php">includes/functions_content.php</a></td>
+		<td>bbcode_uid, message_text</td>
+		<td>3.1.9-RC1</td>
+		<td>{L_DECODE_MESSAGE_AFTER}</td>
+	</tr>
+	<tr id="core.decode_message_before">
+		<td><a href="#core.decode_message_before">core.decode_message_before</a></td>
+		<td><a href="{PATH}&amp;f=/includes/functions_content.php">includes/functions_content.php</a></td>
+		<td>bbcode_uid, message_text</td>
+		<td>3.1.9-RC1</td>
+		<td>{L_DECODE_MESSAGE_BEFORE}</td>
+	</tr>
 	<tr id="core.delete_attachments_before">
 		<td><a href="#core.delete_attachments_before">core.delete_attachments_before</a></td>
 		<td><a href="{PATH}&amp;f=/includes/functions_admin.php">includes/functions_admin.php</a></td>
@@ -628,6 +642,13 @@ table.zebra tr:hover td {
 		<td></td>
 		<td>3.1.0-a1</td><td>{L_GARBAGE_COLLECTION}</td>
 	</tr>
+	<tr id="core.gen_sort_selects_after">
+		<td><a href="#core.gen_sort_selects_after">core.gen_sort_selects_after</a></td>
+		<td><a href="{PATH}&amp;f=/includes/functions_content.php">includes/functions_content.php</a></td>
+		<td>def_sd, def_sk, def_st, limit_days, s_limit_days, s_sort_dir, s_sort_key, sort_by_text, sort_days, sort_dir, sort_key, sorts, u_sort_param </td>
+		<td>3.1.9-RC1</td>
+		<td>{L_GEN_SORT_SELECTS_AFTER}</td>
+	</tr>
 	<tr id="core.generate_forum_nav">
 		<td><a href="#core.generate_forum_nav">core.generate_forum_nav</a></td>
 		<td><a href="{PATH}&amp;f=/includes/functions_display.php">includes/functions_display.php</a></td>
@@ -760,6 +781,13 @@ table.zebra tr:hover td {
 		<td><a href="{PATH}&amp;f=/includes/functions_posting.php">includes/functions_posting.php</a></td>
 		<td>draft_rows, topic_ids, topic_rows</td>
 		<td>3.1.0-RC3</td><td>{L_LOAD_DRAFTS_DRAFT_LIST_RESULT}</td>
+	</tr>
+	<tr id="core.login_box_before">
+		<td><a href="#core.login_box_before">core.login_box_before</a></td>
+		<td><a href="{PATH}&amp;f=/includes/functions.php">includes/functions.php</a></td>
+		<td>admin, err, l_explain, l_success, redirect, s_display</td>
+		<td>3.1.9-RC1</td>
+		<td>{L_LOGIN_BOX_BEFORE}</td>
 	</tr>
 	<tr id="core.login_box_failed">
 		<td><a href="#core.login_box_failed">core.login_box_failed</a></td>
@@ -1496,6 +1524,13 @@ table.zebra tr:hover td {
 		<td>data, poll, post_mode, sql_data, subject, topic_type, username</td>
 		<td>3.1.3-RC1</td><td>{L_SUBMIT_POST_MODIFY_SQL_DATA}</td>
 	</tr>
+	<tr id="core.topic_review_modify_post_list">
+		<td><a href="#core.topic_review_modify_post_list">core.topic_review_modify_post_list</a></td>
+		<td><a href="{PATH}&amp;f=/includes/functions_posting.php">includes/functions_posting.php</a></td>
+		<td>attachments, cur_post_id, forum_id, mode, post_list, rowset, show_quote_button, topic_id</td>
+		<td>3.1.9-RC1</td>
+		<td>{L_TOPIC_REVIEW_MODIFY_POST_LIST}</td>
+	</tr>
 	<tr id="core.topic_review_modify_row">
 		<td><a href="#core.topic_review_modify_row">core.topic_review_modify_row</a></td>
 		<td><a href="{PATH}&amp;f=/includes/functions_posting.php">includes/functions_posting.php</a></td>
@@ -1581,6 +1616,14 @@ table.zebra tr:hover td {
 		<td><a href="{PATH}&amp;f=/includes/ucp/ucp_prefs.php">includes/ucp/ucp_prefs.php</a></td>
 		<td>data, sql_ary</td>
 		<td>3.1.0-a1</td><td>{L_UCP_PREFS_POST_UPDATE_DATA}</td>
+	</tr>
+	<tr id="core.ucp_prefs_view_after">
+		<td><a href="#core.ucp_prefs_view_after">core.ucp_prefs_view_after</a></td>
+		<td><a href="{PATH}&amp;f=/includes/ucp/ucp_prefs.php">includes/ucp/ucp_prefs.php</a></td>
+		<td>_options, data, limit_post_days, limit_topic_days, s_limit_post_days, s_limit_topic_days, s_sort_post_dir, s_sort_post_key, s_sort_topic_dir, s_sort_topic_key, sort_by_post_sql, sort_by_post_text, sort_by_topic_sql, sort_by_topic_text, sort_dir_text, submit </td>
+		<td>3.1.8-RC1 </td>
+		<td>{L_UCP_PREFS_VIEW_AFTER}
+		</td>
 	</tr>
 	<tr id="core.ucp_prefs_view_data">
 		<td><a href="#core.ucp_prefs_view_data">core.ucp_prefs_view_data</a></td>
@@ -1750,6 +1793,13 @@ table.zebra tr:hover td {
 		<td>forum_data, sql_approved, sql_ary, sql_limit, sql_limit_time, sql_sort_order, sql_start, sql_where, store_reverse</td>
 		<td>3.1.0-RC4</td><td>{L_VIEWFORUM_GET_TOPIC_IDS_DATA}</td>
 	</tr>
+	<tr id="core.viewforum_modify_sort_data_sql">
+		<td><a href="#core.viewforum_modify_sort_data_sql">core.viewforum_modify_sort_data_sql</a></td>
+		<td><a href="{PATH}&amp;f=viewforum.php">viewforum.php</a></td>
+		<td>forum_id, sort_days, sort_dir, sort_key, sql_array, start</td>
+		<td>3.1.9-RC1</td>
+		<td>{L_VIEWFORUM_MODIFY_SORT_DATA_SQL}</td>
+	</tr>
 	<tr id="core.viewforum_modify_topicrow">
 		<td><a href="#core.viewforum_modify_topicrow">core.viewforum_modify_topicrow</a></td>
 		<td><a href="{PATH}&amp;f=viewforum.php">viewforum.php</a></td>
@@ -1792,6 +1842,13 @@ table.zebra tr:hover td {
 		<td><a href="{PATH}&amp;f=viewonline.php">viewonline.php</a></td>
 		<td>forum_data, location, location_url, on_page, row</td>
 		<td>3.1.0-a1</td><td>{L_VIEWONLINE_OVERWRITE_LOCATION}</td>
+	</tr>
+	<tr id="core.viewtopic_add_quickmod_option_before">
+		<td><a href="#core.viewtopic_add_quickmod_option_before">core.viewtopic_add_quickmod_option_before</a></td>
+		<td><a href="{PATH}&amp;f=viewtopic.php">viewtopic.php</a></td>
+		<td>allow_change_type, forum_id, post_id, quickmod_array, topic_data, topic_id, topic_tracking_info, viewtopic_url</td>
+		<td>3.1.9-RC1</td>
+		<td>{L_VIEWTOPIC_ADD_QUICKMOD_OPTION_BEFORE}</td>
 	</tr>
 	<tr id="core.viewtopic_assign_template_vars_before">
 		<td><a href="#core.viewtopic_assign_template_vars_before">core.viewtopic_assign_template_vars_before</a></td>
@@ -2233,6 +2290,20 @@ table.zebra tr:hover td {
 		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/memberlist_view.html">memberlist_view.html</a></td>
 		<td>3.1.0-b2</td><td>{L_MEMBERLIST_VIEW_CONTACT_BEFORE}</td>
 	</tr>
+	<tr id="memberlist_view_contact_custom_fields_after">
+		<td><a href="#memberlist_view_contact_custom_fields_after">memberlist_view_contact_custom_fields_after</a></td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/memberlist_view.html">memberlist_view.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/memberlist_view.html">memberlist_view.html</a></td>
+		<td>3.1.9-RC1 </td>
+		<td>{L_MEMBERLIST_VIEW_CONTACT_CUSTOM_FIELDS_AFTER}</td>
+	</tr>
+	<tr id="memberlist_view_contact_custom_fields_before">
+		<td><a href="#memberlist_view_contact_custom_fields_before">memberlist_view_contact_custom_fields_before</a> </td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/memberlist_view.html">memberlist_view.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/memberlist_view.html">memberlist_view.html</a></td>
+		<td>3.1.9-RC1 </td>
+		<td>{L_MEMBERLIST_VIEW_CONTACT_CUSTOM_FIELDS_BEFORE}</td>
+	</tr>
 	<tr id="memberlist_view_content_append">
 		<td><a href="#memberlist_view_content_append">memberlist_view_content_append</a></td>
 		<td><a href="{PATH}&amp;f=/styles/prosilver/template/memberlist_view.html">memberlist_view.html</a></td>
@@ -2246,6 +2317,20 @@ table.zebra tr:hover td {
 		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/memberlist_view.html">memberlist_view.html</a></td>
 		<td>3.1.0-b3</td>
 		<td>{L_MEMBERLIST_VIEW_CONTENT_PREPEND}</td>
+	</tr>
+	<tr id="memberlist_view_non_contact_custom_fields_after">
+		<td><a href="#memberlist_view_non_contact_custom_fields_after">memberlist_view_non_contact_custom_fields_after</a></td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/memberlist_view.html">memberlist_view.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/memberlist_view.html">memberlist_view.html</a></td>
+		<td>3.1.9-RC1 </td>
+		<td>{L_MEMBERLIST_VIEW_NON_CONTACT_CUSTOM_FIELDS_AFTER}</td>
+	</tr>
+	<tr id="memberlist_view_non_contact_custom_fields_before">
+		<td><a href="#memberlist_view_non_contact_custom_fields_before">memberlist_view_non_contact_custom_fields_before</a></td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/memberlist_view.html">memberlist_view.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/memberlist_view.html">memberlist_view.html</a></td>
+		<td>3.1.9-RC1</td>
+		<td>Add content before the user not contact related custom fields</td>
 	</tr>
 	<tr id="memberlist_view_rank_after">
 		<td><a href="#memberlist_view_rank_after">memberlist_view_rank_after</a></td>
@@ -2301,6 +2386,20 @@ table.zebra tr:hover td {
 		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/memberlist_view.html">memberlist_view.html</a></td>
 		<td>3.1.0-a1</td><td>{L_MEMBERLIST_VIEW_USER_STATISTICS_BEFORE}</td>
 	</tr>
+	<tr id="memberlist_view_zebra_after">
+		<td><a href="#memberlist_view_zebra_after">memberlist_view_zebra_after</a></td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/memberlist_view.html">memberlist_view.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/memberlist_view.html">memberlist_view.html</a></td>
+		<td>3.1.9-RC1 </td>
+		<td>{L_MEMBERLIST_VIEW_ZEBRA_AFTER}</td>
+	</tr>
+	<tr id="memberlist_view_zebra_before">
+		<td> <a href="#memberlist_view_zebra_before">memberlist_view_zebra_before</a></td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/memberlist_view.html">memberlist_view.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/memberlist_view.html">memberlist_view.html</a></td>
+		<td>3.1.9-RC1</td>
+		<td>{L_MEMBERLIST_VIEW_ZEBRA_BEFORE}</td>
+	</tr>
 	<tr id="navbar_header_logged_out_content">
 		<td><a href="#navbar_header_logged_out_content">navbar_header_logged_out_content</a></td>
 		<td><a href="{PATH}&amp;f=/styles/prosilver/template/navbar_header.html">navbar_header.html</a></td>
@@ -2330,6 +2429,22 @@ table.zebra tr:hover td {
 		<td><a href="{PATH}&amp;f=/styles/prosilver/template/navbar_header.html">navbar_header.html</a></td>
 		<td></td>
 		<td>3.1.0-RC2</td><td>{L_NAVBAR_HEADER_QUICK_LINKS_BEFORE}</td>
+	</tr>
+	<tr id="navbar_header_user_profile_append">
+		<td><a href="#navbar_header_user_profile_append">navbar_header_user_profile_append</a></td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/navbar_header.html">navbar_header.html</a></td>
+		<td></td>
+		<td>3.1.8-RC1</td>
+		<td>{L_NAVBAR_HEADER_USER_PROFILE_APPEND}
+		</td>
+	</tr>
+	<tr id="navbar_header_user_profile_prepend">
+		<td><a href="#navbar_header_user_profile_prepend">navbar_header_user_profile_prepend</a></td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/navbar_header.html">navbar_header.html</a></td>
+		<td></td>
+		<td>3.1.8-RC1</td>
+		<td>{L_NAVBAR_HEADER_USER_PROFILE_PREPEND}
+		</td>
 	</tr>
 	<tr id="navbar_header_username_append">
 		<td><a href="#navbar_header_username_append">navbar_header_username_append</a></td>
@@ -3458,6 +3573,34 @@ table.zebra tr:hover td {
 		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/viewtopic_body.html">viewtopic_body.html</a></td>
 		<td>3.1.7-RC1</td>
 		<td>{L_VIEWTOPIC_BODY_POST_SUBJECT_BEFORE}</td>
+	</tr>
+	<tr id="viewtopic_body_postrow_back2top_after">
+		<td><a href="#viewtopic_body_postrow_back2top_after">viewtopic_body_postrow_back2top_after</a></td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/viewtopic_body.html">viewtopic_body.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/viewtopic_body.html">viewtopic_body.html</a></td>
+		<td>3.1.8-RC1</td>
+		<td>{L_VIEWTOPIC_BODY_POSTROW_BACK2TOP_AFTER}</td>
+	</tr>
+	<tr id="viewtopic_body_postrow_back2top_append">
+		<td><a href="#viewtopic_body_postrow_back2top_append">viewtopic_body_postrow_back2top_append</a></td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/viewtopic_body.html">viewtopic_body.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/viewtopic_body.html">viewtopic_body.html</a></td>
+		<td>3.1.8-RC1</td>
+		<td>{L_VIEWTOPIC_BODY_POSTROW_BACK2TOP_APPEND}</td>
+	</tr>
+	<tr id="viewtopic_body_postrow_back2top_before">
+		<td><a href="#viewtopic_body_postrow_back2top_before">viewtopic_body_postrow_back2top_before</a></td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/viewtopic_body.html">viewtopic_body.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/viewtopic_body.html">viewtopic_body.html</a></td>
+		<td>3.1.8-RC1</td>
+		<td>{L_VIEWTOPIC_BODY_POSTROW_BACK2TOP_BEFORE}</td>
+	</tr>
+	<tr id="viewtopic_body_postrow_back2top_prepend">
+		<td><a href="#viewtopic_body_postrow_back2top_prepend">viewtopic_body_postrow_back2top_prepend</a></td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/viewtopic_body.html">viewtopic_body.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/viewtopic_body.html">viewtopic_body.html</a></td>
+		<td>3.1.8-RC1</td>
+		<td>{L_VIEWTOPIC_BODY_POSTROW_BACK2TOP_PREPEND}</td>
 	</tr>
 	<tr id="viewtopic_body_postrow_custom_fields_after">
 		<td><a href="#viewtopic_body_postrow_custom_fields_after">viewtopic_body_postrow_custom_fields_after</a></td>
