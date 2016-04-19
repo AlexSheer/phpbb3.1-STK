@@ -369,7 +369,7 @@ table.zebra tr:hover td {
 	<tr id="core.avatar_driver_upload_move_file_before">
 		<td><a href="#core.avatar_driver_upload_move_file_before">core.avatar_driver_upload_move_file_before</a></td>
 		<td><a href="{PATH}&amp;f=/phpbb/avatar/driver/upload.php">phpbb/avatar/driver/upload.php</a></td>
-		<td>destination, error, prefix, row</td>
+		<td>destination, error, filedata, prefix, row</td>
 		<td>3.1.6-RC1</td>
 		<td>{L_AVATAR_DRIVER_UPLOAD_MOVE_FILE_BEFORE}</td>
 	</tr>
@@ -798,7 +798,7 @@ table.zebra tr:hover td {
 	<tr id="core.login_box_redirect">
 		<td><a href="#core.login_box_redirect">core.login_box_redirect</a></td>
 		<td><a href="{PATH}&amp;f=/includes/functions.php">includes/functions.php</a></td>
-		<td>admin, redirect, return</td>
+		<td>admin, redirect</td>
 		<td>3.1.0-RC5</td><td>{L_LOGIN_BOX_REDIRECT}</td>
 	</tr>
 	<tr id="core.login_forum_box">
@@ -1290,7 +1290,7 @@ table.zebra tr:hover td {
 	<tr id="core.posting_modify_submission_errors">
 		<td><a href="#core.posting_modify_submission_errors">core.posting_modify_submission_errors</a></td>
 		<td><a href="{PATH}&amp;f=posting.php">posting.php</a></td>
-		<td>error, forum_id, mode, page_title, post_data, post_id, submit, topic_id</td>
+		<td>error, forum_id, mode, page_title, poll, post_data, post_id, submit, topic_id</td>
 		<td>3.1.0-RC5</td><td>{L_POSTING_MODIFY_SUBMISSION_ERRORS}</td>
 	</tr>
 	<tr id="core.posting_modify_submit_post_after">
@@ -1308,7 +1308,7 @@ table.zebra tr:hover td {
 	<tr id="core.posting_modify_template_vars">
 		<td><a href="#core.posting_modify_template_vars">core.posting_modify_template_vars</a></td>
 		<td><a href="{PATH}&amp;f=posting.php">posting.php</a></td>
-		<td>cancel, error, form_enctype, forum_id, load, message_parser, mode, moderators, page_data, page_title, post_data, post_id, preview, refresh, s_action, s_hidden_fields, s_topic_icons, save, submit, topic_id</td>
+		<td>cancel, draft_id, error, form_enctype, forum_id, load, message_parser, mode, moderators, page_data, page_title, post_data, post_id, preview, refresh, s_action, s_hidden_fields, s_topic_icons, save, submit, topic_id</td>
 		<td>3.1.0-a1</td><td>{L_POSTING_MODIFY_TEMPLATE_VARS}</td>
 	</tr>
 	<tr id="core.prune_sql">
@@ -1332,7 +1332,7 @@ table.zebra tr:hover td {
 	<tr id="core.search_get_topic_data">
 		<td><a href="#core.search_get_topic_data">core.search_get_topic_data</a></td>
 		<td><a href="{PATH}&amp;f=search.php">search.php</a></td>
-		<td>sql_from, sql_select, sql_where, total_match_count</td>
+		<td>sort_by_sql, sort_dir, sort_key, sql_from, sql_order_by, sql_select, sql_where, total_match_count</td>
 		<td>3.1.0-a1</td><td>{L_SEARCH_GET_TOPIC_DATA}</td>
 	</tr>
 	<tr id="core.search_modify_param_after">
@@ -1584,7 +1584,7 @@ table.zebra tr:hover td {
 	<tr id="core.ucp_pm_view_messsage">
 		<td><a href="#core.ucp_pm_view_messsage">core.ucp_pm_view_messsage</a></td>
 		<td><a href="{PATH}&amp;f=/includes/ucp/ucp_pm_viewmessage.php">includes/ucp/ucp_pm_viewmessage.php</a></td>
-		<td>cp_row, folder, folder_id, id, message_row, mode, msg_data, msg_id</td>
+		<td>cp_row, folder, folder_id, id, message_row, mode, msg_data, msg_id, user_info</td>
 		<td>3.1.0-a1</td><td>{L_UCP_PM_VIEW_MESSSAGE}</td>
 	</tr>
 	<tr id="core.ucp_prefs_modify_common">
@@ -1784,7 +1784,7 @@ table.zebra tr:hover td {
 	<tr id="core.viewforum_get_topic_data">
 		<td><a href="#core.viewforum_get_topic_data">core.viewforum_get_topic_data</a></td>
 		<td><a href="{PATH}&amp;f=viewforum.php">viewforum.php</a></td>
-		<td>forum_data, sql_array, forum_id, topics_count, sort_days, sort_key, sort_dir</td>
+		<td>forum_data, forum_id, sort_days, sort_dir, sort_key, sql_array, topics_count</td>
 		<td>3.1.0-a1</td><td>{L_VIEWFORUM_GET_TOPIC_DATA}</td>
 	</tr>
 	<tr id="core.viewforum_get_topic_ids_data">
@@ -3002,15 +3002,15 @@ table.zebra tr:hover td {
 	</tr>
 	<tr id="topiclist_row_prepend">
 		<td><a href="#topiclist_row_prepend">topiclist_row_prepend</a></td>
-		<td><a href="{PATH}&amp;f=/styles/prosilver/template/search_results.html">search_results.html</a>,<a href="{PATH}&amp;f=/styles/prosilver/template/viewforum_body.html">viewforum_body.html</a></td>
-		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/search_results.html">search_results.html</a>,<a href="{PATH}&amp;f=/styles/subsilver2/template/viewforum_body.html">viewforum_body.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/search_results.html">search_results.html</a>,<br /><a href="{PATH}&amp;f=/styles/prosilver/template/viewforum_body.html">viewforum_body.html</a>,<br /><a href="{PATH}&amp;f=/styles/prosilver/template/viewforum_body.html">mcp_forum.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/search_results.html">search_results.html</a>,<br /><a href="{PATH}&amp;f=/styles/subsilver2/template/viewforum_body.html">viewforum_body.html</a>,<br /><a href="{PATH}&amp;f=/styles/subsilver2/template/viewforum_body.html">mcp_forum.html</a></td>
 		<td>3.1.0-a1</td>
 		<td>{L_TOPICLIST_ROW_PREPEND}</td>
 	</tr>
 	<tr id="topiclist_row_append">
 		<td><a href="#topiclist_row_append">topiclist_row_append</a></td>
-		<td><a href="{PATH}&amp;f=/styles/prosilver/template/search_results.html">search_results.html</a>,<a href="{PATH}&amp;f=/styles/prosilver/template/viewforum_body.html">viewforum_body.html</a></td>
-		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/search_results.html">search_results.html</a>,<a href="{PATH}&amp;f=/styles/subsilver2/template/viewforum_body.html">viewforum_body.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/prosilver/template/search_results.html">search_results.html</a>,<br /><a href="{PATH}&amp;f=/styles/prosilver/template/viewforum_body.html">viewforum_body.html</a></td>
+		<td><a href="{PATH}&amp;f=/styles/subsilver2/template/search_results.html">search_results.html</a>,<br /><a href="{PATH}&amp;f=/styles/subsilver2/template/viewforum_body.html">viewforum_body.html</a></td>
 		<td>3.1.0-a1</td>
 		<td>{L_TOPICLIST_ROW_APPEND}</td>
 	</tr>
