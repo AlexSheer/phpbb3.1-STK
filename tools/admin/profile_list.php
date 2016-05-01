@@ -188,7 +188,7 @@ class profile_list
 		$db->sql_query($sql);
 		$count = $db->sql_fetchfield('cnt');
 
-		$sql = 'SELECT u.user_id, u.username, u.user_sig, u.user_jabber, u.user_inactive_reason, u.user_email, u.user_regdate, u.user_posts, u.user_sig_bbcode_uid, u.user_sig_bbcode_bitfield, u.user_colour, u.user_lastvisit, u.user_warnings, u.user_lastpost_time, u.username_clean, p.*
+		$sql = 'SELECT u.user_id AS uid, u.username, u.user_sig, u.user_jabber, u.user_inactive_reason, u.user_email, u.user_regdate, u.user_posts, u.user_sig_bbcode_uid, u.user_sig_bbcode_bitfield, u.user_colour, u.user_lastvisit, u.user_warnings, u.user_lastpost_time, u.username_clean, p.*
 			FROM ' . USERS_TABLE . ' AS u
 			LEFT JOIN ' . PROFILE_FIELDS_DATA_TABLE . ' AS p ON (p.user_id = u.user_id)
 			WHERE u.user_type <> ' . USER_IGNORE .
@@ -238,7 +238,7 @@ class profile_list
 				'OCCUPATION'		=> $row['pf_phpbb_occupation'],
 				'POSTS'				=> $row['user_posts'],
 				'SIGNATURE'			=> ((!isset($options[$display]) || $display == 'user_sig') && $row['user_sig']) ? generate_text_for_display($row['user_sig'], $row['user_sig_bbcode_uid'], $row['user_sig_bbcode_bitfield'], 7) : '',
-				'USERID'			=> ($user->data['user_id'] == $row['user_id']) ? false : $row['user_id'],
+				'USERID'			=> ($user->data['user_id'] == $row['uid']) ? false : $row['uid'],
 				'USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 				'VISITED'			=> ($row['user_lastvisit']) ? $user->format_date($row['user_lastvisit']) : 0,
 				'WARNINGS'			=> $row['user_warnings'],
@@ -248,7 +248,7 @@ class profile_list
 				'ORDER_SECTION'			=> (in_array($order_by, $timestamps)) ? (($row[$order_by]) ? $user->format_date($row[$order_by]) : $user->lang['NEVER']) : $row[$order_by],
 				'USER_INACTIVE_REASON'	=> $inactive_reason,
 
-				'U_USER_ADMIN'		=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, 'i=users&amp;mode=overview&amp;u=' . $row['user_id'], true, $user->session_id),
+				'U_USER_ADMIN'		=> append_sid(PHPBB_ROOT_PATH . 'adm/index.' . PHP_EXT, 'i=users&amp;mode=overview&amp;u=' . $row['uid'], true, $user->session_id),
 
 				'S_USER_INACTIVE'	=> ($row['user_inactive_reason']) ? true : false,
 			));
