@@ -30,7 +30,7 @@ class extensions
 		$submit = request_var('sa', false);
 
 		$vendor = request_var('vendor', '');
-		$author = request_var('developer', '');
+		$author = request_var('developer', '', true);
 		$version = request_var('version', '');
 		$description = request_var('description', '');
 		$homepage = request_var('homepage', '');
