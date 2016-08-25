@@ -145,6 +145,7 @@ class reparse_bbcode
 		$step				= request_var('step', 0);
 		$start				= $step * $this->step_size;
 		$cnt				= 0;
+		$sql_forum_where	= '';
 
 		if (sizeof($reparse_forum_ids))
 		{
