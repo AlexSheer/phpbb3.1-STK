@@ -461,6 +461,10 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 						$v = "3.1.{$i}";
 						$d = ($v == $config['version']) ? " default='default'" : '';
 						$version_options .= "<option value='{$v}'{$d}>{$v}</option>";
+						if ($i >= 8 && $i < $_phpbb_version)
+						{
+							$version_options .= '<option value="3.1.7-pl1">3.1.7-pl1</option>';
+						}
 					}
 
 					$template->assign_vars(array(
