@@ -276,7 +276,7 @@ class database_cleaner_views
 			'TITLE'		=> 'ROWS',
 		);
 
-		$removed_config = ($db->get_sql_layer() == 'mysql4') ? array('auth_oauth_bitly_key', 'auth_oauth_bitly_secret', 'auth_oauth_facebook_key', 'auth_oauth_facebook_secret', 'auth_oauth_google_key', 'auth_oauth_google_secret') : array();
+		$removed_config = ($db->get_sql_layer() == 'mysql4' || $db->get_sql_layer() == 'mysqli') ? array('auth_oauth_bitly_key', 'auth_oauth_bitly_secret', 'auth_oauth_facebook_key', 'auth_oauth_facebook_secret', 'auth_oauth_google_key', 'auth_oauth_google_secret', 'fulltext_sphinx_id') : array();
 
 		$config_rows = $existing_config = array();
 		get_config_rows($this->db_cleaner->data->config, $config_rows, $existing_config);
