@@ -45,7 +45,7 @@ class reset_styles
 	*/
 	function run_tool(&$error)
 	{
-		global $db;
+		global $db, $request;
 
 		if (!check_form_key('reset_styles'))
 		{
@@ -53,7 +53,7 @@ class reset_styles
 			return;
 		}
 
-		$style_id = request_var('style_id', 0);
+		$style_id = $request->variable('style_id', 0);
 
 		if (!$style_id)
 		{
