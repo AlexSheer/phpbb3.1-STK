@@ -18,7 +18,6 @@ if (!defined('IN_PHPBB'))
 
 class delete_users
 {
-
 	function run_tool(&$error)
 	{
 		global $user, $db;
