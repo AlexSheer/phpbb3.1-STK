@@ -1,5 +1,52 @@
 <!-- INCLUDE overall_header.html -->
 
+<h1>{L_ORPHANED_TOPICS}</h1>
+
+<p>{L_ORPHANED_TOPICS_EXPLAIN}</p>
+
+<!-- IF .orphaned_topics -->
+<form id="stk_forum_orphan_topics" method="post" action="{U_FORUM_ORPHANED_TOPICS}">
+	<fieldset>
+	<legend>{L_ORPHANED_TOPICS}</legend>
+	<table cellspacing="1">
+		<tr>
+			<th width="70px">{L_TOPIC_ID}</th>
+			<th>{L_POST_SUBJECT}</th>
+			<th width="250px">{L_AUTHOR}</th>
+			<th>ID {L_FORUM}</th>
+			<th width="125px">{L_NEW_FORUM_ID}</th>
+			<th width="125px" class="mark">{L_MARK}</th>
+		</tr>
+		<!-- BEGIN orphaned_topics -->
+		<tr>
+			<td>{orphaned_topics.TOPIC_ID}</td>
+			<td>{orphaned_topics.TOPIC_TITLE}</td>
+			<td>{orphaned_topics.USER_FULL}</td>
+			<td>{orphaned_topics.FORUM_ID}</td>
+			<td><input type="text" name="forum[{orphaned_topics.TOPIC_ID}]" /></td>
+			<td class="mark"><input type="checkbox" name="topics[]" value="{orphaned_topics.TOPIC_ID}" /></td>
+		</tr>
+		<!-- END orphaned_topics -->
+		</table>
+	<div class="rightside pagination">
+		<a href="#" onclick="marklist('stk_forum_orphan_topics', 'topics', true); return false;">{L_MARK_ALL}</a> :: <a href="#" onclick="marklist('stk_forum_orphan_topics', 'topics', false); return false;">{L_UNMARK_ALL}</a><br /><br />
+		<label for="det">{L_DELETE_EMPTY_TOPICS}:</label>
+		<input type="submit" name="reassign" class="button2" value="{L_REASSIGN}" />
+		<input type="submit" name="submit" id="det" class="button2" value="{L_DELETE}" />
+	</div>
+	</fieldset>
+	{S_HIDDEN_FIELDS}
+	{S_FORM_TOKEN}
+</form>
+<!-- ELSE -->
+<fieldset>
+	<legend>{L_ORPHANED_TOPICS}</legend>
+	<dl>
+		<dd><b>{L_NO_ORPHANED_TOPICS}</b></dd>
+	</dl>
+</fieldset>
+<!-- ENDIF -->
+
 <h1>{L_EMPTY_TOPICS}</h1>
 
 <p>{L_EMPTY_TOPICS_EXPLAIN}</p>
