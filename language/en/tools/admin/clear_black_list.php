@@ -39,4 +39,5 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'CLEAR_BLACK_LIST'				=> 'IP-addresses Black list',
+	'NO_BAN_CELL'					=> 'No banned IP addresses'
 ));
