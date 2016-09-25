@@ -38,6 +38,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
+	'ACP_MODULES_SETTINGS'			=> 'Search for additional modules',
+
 	'BOARD_DISABLE_REASON'			=> 'The board is currently disabled due to some database maintenace. Please check back soon!',
 	'BOARD_DISABLE_SUCCESS'			=> 'The board has been disabled successfully!',
 
@@ -47,6 +49,7 @@ $lang = array_merge($lang, array(
 	'CONTINUE'						=> 'Continue',
 
 	'DATABASE_CLEANER'				=> 'Database Cleaner',
+	'DATABASE_CLEANER_BREAK'		=> 'Database Cleaner forcibly interrupted work!<br /><br />The cache has been cleaned and restored access to the board.',
 	'DATABASE_CLEANER_EXTRA'		=> 'Any others are extra items added by modifications.  <strong>If the check box is selected it will be removed</strong>.',
 	'DATABASE_CLEANER_MISSING'		=> 'Any fields with a red background like this are missing items that should be added.  <strong>If the check box is selected it will be added</strong>.',
 	'DATABASE_CLEANER_SUCCESS'		=> 'The database cleaner has successfully finished all tasks!<br /><br />Please be sure to backup your database again.',
@@ -64,18 +67,25 @@ $lang = array_merge($lang, array(
 	'EMPTY_PREFIX_EXPLAIN'			=> 'The database cleaner has determined that you haven\'t set an table prefix for the phpBB database tables. Due to this the database cleaner will check <strong>all</strong> tables in the database. Take extra care when proceding and make sure that you exclude any non-phpBB tables from the selection. Failing to do so will damage database tables that aren\'t part of phpBB.<br />If you aren\'t sure on how to procede seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">phpBB Support Forums</a>.',
 	'ERROR'							=> 'Error',
 	'EXTRA'							=> 'Extra',
+	'EXTENSION_FILE_GROUPS'			=> 'Attachment extension',
 	'EXTENSION_GROUPS_SETTINGS'		=> 'Extension groups settings',
 	'EXTENSION_GROUPS_SUCCESS'		=> 'The extension groups have been reset successfully',
 	'EXTENSIONS_SUCCESS'			=> 'The extensions have been reset successfully',
 
 	'FINAL_STEP'					=> 'This is the final step.<br /><br />We will now re-enable your board and purge your board’s cache.',
 
+	'GO_TO_ACP'						=> ' --&raquo; go to control module ',
+
 	'INSTRUCTIONS'					=> 'Instructions',
+	'INTRODUCTION'					=> 'Start over',
 
 	'MISSING'						=> 'Missing',
+	'MODULE_ADD'					=> 'Module add',
+	'MODULE_ALREADY_EXIST'			=> 'Module already exist',
 	'MODULE_UPDATE_SUCCESS'			=> 'The modules have been updated successfully!',
 
 	'NO_BOT_GROUP'					=> 'Could not reset the bots, missing Bot group.',
+	'NO_PARENT'						=> 'Parent module not exists.<br />Failed',
 
 	'PERMISSION_SETTINGS'			=> 'Permission Options',
 	'PERMISSION_UPDATE_SUCCESS'		=> 'The permission settings have been updated successfully!',
@@ -83,6 +93,8 @@ $lang = array_merge($lang, array(
 
 	'QUIT'							=> 'Quit',
 
+	'RESET_ACP_MODULES_SKIP'		=> 'Checking of additional modules skipped',
+	'RESET_ACP_MODULE_SUCCESS'		=> 'Checking of additional modules is done',
 	'RESET_BOTS'					=> 'Reset Bots',
 	'RESET_BOTS_EXPLAIN'			=> 'Would you like to reset the bots list to the default phpBB3 bot list?  All existing bots will be removed and be replaced with the default set.',
 	'RESET_BOTS_SKIP'				=> 'The bot reset has been skipped',
@@ -99,12 +111,6 @@ $lang = array_merge($lang, array(
 	'RESET_ROLE_DATA_EXPLAIN'		=> 'This step will reset the phpBB system roles back to their original state, its highly advised to run this if you made changes in the previous step.',
 	'ROLE_SETTINGS'					=> 'Role Settings',
 	'ROWS'							=> 'Rows',
-
-	'ACP_MODULES_SETTINGS'			=> 'Search for additional modules',
-	'UNDEFINED'						=> 'undefined',
-	'RESET_ACP_MODULES_SKIP'		=> 'Checking of additional modules skipped',
-	'RESET_ACP_MODULE_SUCCESS'		=> 'Checking of additional modules is done',
-	'GO_TO_ACP'						=> ' --&raquo; go to control module ',
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
 		'tables'			=> 'Tables not changed',
@@ -130,13 +136,17 @@ $lang = array_merge($lang, array(
 		'final_step'		=> 'This last step will clear the cache and re-enable the board.',
 		'acp_modules'		=> 'Not found any additional or missing modules',
 	),
+	'SKIP_AND_GO'					=> 'Skip & Go',
+	'SKIP_TO'						=> 'Skip',
+	'SKIP_EXPLAIN'					=> 'You can skip actions on this step and go to step selected from the list below:',
 	'SUCCESS'						=> 'Success',
-	'MODULE_ADD'					=> 'Module add',
-	'MODULE_ALREADY_EXIST'			=> 'Module already exist',
-	'NO_PARENT'						=> 'Parent module not exists.<br />Failed',
+	'SYSTEM_GROUPS'					=> 'Checking system groups',
 	'SYSTEM_GROUP_UPDATE_SUCCESS'	=> 'The system groups have been reset successfully',
+
 	'TYPE'							=> 'Type',
+
 	'UNSTABLE_DEBUG_ONLY'			=> 'The database cleaner can only run on unstable phpBB versions <em>(dev, a, b, RC)</em>, when "DEBUG" is enabled through the phpBB config file.',
+	'UNDEFINED'						=> 'undefined',
 
 	'ARCHIVES'				=> 'Archives',
 	'DOCUMENTS'				=> 'Documents',
