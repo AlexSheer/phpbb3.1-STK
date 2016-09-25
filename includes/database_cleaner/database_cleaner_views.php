@@ -162,6 +162,30 @@ class database_cleaner_views
 			$msg = (!empty($this->not_run_message)) ? $this->not_run_message : ((isset($user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step - 1]])) ? $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step - 1]] : $this->success_message);
 		}
 
+		$s_options = '';
+		$actions =array(
+			'introduction'			=> $user->lang['INTRODUCTION'],
+			'tables'				=> $user->lang['DATABASE_TABLES'],
+			'columns'				=> $user->lang['COLUMNS'],
+			'config'				=> $user->lang['CONFIG_SETTINGS'],
+			'extension_groups'		=> $user->lang['ACP_EXTENSION_GROUPS'],
+			'extensions'			=> $user->lang['EXTENSION_FILE_GROUPS'],
+			'permissions'			=> $user->lang['PERMISSION_SETTINGS'],
+			'groups'				=> $user->lang['SYSTEM_GROUPS'],
+			'roles'					=> $user->lang['ROLE_SETTINGS'],
+			'role_data'				=> $user->lang['RESET_ROLE_DATA'],
+			'acp_modules'			=> $user->lang['ACP_MODULES_SETTINGS'],
+			'modules'				=> $user->lang['RESET_MODULES'],
+			'bots'					=> $user->lang['RESET_BOTS'],
+			'report_reasons'		=> $user->lang['RESET_REPORT_REASONS'],
+			'final_step'			=> $user->lang['SECTION_NOT_CHANGED_TITLE']['final_step']
+		);
+		foreach ($this->db_cleaner->step_to_action as $step => $action)
+		{
+			$s_selected = ($step == $this->db_cleaner->step + 1) ? ' selected="selected"' : '';
+			$s_options .= '<option value="' . $step . '" ' . $s_selected . '>' . $actions[$action] . '</option>';
+		}
+
 		// Output some stuff we need always
 		$template->assign_vars(array(
 			'S_HIDDEN_FIELDS'	=> (isset($this->_hidden_fields)) ? build_hidden_fields($this->_hidden_fields) : '',
@@ -171,6 +195,11 @@ class database_cleaner_views
 
 			// Create submit link, always set "submit" so we'll continue in the run_tool method
 			'U_NEXT_STEP'	=> $_u_next_step,
+
+			// Skip next step & go to spcified step
+			'U_SKIP_STEP'	=> append_sid(STK_INDEX, 'c=support&t=database_cleaner'),
+ 			'S_SKIP'		=> ($this->db_cleaner->step > 0 && $this->db_cleaner->step_to_action[$this->db_cleaner->step] != 'final_step') ? true : false,
+ 			'S_SELECT'		=> $s_options,
 		));
 
 		// Do tha page
@@ -268,7 +297,7 @@ class database_cleaner_views
 	*/
 	function config()
 	{
-		global $db;
+		global $db, $user, $template;
 
 		// display extra config variables and let them check/uncheck the ones they want to add/remove
 		$this->_section_data['config'] = array(
@@ -300,6 +329,11 @@ class database_cleaner_views
 				$this->_has_changes = true;
 			}
 		}
+
+		$template->assign_vars(array(
+			'NO_CHANGES_TEXT'	=> $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+			'NO_CHANGES_TITLE'	=> $user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+		));
 
 		$this->success_message = 'DATABASE_COLUMNS_SUCCESS';
 	}
@@ -375,7 +409,7 @@ class database_cleaner_views
 
 						$this->_section_data[$group] = array(
 							'NAME'	=> user_lang($group),
-							'TITLE'	=> 'COLUMNS',
+							'TITLE'	=> 'EXTENSION_FILE_GROUPS',
 						);
 					}
 
@@ -434,7 +468,7 @@ class database_cleaner_views
 				continue;
 			}
 
-			$this->_section_data['config']['ITEMS'][] = array(
+			$this->_section_data['groups']['ITEMS'][] = array(
 				'NAME'			=> $name,
 				'FIELD_NAME'	=> $name,
 				'MISSING'		=> (!in_array($name, $existing_groups)) ? true : false,
