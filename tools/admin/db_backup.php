@@ -22,14 +22,14 @@ class db_backup
 {
 	function display_options()
 	{
-		global $db, $template, $config, $user;
+		global $db, $template, $config, $user, $request;
 
-		$submit = request_var('sa', false);
-		$tables = request_var('table_select', array(''));
-		$gzip = request_var('gzip', true);
-		$where = request_var('action', 'store');
-		$type = request_var('type', 'full');
-		$format	= request_var('method', '', true);
+		$submit = $request->variable('sa', false);
+		$tables = $request->variable('table_select', array(''));
+		$gzip = $request->variable('gzip', true);
+		$where = $request->variable('action', 'store');
+		$type = $request->variable('type', 'full');
+		$format = $request->variable('method', '', true);
 
 		$sql_layer = $db->get_sql_layer();
 
@@ -253,7 +253,9 @@ class db_backup
 		$tables = is_array($tables) ? $tables : explode(',', $tables);
 		$db_name = $db->get_db_name();
 
-		$sql = 'SHOW TABLE STATUS FROM '. $db_name .' WHERE '. $db->sql_in_set('Name', $tables) .'';
+		$sql = 'SHOW TABLE STATUS
+			WHERE ' . $db->sql_in_set('Name', $tables) . '';
+
 		$result = $db->sql_query($sql);
 		$table_count = $records = 0;
 		while ($row = $db->sql_fetchrow($result))
@@ -535,7 +537,9 @@ class mysql_dumper_extractor extends dbbase_extractor
 		$tables = is_array($tables) ? $tables : explode(',', $tables);
 		$db_name = $db->get_db_name();
 
-		$sql = 'SHOW TABLE STATUS FROM '. $db_name .' WHERE '. $db->sql_in_set('Name', $tables) .'';
+		$sql = 'SHOW TABLE STATUS
+			WHERE ' . $db->sql_in_set('Name', $tables) . '';
+
 		$result = $db->sql_query($sql);
 		$table_count = $records = 0;
 		while ($row = $db->sql_fetchrow($result))
