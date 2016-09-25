@@ -219,9 +219,11 @@ a:active {
 	Based on: http://www.alistapart.com/articles/slidingdoors2/
 ----------------------------------------*/
 #tabs {
-	line-height: normal;
-	margin: 0 0 -6px 7px;
-	min-width: 600px;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: normal;
+    margin: 0 7px;
+    position: relative;
+    z-index: 2;
 }
 
 .rtl #tabs {
@@ -306,54 +308,14 @@ a:active {
 /* Main Panel
 ---------------------------------------- */
 #acp {
-	margin: 4px 0;
+	margin: 0 0 2px;
 	padding: 3px 1px;
 	min-width: 550px;
-	background-color: #FFFFFF;
-	border: 1px #999999 solid;
-}
-
-.panel {
 	background: #F3F3F3 url("../images/innerbox_bg.gif") repeat-x top;
-	padding: 0;
+	border: 1px #999999 solid;
+	border-radius: 5px;
+	box-shadow: #FFF 0 0 0 1px inset;
 }
-
-span.corners-top, span.corners-bottom,
-span.corners-top span, span.corners-bottom span {
-	font-size: 1px;
-	line-height: 1px;
-	display: block;
-	height: 5px;
-	background-repeat: no-repeat;
-}
-
-span.corners-top {
-	background-image: url("../images/corners_left.gif");
-	background-position: 0 0;
-	margin: -4px -2px 0;
-}
-
-span.corners-top span {
-	background-image: url("../images/corners_right.gif");
-	background-position: 100% 0;
-}
-
-span.corners-bottom {
-	background-image: url("../images/corners_left.gif");
-	background-position: 0 100%;
-	margin: 0 -2px -4px;
-	clear: both;
-}
-
-span.corners-bottom span {
-	background-image: url("../images/corners_right.gif");
-	background-position: 100% 100%;
-}
-
-/* WinIE tweaks \*/
-* html span.corners-top, * html span.corners-bottom { background-image: url("../images/corners_left.gif"); }
-* html span.corners-top span, * html span.corners-bottom span { background-image: url("../images/corners_right.gif"); }
-/* End tweaks */
 
 /* Sub-navigation Menu
 ---------------------------------------- */
@@ -1065,6 +1027,13 @@ a.button1, input.button1 {
 /* Alternative button */
 a.button2, input.button2 {
 	border: 1px solid #666666;
+}
+
+input.quit {
+	color: #fff;
+	background: #F00;
+	border: 1px solid #BC2A4D;
+
 }
 
 /* <a> button in the style of the form buttons */
