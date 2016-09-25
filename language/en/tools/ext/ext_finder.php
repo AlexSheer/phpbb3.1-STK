@@ -46,7 +46,7 @@ $lang = array_merge($lang, array(
 
 	'EXT_COLUMN_FINDER'			=> 'Columns',
 	'EXT_COLUMN_FINDER_EXPLAIN'	=> 'Here you can get information about an extension, which uses this column:',
-	'COLUMN'					=> 'Colums',
+	'COLUMN'					=> 'Column',
 
 	'EXT_CONFIG_FINDER'			=> 'Configs',
 	'EXT_CONFIG_FINDER_EXPLAIN'	=> 'Here you can get information about an extension, which uses this config parameter:',
