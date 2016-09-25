@@ -74,7 +74,7 @@ $lang = array_merge($lang, array(
 	'NO_ORPHANED_TOPICS'			=> 'No orphaned topics found',
 	'NEW_FORUM_ID'					=> 'New Forum ID',
 	'TOPICS_REASSIGNED'				=> '%d topics re-assigned',
-	'ORPHANED_TOPICS_EXPLAIN'		=> 'These aretopics that do not have a forum associated with them. Specify a new forum ID to have the topic attached to that forum.',
+	'ORPHANED_TOPICS_EXPLAIN'		=> 'These are topics that do not have a forum associated with them. Specify a new forum ID to have the topic attached to that forum.',
 	'NO_FORUMS_IDS'					=> 'No forum IDs provided',
 	'NONEXISTENT_FORUMS_IDS'		=> 'The following target forums IDs do not exist: %s.<br />Please verify the specified forum IDs.',
 ));

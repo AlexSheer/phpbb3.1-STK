@@ -47,7 +47,7 @@ $lang = array_merge($lang, array(
 	'GROUP_LEADER'			=> 'Group leader',
 	'GROUP_LEADER_EXPLAIN'	=> 'Make this user the group leader of the selected groups.',
 
-	'USER_ADDED'			=> 'The user was sucessfully created!',
+	'USER_ADDED'			=> 'The user was successfully created!',
 	'USER_GROUPS'			=> 'User groups',
 	'USER_GROUPS_EXPLAIN'	=> 'Make this user a member of the selected groups.',
 ));

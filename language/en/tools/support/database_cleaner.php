@@ -40,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ACP_MODULES_SETTINGS'			=> 'Search for additional modules',
 
-	'BOARD_DISABLE_REASON'			=> 'The board is currently disabled due to some database maintenace. Please check back soon!',
+	'BOARD_DISABLE_REASON'			=> 'The board is currently disabled due to some database maintenance. Please check back soon!',
 	'BOARD_DISABLE_SUCCESS'			=> 'The board has been disabled successfully!',
 
 	'COLUMNS'						=> 'Columns',
@@ -64,7 +64,7 @@ $lang = array_merge($lang, array(
 
 	'EMPTY_PREFIX'					=> 'No database prefix',
 	'EMPTY_PREFIX_CONFIRM'			=> 'The database cleaner is about to make changes to the tables in your database, but as you are using an empty table prefix this might affect non-phpBB tables. Are you sure that you want to continue?',
-	'EMPTY_PREFIX_EXPLAIN'			=> 'The database cleaner has determined that you haven\'t set an table prefix for the phpBB database tables. Due to this the database cleaner will check <strong>all</strong> tables in the database. Take extra care when proceding and make sure that you exclude any non-phpBB tables from the selection. Failing to do so will damage database tables that aren\'t part of phpBB.<br />If you aren\'t sure on how to procede seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">phpBB Support Forums</a>.',
+	'EMPTY_PREFIX_EXPLAIN'			=> 'The database cleaner has determined that you haven\'t set an table prefix for the phpBB database tables. Due to this the database cleaner will check <strong>all</strong> tables in the database. Take extra care when proceeding and make sure that you exclude any non-phpBB tables from the selection. Failing to do so will damage database tables that aren\'t part of phpBB.<br />If you aren\'t sure on how to proceed seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">phpBB Support Forums</a>.',
 	'ERROR'							=> 'Error',
 	'EXTRA'							=> 'Extra',
 	'EXTENSION_FILE_GROUPS'			=> 'Attachment extension',
