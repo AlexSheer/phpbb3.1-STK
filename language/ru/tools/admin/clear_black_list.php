@@ -38,5 +38,6 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'CLEAR_BLACK_LIST'				=> 'Черный список IP-адресов',
+	'CLEAR_BLACK_LIST'		=> 'Черный список IP-адресов',
+	'NO_BAN_CELL'			=> 'Черный список IP-адресов пуст'
 ));
