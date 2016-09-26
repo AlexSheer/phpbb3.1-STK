@@ -19,7 +19,7 @@
 <form id="cleaner" method="post" action="{U_NEXT_STEP}">
 	<!-- IF S_SKIP -->
 	<p style="font-size: 0.8em; margin-bottom: 0.5em;">{L_SKIP_EXPLAIN}</p>
-	{L_NEXT_STEP}{L_COLON}<select onchange="getval(this);">{S_SELECT}</select>&nbsp;<input type="submit" name="next" value="{L_SKIP_AND_GO}" class="button1" />
+	{L_NEXT_STEP}{L_COLON}<select name="next_step" onchange="getval(this);">{S_SELECT}</select>&nbsp;<input type="submit" name="next" value="{L_SKIP_AND_GO}" class="button1" />
 	<!-- IF S_CONFIRM_BOX -->&nbsp;<input type="submit" name="skip" value="{L_SKIP_TO}" class="button1" />&nbsp;<input type="submit" name="quit" value="{L_QUIT}" class="button1 quit" /><!-- ENDIF -->
 	<!-- ENDIF -->
 	<script type="text/javascript">
