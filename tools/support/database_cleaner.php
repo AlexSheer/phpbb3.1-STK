@@ -28,6 +28,7 @@ if (!class_exists('database_cleaner'))
 		var $step_to_action = array(
 			'introduction',
 			'tables',
+			'indexes',
 			'columns',
 			'config',
 			'extension_groups',
