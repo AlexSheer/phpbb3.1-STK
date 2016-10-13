@@ -603,3 +603,61 @@ function recursive_keys($input, $search_value = null){
 	}
 	return $output;
 }
+
+function get_keys($table_name)
+{
+	global $db;
+
+	$dbms = $db->get_sql_layer();
+
+	$keys = array();
+
+	switch ($dbms)
+	{
+		case 'postgres':
+			$sql = "SELECT ic.relname as index_name, i.indisunique
+				FROM pg_class bc, pg_class ic, pg_index i
+				WHERE (bc.oid = i.indrelid)
+					AND (ic.oid = i.indexrelid)
+					AND (bc.relname = '" . $table_name . "')
+					AND (i.indisprimary != 't')";
+			$col = 'index_name';
+		break;
+
+		case 'mysql4':
+			$sql = 'SHOW KEYS
+				FROM ' . $table_name;
+			$col = 'Key_name';
+		break;
+
+		case 'oracle':
+			$sql = "SELECT index_name, table_owner
+				FROM user_indexes
+				WHERE table_name = '" . strtoupper($table_name) . "'
+					AND generated = 'N'
+					AND uniqueness = 'UNIQUE'";
+			$col = 'index_name';
+		break;
+
+		case 'sqlite':
+		case 'sqlite3':
+			$sql = "PRAGMA index_list('" . $table_name . "');";
+			$col = 'name';
+		break;
+	}
+
+	$result = $db->sql_query($sql);
+
+	while($row = $db->sql_fetchrow($result))
+	{
+		if($row[$col] != 'PRIMARY')
+		{
+			$keys[] = $row[$col];
+		}
+		else
+		{
+			//$keys[] = 'PRIMARY_KEY';
+		}
+	}
+	return $keys;
+}
