@@ -557,7 +557,7 @@ class umil
 	/**
 	* Cache Purge
 	*
-	* This function is for purging either phpBB3’s data cache, authorization cache, or the styles cache.
+	* This function is for purging either phpBB3вЂ™s data cache, authorization cache, or the styles cache.
 	*
 	* @param string $type The type of cache you want purged.  Available types: auth, imageset, template, theme.  Anything else sent will purge the forum's cache.
 	* @param int $style_id The id of the item you want purged (if the type selected is imageset/template/theme, 0 for all items in that section)
@@ -2340,7 +2340,7 @@ class umil
 	*
 	* Add a new key/index to a table
 	*/
-	function table_index_add($table_name, $index_name = '', $column = array())
+	function table_index_add($table_name, $index_name = '', $column = array(), $index_type = 'INDEX')
 	{
 		global $config;
 
@@ -2360,25 +2360,29 @@ class umil
 
 		$this->umil_start('TABLE_KEY_ADD', $table_name, $index_name);
 
-		if ($this->table_index_exists($table_name, $index_name))
-		{
-			return $this->umil_end('TABLE_KEY_ALREADY_EXIST', $table_name, $index_name);
-		}
-
 		if (!is_array($column))
 		{
 			$column = array($column);
 		}
 
-		// remove index length if we are before 3.0.8
-		// the feature (required for some types when using MySQL4)
-		// was added in that release (ticket PHPBB3-8944)
-		if (version_compare($config['version'], '3.0.7-pl1', '<='))
+		switch ($index_type)
 		{
-			$column = preg_replace('#:.*$#', '', $column);
+			case 'UNIQUE':
+				if($this->db_tools->sql_unique_index_exists($table_name, $index_name))
+				{
+					return $this->umil_end('TABLE_KEY_ALREADY_EXIST', $table_name, $index_name);
+				}
+				$this->db_tools->sql_create_unique_index($table_name, $index_name, $column);
+			break;
+			case 'INDEX':
+			default:
+				if($this->db_tools->sql_index_exists($table_name, $index_name))
+				{
+					return $this->umil_end('TABLE_KEY_ALREADY_EXIST', $table_name, $index_name);
+				}
+				$this->db_tools->sql_create_index($table_name, $index_name, $column);
+			break;
 		}
-
-		$this->db_tools->sql_create_index($table_name, $index_name, $column);
 
 		return $this->umil_end();
 	}
@@ -2400,18 +2404,16 @@ class umil
 
 		$this->umil_start('TABLE_KEY_REMOVE', $table_name, $index_name);
 
-		if (!$this->table_index_exists($table_name, $index_name))
-		{
-			return $this->umil_end('TABLE_KEY_NOT_EXIST', $table_name, $index_name);
-		}
-
 		$this->db_tools->sql_index_drop($table_name, $index_name);
 
 		return $this->umil_end();
 	}
 
 	// Ignore, function was renamed to table_row_insert and keeping for backwards compatibility
-	function table_insert($table_name, $data = array()) { $this->table_row_insert($table_name, $data); }
+	function table_insert($table_name, $data = array())
+	{
+		$this->table_row_insert($table_name, $data);
+	}
 
 	/**
 	* Table Insert
