@@ -881,7 +881,7 @@ class datafile_3_1_2
 			),
 			'ACP_FORUM_BASED_PERMISSIONS' => array(
 				'ACP_FORUM_PERMISSIONS',
-//				'ACP_FORUM_PERMISSIONS_COPY',
+				'ACP_FORUM_PERMISSIONS_COPY',
 				'ACP_FORUM_MODERATORS',
 				'ACP_USERS_FORUM_PERMISSIONS',
 				'ACP_GROUPS_FORUM_PERMISSIONS',
@@ -2125,7 +2125,7 @@ class datafile_3_1_2
 				'title_match'		=> array('BOOL', 0),
 			),
 			'KEYS'			=> array(
-				'unq_mtch'			=> array('UNIQUE', array('word_id', 'post_id', 'title_match')),
+				'un_mtch'			=> array('UNIQUE', array('word_id', 'post_id', 'title_match')),
 				'word_id'			=> array('INDEX', 'word_id'),
 				'post_id'			=> array('INDEX', 'post_id'),
 			),
