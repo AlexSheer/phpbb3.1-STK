@@ -989,6 +989,57 @@ class database_cleaner_controller
 		return $error;
 	}
 
+
+	function indexes($error, $selected)
+	{
+		global $umil;
+
+		foreach ($this->db_cleaner->data->tables as $table_name => $data)
+		{
+			if ($umil->table_exists($table_name) === false)
+			{
+				continue;
+			}
+			$existing_keys = get_keys($table_name);
+
+			if ($existing_keys === false)
+			{
+				// Table doesn't exist, don't handle here.
+				continue;
+			}
+
+			if (!empty($data['KEYS']))
+			{
+				$keys = array_unique(array_merge(array_keys($data['KEYS']), $existing_keys));
+			}
+
+			foreach ($keys as $key)
+			{
+				if (isset($selected[$table_name . '_' . $key]))
+				{
+					if (!isset($data['KEYS'][$key]) && in_array($key, $existing_keys))
+					{
+						$result = $umil->table_index_remove($table_name, $key);
+						if (stripos($result, 'SQL ERROR'))
+						{
+							$error[] = $result;
+						}
+					}
+					else if (isset($data['KEYS'][$key]) && !in_array($key, $existing_keys))
+					{
+						$columns = $data['KEYS'][$key][1];
+						$result = $umil->table_index_add($table_name, $key, $columns, $data['KEYS'][$key][0]);
+						if (stripos($result, 'SQL ERROR'))
+						{
+							$error[] = $result;
+						}
+					}
+				}
+			}
+		}
+		return $error;
+	}
+
 	/**
 	* Correct the database tables based upon the selection
 	* the user made before.
