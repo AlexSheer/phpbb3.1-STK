@@ -40,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ACP_MODULES_SETTINGS'			=> 'Search for additional modules',
 
-	'BOARD_DISABLE_REASON'			=> 'The board is currently disabled due to some database maintenance. Please check back soon!',
+	'BOARD_DISABLE_REASON'			=> 'The board is currently disabled due to some database maintenace. Please check back soon!',
 	'BOARD_DISABLE_SUCCESS'			=> 'The board has been disabled successfully!',
 
 	'COLUMNS'						=> 'Columns',
@@ -55,6 +55,7 @@ $lang = array_merge($lang, array(
 	'DATABASE_CLEANER_SUCCESS'		=> 'The database cleaner has successfully finished all tasks!<br /><br />Please be sure to backup your database again.',
 	'DATABASE_CLEANER_WARNING'		=> 'This tool comes with NO WARRANTY and users of this tool should back up their entire database in case of a failure.<br /><br />Before continuing, make sure you have a database backup!',
 	'DATABASE_CLEANER_WELCOME'		=> 'Welcome to the Database Cleaner tool!<br /><br />This tool was designed to remove extra columns, rows, and tables from the database not present in the default installation of phpBB3, and to add missing database elements that may be needed.<br /><br />When you are ready to continue click the Continue button to start using the Database Cleaner tool (note that your board will be disabled until this is finished).',
+	'DATABASE_INDEXES_SUCCESS'		=> 'Indexes updated successfully!',
 	'DATABASE_COLUMNS_SUCCESS'		=> 'The database columns have been updated successfully!',
 	'DATABASE_TABLES'				=> 'Database Tables',
 	'DATABASE_TABLES_SUCCESS'		=> 'The database tables have been updated successfully!',
@@ -64,7 +65,7 @@ $lang = array_merge($lang, array(
 
 	'EMPTY_PREFIX'					=> 'No database prefix',
 	'EMPTY_PREFIX_CONFIRM'			=> 'The database cleaner is about to make changes to the tables in your database, but as you are using an empty table prefix this might affect non-phpBB tables. Are you sure that you want to continue?',
-	'EMPTY_PREFIX_EXPLAIN'			=> 'The database cleaner has determined that you haven\'t set an table prefix for the phpBB database tables. Due to this the database cleaner will check <strong>all</strong> tables in the database. Take extra care when proceeding and make sure that you exclude any non-phpBB tables from the selection. Failing to do so will damage database tables that aren\'t part of phpBB.<br />If you aren\'t sure on how to proceed seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">phpBB Support Forums</a>.',
+	'EMPTY_PREFIX_EXPLAIN'			=> 'The database cleaner has determined that you haven\'t set an table prefix for the phpBB database tables. Due to this the database cleaner will check <strong>all</strong> tables in the database. Take extra care when proceding and make sure that you exclude any non-phpBB tables from the selection. Failing to do so will damage database tables that aren\'t part of phpBB.<br />If you aren\'t sure on how to procede seek assistance in the <a href="http://www.phpbb.com/community/viewforum.php?f=46">phpBB Support Forums</a>.',
 	'ERROR'							=> 'Error',
 	'EXTRA'							=> 'Extra',
 	'EXTENSION_FILE_GROUPS'			=> 'Attachment extension',
@@ -78,12 +79,14 @@ $lang = array_merge($lang, array(
 
 	'INSTRUCTIONS'					=> 'Instructions',
 	'INTRODUCTION'					=> 'Start over',
+	'INDEXES'						=> 'DB Tables Indexes',
 
 	'MISSING'						=> 'Missing',
 	'MODULE_ADD'					=> 'Module add',
 	'MODULE_ALREADY_EXIST'			=> 'Module already exist',
 	'MODULE_UPDATE_SUCCESS'			=> 'The modules have been updated successfully!',
 
+	'NEXT_STEP'						=> 'Next step',
 	'NO_BOT_GROUP'					=> 'Could not reset the bots, missing Bot group.',
 	'NO_PARENT'						=> 'Parent module not exists.<br />Failed',
 
@@ -114,6 +117,7 @@ $lang = array_merge($lang, array(
 
 	'SECTION_NOT_CHANGED_TITLE'		=> array(
 		'tables'			=> 'Tables not changed',
+		'indexes'			=> 'Indexes not changed',
 		'columns'			=> 'Columns not changed',
 		'config'			=> 'Config not changed',
 		'extension_groups'	=> 'Extension groups not changed',
@@ -126,6 +130,7 @@ $lang = array_merge($lang, array(
 	),
 	'SECTION_NOT_CHANGED_EXPLAIN'	=> array(
 		'tables'			=> 'The database tables haven’t been changed',
+		'indexes'			=> 'Indexes doesn’t have any new/missing values',
 		'columns'			=> 'The columns in the database haven’t been changed',
 		'config'			=> 'The configuration table doesn’t have any new/missing values',
 		'extension_groups'	=> 'The extension groups table doesn’t have any new/missing values',
