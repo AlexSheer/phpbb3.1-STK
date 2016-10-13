@@ -144,6 +144,6 @@ class datafile_3_1_10
 	*/
 	function get_schema_struct(&$schema_data)
 	{
-		// No schema changes 3.1.9 -> 3.1.10
+		$schema_data['phpbb_log']['KEYS']['log_time']				= array('INDEX', 'log_time');
 	}
 }
