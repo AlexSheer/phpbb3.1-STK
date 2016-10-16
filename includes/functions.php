@@ -482,7 +482,7 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 			}
 			if ($config['version'] < '3.1.2')
 			{
-				trigger_error(sprintf($user->lang['INCORRECT_PHPBB_VERSION'], $version_data['current']), E_USER_WARNING);
+				trigger_error(sprintf($user->lang['INCORRECT_PHPBB_VERSION'], $_version_number), E_USER_WARNING);
 			}
 			define('PHPBB_VERSION_NUMBER', $_version_number);
 		break;
