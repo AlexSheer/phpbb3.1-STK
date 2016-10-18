@@ -460,6 +460,7 @@ function fetch_cleaner_data(&$data, $phpbb_version)
 		case '3_1_7_pl1':
 		case '3_1_8'	:
 		case '3_1_9'	:
+		case '3_1_10'	:
 			// The extension group names have been changed, remove the old ones
 			foreach ($data->extension_groups as $key => $null)
 			{
@@ -625,6 +626,7 @@ function get_keys($table_name)
 		break;
 
 		case 'mysql4':
+		case 'mysqli':
 			$sql = 'SHOW KEYS
 				FROM ' . $table_name;
 			$col = 'Key_name';
