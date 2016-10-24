@@ -239,7 +239,6 @@ class orphaned_posts
 						$sql = 'UPDATE ' . TOPICS_TABLE . ' SET forum_id = ' . $forum_id . ' WHERE topic_id = ' . $topic_id;
 						$db->sql_query($sql);
 					}
-					sinc_stats();
 					trigger_error(sprintf($user->lang['TOPICS_REASSIGNED'], sizeof($forums_map)));
 				}
 				else
@@ -308,7 +307,6 @@ class orphaned_posts
 						$db->sql_query($sql);
 					}
 
-					sinc_stats();
 					trigger_error(sprintf($user->lang['POSTS_REASSIGNED'], sizeof($post_map)));
 				}
 				else if (isset($_POST['delete']))
@@ -326,7 +324,6 @@ class orphaned_posts
 					}
 
 					$return = delete_posts('post_id', $post_ids);
-					sinc_stats();
 					trigger_error(sprintf($user->lang['POSTS_DELETED'], $return));
 				}
 				else
