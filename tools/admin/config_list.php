@@ -54,6 +54,7 @@ class config_list
 		}
 
 		$options = array(
+			'statistics'		=> 'STATISTICS',
 			'cron'				=> 'CRON_TASKS',
 			'attachments'		=> 'ATTACHMENTS',
 			'board_config'		=> 'BOARD_CONFIG',
@@ -186,7 +187,13 @@ class config_list
 			'fulltext_sphinx_id', 'fulltext_sphinx_data_path', 'fulltext_sphinx_indexer_mem_limit', 'fulltext_sphinx_host', 'fulltext_sphinx_port', 'fulltext_sphinx_stopwords',
 		);
 
+		$config_statistics = array(
+			'dbms_version', 'last_queue_run', 'board_startdate', 'newest_user_id', 'newest_username', 'num_files', 'num_posts', 'num_topics',
+			'num_users', 'record_online_date', 'record_online_users', 'upload_dir_size', 'version',
+		);
+
 		$config_common = $config_all = array();
+		$config_common = array_merge($config_common, $config_statistics);
 		$config_common = array_merge($config_common, $config_cron);
 		$config_common = array_merge($config_common, $config_attachments);
 		$config_common = array_merge($config_common, $config_avatras);
@@ -238,7 +245,11 @@ class config_list
 		{
 			// Show selected
 			switch ($display)
-			{	case 'cron'				:
+			{
+				case 'statistics'		:
+					$where = $config_statistics;
+				break;
+				case 'cron'				:
 					$where = $config_cron;
 				break;
 				case 'attachments'		:
