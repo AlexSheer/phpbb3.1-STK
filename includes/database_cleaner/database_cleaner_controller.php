@@ -1087,6 +1087,9 @@ class database_cleaner_controller
 	{
 		global $db, $user, $phpbb_root_path, $phpEx, $umil;
 
+		$user->add_lang('ucp');
+		$user->add_lang('mcp');
+
 		if (sizeof($selected))
 		{
 			if (!class_exists('acp_modules'))
