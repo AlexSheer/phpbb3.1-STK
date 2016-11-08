@@ -54,7 +54,7 @@ class resync_avatars
 		switch ($mode)
 		{
 			case RESYNC_GROUP_AVATARS :
-				$sql = 'SELECT group_id, group_avatar as avatar, group_avatar_type as avatar_type
+				$sql = 'SELECT group_id as id, group_avatar as avatar, group_avatar_type as avatar_type
 					FROM ' . GROUPS_TABLE . '
 					WHERE ' . $db->sql_in_set('group_avatar_type', array('avatar.driver.upload', 'avatar.driver.gallery')) .'ORDER BY group_id';
 			break;
