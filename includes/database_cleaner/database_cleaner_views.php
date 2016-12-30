@@ -768,7 +768,7 @@ class database_cleaner_views
 				$this->_has_changes = true;
 			}
 		}
-		$db->sql_freeresult($result);
+		$db->sql_freeresult($res);
 
 		//Find missing modules
 		foreach($modules as $module)
