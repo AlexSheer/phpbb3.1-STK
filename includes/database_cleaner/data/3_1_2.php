@@ -213,7 +213,7 @@ class datafile_3_1_2
 		'fulltext_native_min_chars'		=> array('config_value' => '3', 'is_dynamic' => '0'),
 		'fulltext_postgres_max_word_len'	=> array('config_value' => '254', 'is_dynamic' => '0'),
 		'fulltext_postgres_min_word_len'	=> array('config_value' => '4', 'is_dynamic' => '0'),
-		'fulltext_postgres_ts_name'			=> array('simple', 'is_dynamic' => '0'),
+		'fulltext_postgres_ts_name'			=> array('config_value' => 'simple', 'is_dynamic' => '0'),
 		'fulltext_sphinx_indexer_mem_limit'	=> array('config_value' => '512', 'is_dynamic' => '0'),
 		'fulltext_sphinx_stopwords'			=> array('config_value' => '0', 'is_dynamic' => '0'),
 		'gzip_compress'					=> array('config_value' => '0', 'is_dynamic' => '0'),
