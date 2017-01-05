@@ -61,6 +61,7 @@ $lang = array_merge($lang, array(
 	'EMERGENCY_LOGIN_NAME'				=> 'STK Emergency Login',
 	'ERK'								=> 'Emergency Repair Kit',
 
+	'FAIL'								=> 'Fail',
 	'FAIL_REMOVE_PASSWD'				=> 'Couldn’t remove the expired password file. Please remove this file manually!',
 
 	'GEN_PASS_FAILED'					=> 'The Support Toolkit was unable to generate a new password. Please try again.',
