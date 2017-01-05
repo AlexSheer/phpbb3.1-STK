@@ -711,6 +711,7 @@ class database_cleaner_views
 	function acp_modules()
 	{
 		global $db, $user, $template, $phpEx, $phpbb_root_path;
+		$user->add_lang(array('ucp', 'mcp'));
 
 		$this->_section_data['acp_modules'] = array(
 			'NAME'		=> 'ACP_MODULES_SETTINGS',
@@ -768,7 +769,7 @@ class database_cleaner_views
 				$this->_has_changes = true;
 			}
 		}
-		$db->sql_freeresult($res);
+		$db->sql_freeresult($result);
 
 		//Find missing modules
 		foreach($modules as $module)
@@ -797,7 +798,7 @@ class database_cleaner_views
 				}
 
 				$sql = 'SELECT module_id FROM ' . MODULES_TABLE . '
-					WHERE module_langname = \''. $key .'\'';
+					WHERE module_langname = \''.  $key . '\'';
 				$res = $db->sql_query($sql);
 				$row = $db->sql_fetchrow($res);
 				$parent_id = $row['module_id'];
@@ -810,7 +811,7 @@ class database_cleaner_views
 				$parent_module_langname = $user->lang($key);
 
 				$this->_section_data['acp_modules']['ITEMS'][] = array(
-					'NAME'			=> '' . $module_langname . ' ('.$module.')' . $user->lang['GO_TO_ACP'] .  $link . ''. $parent_module_langname .'</a>',
+					'NAME'			=> '' . $module_langname . ' (' . $module . ')' . $user->lang['GO_TO_ACP'] .  $link . '' . $parent_module_langname . '</a>',
 					'FIELD_NAME'	=> strtolower($module),
 					'MISSING'		=> true,
 				);
