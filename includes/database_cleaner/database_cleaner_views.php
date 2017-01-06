@@ -798,12 +798,12 @@ class database_cleaner_views
 				}
 
 				$sql = 'SELECT module_id FROM ' . MODULES_TABLE . '
-					WHERE module_langname = \''.  $key . '\'';
+					WHERE module_langname = \'' .  $key . '\'';
 				$res = $db->sql_query($sql);
 				$row = $db->sql_fetchrow($res);
 				$parent_id = $row['module_id'];
 
-				$db->sql_freeresult($result);
+				$db->sql_freeresult($res);
 
 				// Link to ACP manage module
 				$link = ($parent_id) ? '<a style="color:#70AED3;" href="'. append_sid("{$phpbb_root_path}adm/index.$phpEx", 'i=acp_modules&amp;sid=' . $user->data['session_id'] .'&amp;mode=' . $mode . '&parent_id='. $parent_id .'') .'" " target="_blank">' : '';
