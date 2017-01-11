@@ -23,14 +23,13 @@ if (!defined('IN_PHPBB'))
 */
 function build_cfg_template($tpl_type, $name, $vars)
 {
-	global $user;
+	global $user, $request;
 
 	$tpl = array();
 
-	// Give the option to not do a request_var here and never do it for password fields.
 	if ((!isset($vars['no_request_var']) || !$vars['no_request_var']) && $tpl_type[0] != 'password')
 	{
-		$default = (isset($vars['default'])) ? request_var($name, $vars['default']) : request_var($name, '');
+		$default = (isset($vars['default'])) ? $request->variable($name, $vars['default']) : $request->variable($name, '');
 	}
 	else
 	{
@@ -181,90 +180,76 @@ function use_lang(&$lang_key)
 */
 function user_lang()
 {
-	global $user;
+	global $user, $lang;
 
 	$args = func_get_args();
 
-	if (method_exists($user, 'lang'))
+	$key = $args[0];
+
+	// Return if language string does not exist
+	if (!isset($lang[$key]) || (!is_string($lang[$key]) && !is_array($lang[$key])))
 	{
-		return call_user_func_array(array($user, 'lang'), $args);
+		return $key;
 	}
-	else
+
+	// If the language entry is a string, we simply mimic sprintf() behaviour
+	if (is_string($lang[$key]))
 	{
-		$key = $args[0];
-
-		// Return if language string does not exist
-		if (!isset($user->lang[$key]) || (!is_string($user->lang[$key]) && !is_array($user->lang[$key])))
+		if (sizeof($args) == 1)
 		{
-			return $key;
+			return $lang[$key];
 		}
 
-		// If the language entry is a string, we simply mimic sprintf() behaviour
-		if (is_string($user->lang[$key]))
-		{
-			if (sizeof($args) == 1)
-			{
-				return $user->lang[$key];
-			}
-
-			// Replace key with language entry and simply pass along...
-			$args[0] = $user->lang[$key];
-			return call_user_func_array('sprintf', $args);
-		}
-
-		// It is an array... now handle different nullar/singular/plural forms
-		$key_found = false;
-
-		// We now get the first number passed and will select the key based upon this number
-		for ($i = 1, $num_args = sizeof($args); $i < $num_args; $i++)
-		{
-			if (is_int($args[$i]))
-			{
-				$numbers = array_keys($user->lang[$key]);
-
-				foreach ($numbers as $num)
-				{
-					if ($num > $args[$i])
-					{
-						break;
-					}
-
-					$key_found = $num;
-				}
-			}
-		}
-
-		// Ok, let's check if the key was found, else use the last entry (because it is mostly the plural form)
-		if ($key_found === false)
-		{
-			$numbers = array_keys($user->lang[$key]);
-			$key_found = end($numbers);
-		}
-
-		// Use the language string we determined and pass it to sprintf()
-		$args[0] = $user->lang[$key][$key_found];
+		// Replace key with language entry and simply pass along...
+		$args[0] = $lang[$key];
 		return call_user_func_array('sprintf', $args);
 	}
+
+	// It is an array... now handle different nullar/singular/plural forms
+	$key_found = false;
+
+	// We now get the first number passed and will select the key based upon this number
+	for ($i = 1, $num_args = sizeof($args); $i < $num_args; $i++)
+	{
+		if (is_int($args[$i]))
+		{
+			$numbers = array_keys($lang[$key]);
+
+			foreach ($numbers as $num)
+			{
+				if ($num > $args[$i])
+				{
+					break;
+				}
+
+				$key_found = $num;
+			}
+		}
+	}
+
+	// Ok, let's check if the key was found, else use the last entry (because it is mostly the plural form)
+	if ($key_found === false)
+	{
+		$numbers = array_keys($lang[$key]);
+		$key_found = end($numbers);
+	}
+
+	// Use the language string we determined and pass it to sprintf()
+	$args[0] = $lang[$key][$key_found];
+	return call_user_func_array('sprintf', $args);
 }
 
 /**
 * Stk add lang
 *
-* A wrapper for the $user->add_lang method that will use the custom language path that is used
-* in this tool kit.
-* The function shall first try to include the file in the users language, if that fails it will
-* take the boards default language, if that also fails it will fall back to English
-*
 * @param	String	$lang_file	the name of the language file
-* @param	mixed	$force_lang	If this parameter contains an ISO code this language
-*								is used for the file. If set to "false" the users default
-*								langauge will be used
+
 */
 function stk_add_lang($lang_file)
 {
-	global $config, $user;
+	global $template, $lang, $user;
 
-	if (!isset($user))
+	if (empty($user->data))
 	{
 		if (file_exists(STK_ROOT_PATH . 'default_lang.txt'))
 		{
@@ -277,15 +262,6 @@ function stk_add_lang($lang_file)
 		else
 		{
 			$default_lang = 'en';
-		}
-
-		if (!class_exists('phpbb\session'))
-		{
-			include(PHPBB_ROOT_PATH . 'phpbb/session.' . PHP_EXT);
-		}
-		if (!class_exists('phpbb\user'))
-		{
-			include(PHPBB_ROOT_PATH . 'phpbb/user.' . PHP_EXT);
 		}
 
 		$dir = @opendir(PHPBB_ROOT_PATH . 'language');
@@ -311,76 +287,19 @@ function stk_add_lang($lang_file)
 			die('No language found!');
 		}
 
-		$user = new \phpbb\user('\phpbb\datetime');
-
-		$user->lang_path = $user->lang_path.$language;
 		$user->data['user_lang'] = $default_lang;
 	}
 
-	// Internally cache some data
-	static $lang_data	= array();
-	static $lang_dirs	= array();
+	include(PHPBB_ROOT_PATH . 'language/' . $user->data['user_lang'] . '/common.' . PHP_EXT);
+	include(STK_ROOT_PATH . 'language/' . $user->data['user_lang'] . '/' . $lang_file . '.' . PHP_EXT);
 
-	// Store current phpBB data
-	if (empty($lang_data))
+	if (!defined('IN_ERK') && isset($user->data['user_id']))
 	{
-		$lang_data = array(
-			'lang_path'	=> $user->lang_path,
-			'lang_name'	=> $user->data['user_lang'],
-		);
-	}
-
-	if (empty($user->lang_path))
-	{
-		die('No language found!');
-	}
-
-	// Empty the lang_name
-	$user->lang_name = '';
-
-	// Find out what languages we could use
-	if (empty($config['default_lang']))
-	{
-		$config['default_lang'] = $language;
-	}
-
-	if (empty($lang_dirs))
-	{
-		$lang_dirs = array(
-			$user->data['user_lang'],			// User default
-			basename($config['default_lang']),	// Board default
-			'en',								// System default
-		);
-
-		// Only unique dirs
-		$lang_dirs = array_unique($lang_dirs);
-	}
-
-	// Switch to the STK language dir
-	$user->lang_path = STK_ROOT_PATH . 'language/';
-
-	// Test all languages
-	foreach ($lang_dirs as $dir)
-	{
-		if (file_exists($user->lang_path . $dir . "/{$lang_file}." . PHP_EXT))
+		foreach($lang as $key => $value)
 		{
-			$user->lang_name = $dir;
-			break;
+			$template->assign_var('L_' . $key, $value);
 		}
 	}
-
-	// No language file :/
-	if (empty($user->lang_name))
-	{
-		trigger_error("Language file: {$lang_file}." . PHP_EXT . ' missing!', E_USER_ERROR);
-	}
-
-	// Add the file
-	$user->add_lang($lang_file);
-
-	// Now reset the paths so phpBB can continue to operate as usual
-	$user->lang_path = PHPBB_ROOT_PATH . 'language/';
-	$user->lang_name = (!isset($user->lang_name)) ? $user->lang_name : $user->data['user_lang'];
 }
 
 /**
@@ -391,7 +310,7 @@ function stk_add_lang($lang_file)
  */
 function perform_unauthed_quick_tasks($action, $submit = false)
 {
-	global $template, $umil, $user;
+	global $template, $umil, $lang, $request, $user;
 
 	switch ($action)
 	{
@@ -417,13 +336,13 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 						trigger_error('FORM_INVALID');
 					}
 
-					$_version_number = request_var('version_number', $config['version']);
+					$_version_number = $request->variable('version_number', $config['version']);
 					$cache->put('_stk_phpbb_version_number', $_version_number);
 				}
 				else
 				{
 					add_form_key('request_phpbb_version');
-					page_header($user->lang['REQUEST_PHPBB_VERSION'], false);
+					page_header($lang['REQUEST_PHPBB_VERSION'], false);
 					$version_helper = $phpbb_container->get('version_helper');
 					$updates_available = $version_helper->get_suggested_updates(false);
 					if ($updates_available)
@@ -458,18 +377,14 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 					$version_options = '';
 					for ($i = $_phpbb_version; $i > 1; $i--)
 					{
-						$v = "3.1.{$i}";
+						$v = "3.2.{$i}";
 						$d = ($v == $config['version']) ? " default='default'" : '';
 						$version_options .= "<option value='{$v}'{$d}>{$v}</option>";
-						if ($i >= 8 && $i < $_phpbb_version)
-						{
-							$version_options .= '<option value="3.1.7-pl1">3.1.7-pl1</option>';
-						}
 					}
 
 					$template->assign_vars(array(
 						'UPDATES_AVAILABLE'				=> (PHPBB_VERSION < $version_data['current'] || $config['version'] < $version_data['current']) ? sprintf($user->lang['UPDATES_AVAILABLE'], $version_data['current'], $announcement) : false,
-						'PROCEED_TO_STK'				=> $user->lang('PROCEED_TO_STK', '', ''),
+						'PROCEED_TO_STK'				=> user_lang('PROCEED_TO_STK', '', ''),
 						'REQUEST_PHPBB_VERSION_OPTIONS'	=> $version_options,
 						'U_ACTION'						=> append_sid(STK_INDEX, array('action' => 'request_phpbb_version')),
 					));
@@ -480,9 +395,9 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 					page_footer(false);
 				}
 			}
-			if ($config['version'] < '3.1.2')
+			if ($config['version'] < '3.2.0')
 			{
-				trigger_error(sprintf($user->lang['INCORRECT_PHPBB_VERSION'], $_version_number), E_USER_WARNING);
+				trigger_error(sprintf($lang['INCORRECT_PHPBB_VERSION'], $version_data['current']), E_USER_WARNING);
 			}
 			define('PHPBB_VERSION_NUMBER', $_version_number);
 		break;
@@ -501,11 +416,11 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 			$_pass_exprire = time() + 21600;
 
 			// Print a message and tell the user what to do and where to download this page
-			page_header($user->lang['GEN_PASS_FILE'], false);
+			page_header($lang['GEN_PASS_FILE'], false);
 
 			$template->assign_vars(array(
-				'PASS_GENERATED'			=> sprintf($user->lang['PASS_GENERATED'], $_pass_string, $user->format_date($_pass_exprire, false, true)),
-				'PASS_GENERATED_REDIRECT'	=> sprintf($user->lang['PASS_GENERATED_REDIRECT'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT)),
+				'PASS_GENERATED'			=> sprintf($lang['PASS_GENERATED'], $_pass_string, $user->format_date($_pass_exprire, false, true)),
+				'PASS_GENERATED_REDIRECT'	=> sprintf($lang['PASS_GENERATED_REDIRECT'], append_sid(STK_ROOT_PATH . 'index.' . PHP_EXT)),
 				'S_HIDDEN_FIELDS'			=> build_hidden_fields(array('pass_string' => $_pass_string, 'pass_exp' => $_pass_exprire)),
 				'U_ACTION'					=> append_sid(STK_INDEX, array('action' => 'downpasswdfile')),
 			));
@@ -518,13 +433,13 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 
 		// Download the passwd file
 		case 'downpasswdfile' :
-			$_pass_string	= request_var('pass_string', '', true);
-			$_pass_exprire	= request_var('pass_exp', 0);
+			$_pass_string	= $request->variable('pass_string', '', true);
+			$_pass_exprire	= $request->variable('pass_exp', 0);
 
 			// Something went wrong, stop execution
 			if (!isset($_POST['download_passwd']) || empty($_pass_string) || $_pass_exprire <= 0)
 			{
-				trigger_error($user->lang['GEN_PASS_FAILED'], E_USER_ERROR);
+				trigger_error($lang['GEN_PASS_FAILED'], E_USER_ERROR);
 			}
 
 			// Create the file and let the user download it
@@ -594,7 +509,7 @@ function perform_authed_quick_tasks($action)
  */
 function stk_version_check()
 {
-	global $cache, $template, $umil, $user;
+	global $cache, $template, $umil, $user, $lang;
 
 	// We cache the result, check once per session
 	$version_check = $cache->get('_stk_version_check');
@@ -607,7 +522,7 @@ function stk_version_check()
 		}
 
 		// Lets collect the latest version data. We can use UMIL for this
-		$info = $umil->version_check('sheer.phpbbguru.net', '/stk', ((defined('STK_QA') && STK_QA) ? 'stk_qa.txt' : 'stk.txt'));
+		$info = $umil->version_check('sheer.phpbbguru.net', '/stk', ((defined('STK_QA') && STK_QA) ? 'stk_32_qa.txt' : 'stk_32.txt'));
 
 		// Compare it and cache the info
 		$version_check = array();
@@ -640,7 +555,7 @@ function stk_version_check()
 	else if (isset($version_check['outdated']) && $version_check['outdated'] === true)
 	{
 		// Need to clear the $user->lang array to prevent the error page from breaking
-		$msg = sprintf($user->lang['STK_OUTDATED'], $version_check['latest'], $version_check['current'], $version_check['topic'], append_sid(STK_ROOT_PATH . $user->page['page_name'], $user->page['query_string'] . '&amp;force_check=1'));
+		$msg = sprintf($lang['STK_OUTDATED'], $version_check['latest'], $version_check['current'], $version_check['topic'], append_sid(STK_ROOT_PATH . $user->page['page_name'], $user->page['query_string'] . '&amp;force_check=1'));
 
 		// Trigger
 		trigger_error($msg, E_USER_ERROR);
@@ -666,7 +581,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 {
 	// First and foremost handle the case where phpBB calls trigger error
 	// but the STK really needs to continue.
-	global $critical_repair, $stk_no_error, $user;
+	global $critical_repair, $stk_no_error, $user, $lang;
 
 	if (!isset($user->lang['STK_FATAL_ERROR']))
 	{
@@ -710,7 +625,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 		case E_USER_ERROR:
 		case E_RECOVERABLE_ERROR:
 			$backtrace = get_backtrace();
-			$msg_text = '<br /><b>[phpBB Debug] PHP '.$error_level[$errno].':</b> in file ' . phpbb_filter_root_path($errfile) . ' on line <b>'. $errline .': ' . $msg_text . '</b><br />'.$backtrace.'';
+			$msg_text = '<br /><b>[phpBB Debug] PHP '. $error_level[$errno] .':</b> in file ' . phpbb_filter_root_path($errfile) . ' on line <b>'. $errline .': ' . $msg_text . '</b><br />'.$backtrace.'';
 		break;
 		default:
 		break;
@@ -838,10 +753,14 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 
 			// Try to not call the adm page data...
 
-			echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-			echo '<html xmlns="http://www.w3.org/1999/xhtml" dir="' . $user->lang['DIRECTION'] . '" lang="' . $user->lang['USER_LANG'] . '" xml:lang="' . $user->lang['USER_LANG'] . '">';
+			echo '<!DOCTYPE html>';
+			echo "\r\n";
+			echo '<html dir="' . $user->lang['DIRECTION'] . '" lang="' . $user->lang['USER_LANG'] . '">';
+			echo "\r\n";
 			echo '<head>';
-			echo '<meta http-equiv="content-type" content="text/html; charset=utf-8" />';
+			echo '<meta charset="utf-8">';
+			echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
+			echo '<meta name="viewport" content="width=device-width, initial-scale=1" />';
 			echo '<title>' . $msg_title . '</title>';
 			echo '<style type="text/css">' . "\n" . '/* <![CDATA[ */' . "\n";
 			echo '* { margin: 0; padding: 0; } html { font-size: 100%; height: 100%; margin-bottom: 1px; background-color: #E4EDF0; } body { font-family: "Lucida Grande", Verdana, Helvetica, Arial, sans-serif; color: #536482; background: #E4EDF0; font-size: 62.5%; margin: 0; } ';
@@ -885,7 +804,6 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 
 		case E_USER_WARNING:
 		case E_USER_NOTICE:
-
 			define('IN_ERROR_HANDLER', true);
 
 			if (empty($user->data))
@@ -907,7 +825,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 			}
 
 			$msg_text = (!empty($user->lang[$msg_text])) ? $user->lang[$msg_text] : $msg_text;
-			$msg_title = (!isset($msg_title)) ? $user->lang['INFORMATION'] : ((!empty($user->lang[$msg_title])) ? $user->lang[$msg_title] : $msg_title);
+			$msg_title = (!isset($msg_title)) ? $lang['INFORMATION'] : ((!empty($lang[$msg_title])) ? $lang[$msg_title] : $msg_title);
 
 			if (!defined('HEADER_INC'))
 			{
@@ -920,6 +838,9 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 					page_header($msg_title, false);
 				}
 			}
+
+			// Do not use the normal template path (to prevent issues with boards using alternate styles)
+			$template->set_custom_style('stk', STK_ROOT_PATH . 'style');
 
 			$template->set_filenames(array(
 				'body' => 'message_body.html')
@@ -1017,10 +938,22 @@ function stk_filter_root_path($errfile)
 function html_entity_decode_utf8($string)
 {
 	static $trans_tbl;
-
 	// replace numeric entities
-	$string = preg_replace('~&#x([0-9a-f]+);~ei', '_code2utf8(hexdec("\\1"))', $string);
-	$string = preg_replace('~&#([0-9]+);~e', '_code2utf8(\\1)', $string);
+	if (@phpversion() < '7.0.0')
+	{
+		$string = preg_replace('~&#x([0-9a-f]+);~ei', '_code2utf8(hexdec("\\1"))', $string);
+		$string = preg_replace('~&#([0-9]+);~e', '_code2utf8(\\1)', $string);
+	}
+	else
+	{
+		// eval() sucks, but we must use preg_replace_callback() to support
+		// PHP 7.0, and custom BBcode replacement function is stored as a string
+
+		$replacement = '_code2utf8(hexdec("\\1"))';
+		$string = preg_replace_callback('|&#x([0-9a-f]+);|', function($matches) use($replacement) {eval('$str=' . $replacement); return $str;}, $string);
+		$replacement = '_code2utf8(\\1)';
+		$string = preg_replace_callback('|&#([0-9]+);|', function($matches) use($replacement) {eval('$str=' . $replacement); return $str;}, $string);
+	}
 
 	// replace literal entities
 	if (!isset($trans_tbl))
@@ -1123,6 +1056,7 @@ function stk_array_walk_keys(&$array, $callback)
 function stk_send_status_line($code, $message)
 {
 	global $request;
+
 	$server_protocol = $request->server('SERVER_PROTOCOL');
 	if (substr(strtolower(@php_sapi_name()), 0, 3) === 'cgi')
 	{
@@ -1146,7 +1080,7 @@ function stk_send_status_line($code, $message)
 // Check PHPBB version
 function check_phpbb_version()
 {
-	global $phpbb_container, $template, $config, $user;
+	global $phpbb_container, $template, $config, $lang;
 
 	$version_helper = $phpbb_container->get('version_helper');
 	$updates_available = $version_helper->get_suggested_updates(false);
@@ -1159,7 +1093,40 @@ function check_phpbb_version()
 		}
 
 		$template->assign_vars(array(
-			'UPDATES_AVAILABLE'		=> (PHPBB_VERSION < $version_data['current'] || $config['version'] < $version_data['current']) ? sprintf($user->lang['UPDATES_AVAILABLE'], $version_data['current'], $announcement) : false,
+			'UPDATES_AVAILABLE'		=> (PHPBB_VERSION < $version_data['current'] || $config['version'] < $version_data['current']) ? sprintf($lang['UPDATES_AVAILABLE'], $version_data['current'], $announcement) : false,
 		));
 	}
+}
+
+function sinc_stats()
+{
+	global $db, $config;
+
+	$sql = 'SELECT COUNT(post_id) AS stat
+		FROM ' . POSTS_TABLE . '
+		WHERE post_visibility = ' . ITEM_APPROVED;
+	$result = $db->sql_query($sql);
+	$config->set('num_posts', (int) $db->sql_fetchfield('stat'), false);
+	$db->sql_freeresult($result);
+
+	$sql = 'SELECT COUNT(topic_id) AS stat
+		FROM ' . TOPICS_TABLE . '
+		WHERE topic_visibility = ' . ITEM_APPROVED;
+	$result = $db->sql_query($sql);
+	$config->set('num_topics', (int) $db->sql_fetchfield('stat'), false);
+	$db->sql_freeresult($result);
+
+	$sql = 'SELECT COUNT(attach_id) as stat
+		FROM ' . ATTACHMENTS_TABLE . '
+		WHERE is_orphan = 0';
+	$result = $db->sql_query($sql);
+	$config->set('num_files', (int) $db->sql_fetchfield('stat'), false);
+	$db->sql_freeresult($result);
+
+	$sql = 'SELECT SUM(filesize) as stat
+		FROM ' . ATTACHMENTS_TABLE . '
+		WHERE is_orphan = 0';
+	$result = $db->sql_query($sql);
+	$config->set('upload_dir_size', (float) $db->sql_fetchfield('stat'), false);
+	$db->sql_freeresult($result);
 }
