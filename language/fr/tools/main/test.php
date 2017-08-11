@@ -1,25 +1,22 @@
 <?php
 /**
-*
-* @package Support Toolkit - Test
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by Galixte (http://www.galixte.com)
-*
-*/
+ *
+ * @package Support Toolkit - Test French language
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 
-/**
-* DO NOT CHANGE
-*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -48,5 +45,5 @@ $lang = array_merge($lang, array(
 	'PHP_INFO'			=> 'Informations concernant PHP',
 	'MBSTRING_LOADED'	=> 'Fonctions sur les chaînes de caractères multi-octets (l’extension PHP <b> mbstring </b>) est chargée',
 	'MBSTRING_NOT_LOADED'				=> 'Fonctions sur les chaînes de caractères multi-octets (l’extension PHP <b> mbstring </b>) n’est pas chargée',
-	'ERROR_MBSTRING_NOT_LOADED_EXPLAIN'	=> 'mbstring n’est pas incluse dans la liste des extensions qui sont installées par défaut. Cela signifie que cette extension est par défaut désactivée. Pour utiliser les fonctionnalités de cette extension, vous devez définir sur « enable » ce module dans la configuration de PHP. Besoin de consulter la documentation de <a href="http://php.net/manual/ru/mbstring.configuration.php">PHP</a>.',
+	'ERROR_MBSTRING_NOT_LOADED_EXPLAIN'	=> 'mbstring n’est pas incluse dans la liste des extensions qui sont installées par défaut. Cela signifie que cette extension est par défaut désactivée. Pour utiliser les fonctionnalités de cette extension, il est nécessaire de définir sur « enable » ce module dans la configuration de PHP. Besoin de consulter la documentation de <a href="http://php.net/manual/ru/mbstring.configuration.php">PHP</a>.',
 ));

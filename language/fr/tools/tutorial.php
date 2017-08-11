@@ -1,13 +1,13 @@
 <?php
 /**
-*
-* @package Support Toolkit - Tutorial
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by phpBB-fr http://www.phpbb-fr.com
-*
-*/
+ *
+ * @package Support Toolkit - Tutorial French language
+ * French translation by phpBB-fr http://www.phpbb-fr.com & Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /*
 * This will be a tutorial page for how to build a new tool to be used with the Support Toolkit.
@@ -16,16 +16,13 @@
 */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 
-/**
-* DO NOT CHANGE
-*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -44,7 +41,7 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ « » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(

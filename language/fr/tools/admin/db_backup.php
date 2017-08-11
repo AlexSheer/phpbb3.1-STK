@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Database Backup
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by Galixte (http://www.galixte.com)
-*
-*/
+ *
+ * @package Support Toolkit - Database Backup French language
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -40,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'DB_BACKUP'					=> 'Sauvegarder la base de données',
-	'DB_BACKUP_EXPLAIN'			=> 'Ici vous pouvez sauvegarder toutes les données de votre forum phpBB. Vous pouvez stocker l’archive créée dans le répertoire <samp>store/</samp>, la télécharger ou l’afficher à l’écran. Selon la configuration de votre serveur vous serez capable de compresser l’archive dans différents formats.',
+	'DB_BACKUP_EXPLAIN'			=> 'Sur cette page il est possible de sauvegarder toutes les données de son forum phpBB. Il est possible de stocker l’archive créée dans le répertoire <samp>store/</samp>, la télécharger ou l’afficher à l’écran. Selon la configuration de son serveur il sera possible de compresser l’archive dans différents formats.',
 	'DB_BACKUP_EXPLAIN_DUMPER'	=> 'La sauvegarde est compatible avec l’outil <a href ="http://www.mysqldumper.net/" target="_blank" /><strong>MySQLDumper</strong></a>, qui prend en charge la restauration des tables de la base de données.',
 
 	'SELECT_TABLE'		=> 'Tables',

@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Resync Avatars
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by phpBB-fr http://www.phpbb-fr.com
-*
-*/
+ *
+ * @package Support Toolkit - Resync Avatars French language
+ * French translation by phpBB-fr http://www.phpbb-fr.com & Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -40,8 +40,8 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'RESYNC_AVATARS'			=> 'Resynchroniser les avatars',
-	'RESYNC_AVATARS_CONFIRM'	=> 'Cet outil vérifiera si tous les avatars utilisés sur le forum existent actuellement sur le serveur. Lorsque des fichiers manquants sont décelés, l’avatar sera supprimé du profil des utilisateurs. Êtes-vous sûr(e) de vouloir continuer ?',
+	'RESYNC_AVATARS_CONFIRM'	=> 'Cet outil vérifiera si tous les avatars utilisés sur le forum existent actuellement sur le serveur. Lorsque des fichiers manquants sont décelés, l’avatar sera supprimé du profil des utilisateurs. Poursuivre ?',
 	'RESYNC_AVATARS_FINISHED'	=> 'Les avatars ont été resynchronisés.',
-	'RESYNC_AVATARS_NEXT_MODE'	=> 'Traitement des avatars de groupe. Veuillez ne pas interrompre cette opération.',
-	'RESYNC_AVATARS_PROGRESS'	=> 'Resynchronisation des avatars en cours. Veuillez ne pas interrompre cette opération.',
+	'RESYNC_AVATARS_NEXT_MODE'	=> 'Traitement des avatars de groupe. Merci de ne pas interrompre cette opération.',
+	'RESYNC_AVATARS_PROGRESS'	=> 'Resynchronisation des avatars en cours. Merci de ne pas interrompre cette opération.',
 ));

@@ -1,25 +1,22 @@
 <?php
 /**
-*
-* @package Support Toolkit - Ext Finder
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by Galixte (http://www.galixte.com)
-*
-*/
+ *
+ * @package Support Toolkit - Ext Finder French language
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 
-/**
-* DO NOT CHANGE
-*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -43,23 +40,23 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'EXT_TABLE_FINDER'			=> 'Tables',
-	'EXT_TABLE_FINDER_EXPLAIN'	=> 'Ici vous pouvez obtenir des informations concernant l’extension, qui utilise cette table :',
+	'EXT_TABLE_FINDER_EXPLAIN'	=> 'Permet d’obtenir des informations concernant l’extension, qui utilise cette table :',
 	'TABLE'						=> 'Table',
 
 	'EXT_COLUMN_FINDER'			=> 'Colonnes',
-	'EXT_COLUMN_FINDER_EXPLAIN'	=> 'Ici vous pouvez obtenir des informations concernant l’extension, qui utilise cette colonne :',
+	'EXT_COLUMN_FINDER_EXPLAIN'	=> 'Permet d’obtenir des informations concernant l’extension, qui utilise cette colonne :',
 	'COLUMN'					=> 'Colonne',
 
 	'EXT_CONFIG_FINDER'			=> 'Configurations',
-	'EXT_CONFIG_FINDER_EXPLAIN'	=> 'Ici vous pouvez obtenir des informations concernant l’extension, qui utilise ces paramètres de configurations :',
+	'EXT_CONFIG_FINDER_EXPLAIN'	=> 'Permet d’obtenir des informations concernant l’extension, qui utilise ces paramètres de configurations :',
 	'CONFIG'					=> 'Paramètre',
 
 	'EXT_MODULE_FINDER'			=> 'Modules',
-	'EXT_MODULE_FINDER_EXPLAIN'	=> 'Ici vous pouvez obtenir des informations concernant l’extension, qui utilise ce module :',
+	'EXT_MODULE_FINDER_EXPLAIN'	=> 'Permet d’obtenir des informations concernant l’extension, qui utilise ce module :',
 	'MODULE'					=> 'Module',
 
 	'EXT_PERM_FINDER'			=> 'Permissions',
-	'EXT_PERM_FINDER_EXPLAIN'	=> 'Ici vous pouvez obtenir des informations concernant l’extension, qui utilise cette permission :',
+	'EXT_PERM_FINDER_EXPLAIN'	=> 'Permet d’obtenir des informations concernant l’extension, qui utilise cette permission :',
 	'PERMISSION'				=> 'Permission',
 
 	'PATH'				=> 'CHEMIN, RELATIF ./ext',

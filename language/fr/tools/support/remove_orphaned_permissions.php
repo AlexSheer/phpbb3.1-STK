@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Orphaned permissions
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by Galixte (http://www.galixte.com)
-*
-*/
+ *
+ * @package Support Toolkit - Orphaned permissions French language
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -41,6 +41,6 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'REMOVE_ORPHANED_PERMISSIONS'			=> 'Supprimer les permissions orphelines',
 	'ORPHANED_PERMISSIONS_DELETED'			=> 'Les permissions orphelines ont été supprimées avec succès.',
-	'ORPHANED_PERMISSIONS_NOT_FIND'			=> 'Aucune permission orpheline n’ a été toruvée.',
-	'REMOVE_ORPHANED_PERMISSIONS_CONFIRM'	=> 'Êtes-vous sûr de vouloir supprimer les permissons orphelines ?',
+	'ORPHANED_PERMISSIONS_NOT_FIND'			=> 'Aucune permission orpheline n’a été trouvée.',
+	'REMOVE_ORPHANED_PERMISSIONS_CONFIRM'	=> 'Confirmer la suppression des permissions orphelines.',
 ));

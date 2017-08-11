@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Orphaned Posts/Topics
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by phpBB-fr http://www.phpbb-fr.com & Galixte (http://www.galixte.com)
-*
-*/
+ *
+ * @package Support Toolkit - Orphaned Posts/Topics French language
+ * French translation by phpBB-fr http://www.phpbb-fr.com & Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -52,10 +52,10 @@ $lang = array_merge($lang, array(
 	'NO_TOPICS_SELECTED'		=> 'Aucun sujet n’a été sélectionné',
 
 	'ORPHANED_POSTS'			=> 'Messages orphelins',
-	'ORPHANED_POSTS_EXPLAIN'	=> 'Correspond à des messages n’étant pas associés à un sujet. Spécifiez un nouvel ID de sujet pour attacher le message à ce sujet.',
+	'ORPHANED_POSTS_EXPLAIN'	=> 'Correspond à des messages n’étant pas associés à un sujet. Spécifier un nouvel ID de sujet pour attacher le message à ce sujet.',
 	'NO_ORPHANED_POSTS'			=> 'Aucun message orphelin n’a été trouvé',
 	'NO_TOPIC_IDS'				=> 'Aucun ID de sujet indiqué',
-	'NONEXISTENT_TOPIC_IDS'		=> 'Les ID de sujet cibles suivants n’existent pas : %s.<br />Veuillez vérifier les ID de sujet spécifiés.',
+	'NONEXISTENT_TOPIC_IDS'		=> 'Les ID de sujet cibles suivants n’existent pas : %s.<br />Merci de vérifier les ID de sujet spécifiés.',
 	'REASSIGN'					=> 'Réaffecter',
 
 	'DELETE_SHADOWS'			=> 'Supprimer tous les sujets fantômes sélectionnés en cliquant sur ce bouton. (Cette opération est irréversible !)',
@@ -67,7 +67,15 @@ $lang = array_merge($lang, array(
 	'POSTS_REASSIGNED'			=> '%d messages re-affectés',
 	'TOPICS_DELETED'			=> '%d sujets supprimés',
 	'ORPHANED_FORUM_POSTS'			=> 'Messages non associés aux forums',
-	'ORPHANED_FORUM_POSTS_EXPLAIN'	=> 'Ces messages ne sont pas attachés à un forum spécifique, il sont donc considérés comme non attachés à des sujets spécifiques. Spécifiez un nouvel ID de sujet pour attacher le message à ce sujet.',
+	'ORPHANED_FORUM_POSTS_EXPLAIN'	=> 'Ces messages ne sont pas attachés à un forum spécifique, il sont donc considérés comme non attachés à des sujets spécifiques. Spécifier un nouvel ID de sujet pour attacher le message à ce sujet.',
 	'NO_FORUM_ORPHANED_POSTS'		=> 'Aucun message non associé aux forums n’a été trouvé',
 	'NO_POSTS_SELECTED'				=> 'Aucun message n’a été sélectionné',
+
+	'ORPHANED_TOPICS'				=> 'Sujets orphelins',
+	'NO_ORPHANED_TOPICS'			=> 'Aucun sujet orphelin n’a été trouvé',
+	'NEW_FORUM_ID'					=> 'Nouvel ID de forum',
+	'TOPICS_REASSIGNED'				=> '%d sujets réassignés',
+	'ORPHANED_TOPICS_EXPLAIN'		=> 'Ces sujets n’ont pas de forum associé. Merci de saisir un nouvel ID de forum à associer au sujet.',
+	'NO_FORUMS_IDS'					=> 'Aucun ID de forum fourni',
+	'NONEXISTENT_FORUMS_IDS'		=> 'Les ID de forums saisies n’existent pas : %s.<br />Merci de vérifier les ID de forums saisies.',
 ));

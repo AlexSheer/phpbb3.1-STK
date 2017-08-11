@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Readd Module Management
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by phpBB-fr http://www.phpbb-fr.com
-*
-*/
+ *
+ * @package Support Toolkit - Readd Module Management French language
+ * French translation by phpBB-fr http://www.phpbb-fr.com & Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -40,6 +40,6 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'READD_MODULE_MANAGEMENT'			=> 'Recréer les modules de la « Gestion de modules »',
-	'READD_MODULE_MANAGEMENT_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir recréer dans le « Panneau d’administration » les modules de la « Gestion de modules » ?',
+	'READD_MODULE_MANAGEMENT_CONFIRM'	=> 'Confirmer la recréation des modules de la « Gestion de modules » du « Panneau d’administration ».',
 	'READD_MODULE_MANAGEMENT_SUCCESS'	=> 'Les modules ont été recréés.',
 ));

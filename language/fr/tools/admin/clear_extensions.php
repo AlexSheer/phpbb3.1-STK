@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Clear Extensions
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by Galixte (http://www.galixte.com)
-*
-*/
+ *
+ * @package Support Toolkit - Clear Extensions French language
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -40,24 +40,24 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'CLEAR_EXTENSIONS'				=> 'Gérer les extensions',
-	'CLEAR_EXTENSIONS_EXPLAIN'		=> 'Ici vous pouvez gérer les extensions <b>installées</b>.',
+	'CLEAR_EXTENSIONS_EXPLAIN'		=> 'Sur cette page il est possible de gérer les extensions <b>installées</b>.',
 	'EXT_PATH'						=> 'Chemin relatif pour le répertoire ' . PHPBB_ROOT_PATH . 'ext/',
 	'MISSING_PATH'					=> 'Répertoire manquant',
 	'S_ACTIVE'						=> ' (activée) ',
 	'S_OFF'							=> ' (désactivée) ',
 	'EXT_NAME'						=> 'Nom de l’extension',
-	'CLICK_TO_CLEAR'				=> 'Les données des extensions installées et sélectionnées seront supprimées de la base de données et les extensions seront désactivées, mais les données liées à ces extensions, teles que les tables ou les valeurs de configuration, ne seront pas supprimées. Pour les supprimer, utilisez le <b>OUTILS DE SUPPORT</b> -> Nettoyeur de base de données',
+	'CLICK_TO_CLEAR'				=> 'Les données des extensions installées et sélectionnées seront supprimées de la base de données et les extensions seront désactivées, mais les données liées à ces extensions, telles que les tables ou les valeurs de configuration, ne seront pas supprimées. Pour les supprimer, utiliser <b>OUTILS DE SUPPORT</b> -> Nettoyeur de base de données',
 	'CLICK_TO_OFF'					=> 'Extensions sélectionnées qui seront désactivées',
 	'OFF_EXT'						=> 'Désactiver',
 	'CLEAR_EXT_SUCCESS'				=> 'Les extensions sélectionnées ont été supprimées.',
 	'OFF_EXT_SUCCESS'				=> 'Les extensions sélectionnées ont été désactivées.',
-	'NO_EXT_SELECTED'				=> 'Aucune extension sélectionnée !',
+	'NO_EXT_SELECTED'				=> 'Aucune extension sélectionnée !',
 	'EXT_DELETE'					=> 'Supprimer les extensions',
-	'EXT_DELETE_CONFIRM'			=> 'Êtes-vous sûr de vouloir supprimer ces extensions ?',
+	'EXT_DELETE_CONFIRM'			=> 'Confirmer la suppression de ces extensions.',
 	'EXT_OFF'						=> 'Désactiver les extensions',
-	'EXT_OFF_CONFIRM'				=> 'Êtes-vous sûr de vouloir désactiver ces extensions ?',
-	'EXT_MISSING_PATH'				=> 'L’extension «%s» n’est pas compatible.<br />',
+	'EXT_OFF_CONFIRM'				=> 'Confirmer la désactivation de ces extensions.',
+	'EXT_MISSING_PATH'				=> 'L’extension « %s » n’est pas compatible.<br />',
 	'NO_COMPOSER'					=> 'Fichier non trouvé : ' . PHPBB_ROOT_PATH . 'ext/%s/composer.json',
 	'NO_EXTENSIONS_TITLE'			=> 'Extensions',
-	'NO_EXTENSIONS_TEXT'			=> 'Aucune extension installée',
+	'NO_EXTENSIONS_TEXT'			=> 'Aucune extension n’est installée',
 ));

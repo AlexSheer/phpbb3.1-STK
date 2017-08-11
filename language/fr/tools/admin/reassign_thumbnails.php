@@ -1,9 +1,11 @@
 <?php
 /**
  *
- * @package Support Toolkit - Reassign Thumbnails English language Sheer
- * @copyright (c) 2017 Sheer
- * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+ * @package Support Toolkit - Reassign Thumbnails French language
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
  *
  */
 
@@ -33,18 +35,18 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'REASSIGN_THUMBNAILS'			=> 'Rebuild thumbnails',
-	'REASSIGN_THUMBNAILS_CONFIRM'	=> 'In case the option &laquo;Create thumbnails&nbsp; was disabled but attachments have been created, you can create thumbnails for such attachments.<br />Continue?',
-	'REASSIGN_THUMBNAILS_PROGRESS'	=> 'Creatig thumbnails in progress. Do not interrupt the process!',
-	'REBUILD_THUMBNAILS_COMPLETE'	=> 'Thumbnail creation complete.',
-	'NO_THUMBNAILS_TO_REBUILD'		=> 'No files for which you need to create thumbnails.',
-	'NEED_TO_PROCESS' 				=> 'Files without thumbnails: ',
-	'THUMB'							=> '<strong>thumbnail</strong>',
-	'REBUILT_THUMB'					=> 'Create Thumbnails',
-	'NO_NEED_REBUILT'				=> '<strong style="color: #aaa;">No need thumbnal</strong> for ',
-	'SOURCE_UNAVAILABLE'			=> 'File not found: ',
+	'REASSIGN_THUMBNAILS'			=> 'Reconstruction des miniatures',
+	'REASSIGN_THUMBNAILS_CONFIRM'	=> 'Lorsque l’option suivante « Créer une miniature » est désactivée et que des fichiers joints existent, cet outil permet de créer des miniatures associées aux fichiers joints existants.<br />Poursuivre ?',
+	'REASSIGN_THUMBNAILS_PROGRESS'	=> 'Création de miniatures en cours… merci de ne pas interrompre l’opération !',
+	'REBUILD_THUMBNAILS_COMPLETE'	=> 'Création de miniatures terminée.',
+	'NO_THUMBNAILS_TO_REBUILD'		=> 'Aucun fichier nécessite des miniatures.',
+	'NEED_TO_PROCESS' 				=> 'Fichiers joints sans miniatures : ',
+	'THUMB'							=> '<strong>miniature</strong>',
+	'REBUILT_THUMB'					=> 'Créer des miniatures',
+	'NO_NEED_REBUILT'				=> '<strong style="color: #aaa;">Aucun besoin de miniatures</strong> for ',
+	'SOURCE_UNAVAILABLE'			=> 'Fichier non trouvé : ',
 ));

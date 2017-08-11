@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Resynchronise Registered Users Groups
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by phpBB-fr http://www.phpbb-fr.com & Galixte (http://www.galixte.com)
-*
-*/
+ *
+ * @package Support Toolkit - Resynchronise Registered Users Groups French language
+ * French translation by phpBB-fr http://www.phpbb-fr.com & Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -35,7 +35,7 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ « » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
@@ -47,11 +47,10 @@ $lang = array_merge($lang, array(
 	'RUN_RNR'						=> 'Resynchroniser les « Nouveaux utilisateurs enregistrés »',
 	'RUN_RNR_EXPLAIN'				=> 'Cela mettra à jour le groupe « Nouveaux utilisateurs enregistrés » afin qu’il contienne tous les utilisateurs qui correspondent aux critères définis dans le panneau d’administration.',
 	'RUN_RNR_FINISHED'				=> 'Le groupe des « Nouveaux utilisateurs enregistrés » a été resynchronisé.',
-	'RUN_RNR_NOT_FINISHED'			=> 'Le groupe des « Nouveaux utilisateurs enregistrés » est en cours de resynchronisation. Veuillez ne pas interrompre cette opération.',
+	'RUN_RNR_NOT_FINISHED'			=> 'Le groupe des « Nouveaux utilisateurs enregistrés » est en cours de resynchronisation. Merci de ne pas interrompre cette opération.',
 	'RUN_RR'						=> 'Resynchroniser les « Utilisateurs enregistrés »',
-	'RUN_RR_EXPLAIN'				=> 'L’outil a déterminé que tous les utilisateurs de votre forum ne sont pas membres du groupe des « Utilisateurs <em>COPPA</em> enregistrés ». Souhaitez-vous resynchroniser ces groupes ?<br /><strong>Note :</strong> Si votre forum a la COPPA activée, les utilisateurs n’ayant pas entré une date de naissance seront placés dans le groupe des « Utilisateurs COPPA enregistrés » !',
+	'RUN_RR_EXPLAIN'				=> 'L’outil a déterminé que tous les utilisateurs du forum ne sont pas membres du groupe des « Utilisateurs <em>COPPA</em> enregistrés ». Confirmer la resynchronisation des groupes.<br /><strong>Note :</strong> Si le forum utilise les utilisateurs COPPA, les utilisateurs n’ayant pas entré une date de naissance seront placés dans le groupe des « Utilisateurs COPPA enregistrés » !',
 	'RUN_RR_FINISHED'				=> 'Les utilisateurs ont été synchronisés.',
 
-
-	'SELECT_RUN_GROUP'				=> 'Veuillez sélectionner au moins un type de groupe qui sera resynchronisé.',
+	'SELECT_RUN_GROUP'	=> 'Merci de sélectionner au moins un type de groupe qui sera resynchronisé.',
 ));

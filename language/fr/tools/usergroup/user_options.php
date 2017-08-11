@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - User Options
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by Galixte (http://www.galixte.com)
-*
-*/
+ *
+ * @package Support Toolkit - User Options French language
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -40,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'USER_OPTIONS'			=> 'Modifier les options des utilisateurs',
-	'USER_OPTIONS_EXPLAIN'	=> 'Ici vous pouvez modifier les paramètres utilisateur par défaut pour tous ou certains groupes sélectionnés.<br />Des informations plus détaillées peuvent être obtenues <a href="https://www.phpbb.com/support/docs/en/3.0/kb/article/changing-user-options-defaults-and-values/" target="_blank"><b>ici</b></a>.',
+	'USER_OPTIONS_EXPLAIN'	=> 'Sur cette page il est possible de modifier les paramètres utilisateur par défaut pour tous ou certains groupes sélectionnés.<br />Des informations plus détaillées peuvent être obtenues <a href="https://www.phpbb.com/support/docs/en/3.0/kb/article/changing-user-options-defaults-and-values/" target="_blank"><b>ici</b></a>.',
 	'NOTHING'				=> 'Ne pas modifier',
 	'USER_OPTIONS_OK'		=> 'Les paramètres des utilisateurs ont été modifiés avec succès.',
 
