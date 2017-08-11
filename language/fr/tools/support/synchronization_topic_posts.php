@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @package Support Toolkit - DB Optimizer French language
+ * @package Support Toolkit - Synchronization topics/posts French language
  * French translation by Galixte (http://www.galixte.com)
  *
  * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
@@ -39,18 +39,17 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'OPTIMIZE_TABLES'			=> 'Optimisation des tables de la BDD',
-	'OPTIMIZE_TABLES_EXPLAIN'	=> 'Cherche les tables de la base de données ayant besoin d’une défragmentation et une optimisation.',
-	'GO'						=> 'Optimiser',
-	'FRAGMENTED'				=> 'Fragmentés',
-	'CREATE_TIME'				=> 'Créée le',
-	'UPDATE_TIME'				=> 'Dernière mise à jour',
-	'CHECK_TIME'				=> 'Vérifiée le',
-	'NOT_FOUND' 				=> 'Aucune table ne requiert une optimisation',
-	'TABLE_NAME'				=> 'Table',
-	'TABLE_SIZE'				=> 'Utilisés',
-	'ALL'						=> 'Total : ',
-	'SUCESS'					=> 'Les tables sélectionnées ont été optimisées avec succès',
-	'NOTHING'					=> 'Aucune sélection',
-	'OPTIMIZER_MESSAGE'			=> '<b>Attention !</b> Selon la taille des tables et l’importance de la fragmentation, l’optimisation pourrait prendre un certain temps.<br />Merci de ne pas quitter cette page jusqu’à la fin de l’optimisation.',
+	'SYNCHRONIZATION_TOPIC_POSTS'			=> 'Synchronisation des sujets',
+	'SYNCHRONIZATION_TOPIC_POSTS_EXPLAIN'	=> 'Cet outil permet de récupérer le nombre actuel de messages dans la table <em>_topics</em>.',
+	'TOPICS_NOT_SYNCHRONIZED'				=> 'Sujets nécessitant une synchronisation',
+	'TOPIC_ID'								=> 'ID du sujet',
+	'TOPIC_TOTAL_POSTS'						=> 'Nombre total de messages<br />de la table %s',
+	'TOPIC_TOTAL_POSTS_TITLE'				=> 'Approuvé(s) +  non approuvé(s) + supprimé(s)',
+	'POSTS_TOTAL'							=> 'Nombre actuel de messages<br />de la table %s',
+	'FROM_TABLE'							=> '<br />de la table %s',
+	'NO_NOT_SYNCHRONIZED_TOPICS'			=> 'Non trouvé',
+	'SYNCHRONIZING_TOPICS'					=> 'Synchronisation en cours…',
+	'TOPIC_LAST_POST_ID'					=> 'Dernier ID de message',
+	'MAX_POST_ID'							=> 'Dernier ID',
+	'TOPICS_SINCRONIZED'					=> '%d éléments ont été synchronisés',
 ));

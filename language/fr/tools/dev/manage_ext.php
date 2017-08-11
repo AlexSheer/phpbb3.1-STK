@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Manager Extensions files
-* @French translation by Galixte (http://www.galixte.com)
-*
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
+ *
+ * @package Support Toolkit - Manager Extensions files French language
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -42,7 +42,7 @@ $lang = array_merge($lang, array(
 	'MANAGE_EXT'				=> 'Gestionnaire de fichiers des extensions',
 	'EXT_NAME'					=> 'Nom de l’extension',
 	'EXTENSIONS_FILES'			=> 'Fichiers de l’extension',
-	'EXTENSIONS_FILES_EXPLAIN'	=> 'Ici vous pouvez voir, renommer supprimer ou créer de nouveaux fichiers ou répertoire pour votre extension.',
+	'EXTENSIONS_FILES_EXPLAIN'	=> 'Sur cette page il est possible de voir, renommer supprimer ou créer de nouveaux fichiers ou répertoire pour son extension.',
 	'EXPAND'					=> 'Étendre / réduire',
 	'SAVE'						=> 'Sauvegarder',
 	'SAVED'						=> 'Le fichier %s a été sauvegardé avec succès',
@@ -71,5 +71,5 @@ $lang = array_merge($lang, array(
 	'ENABLED'					=> 'Activée',
 	'DISABLED'					=> 'Désactivée',
 	'NOT_INSTALLED'				=> 'Pas installée',
-	'NO_EXTENSIONS_FILES'		=> '<strong>Des fichiers sont introuvables</strong>.<br />Probablement par le fait que l’extension n’est pas installée, voire que des fichiers ou répertoires sont manquants.',
+	'NO_EXTENSIONS_FILES'		=> '<strong>Des fichiers sont introuvables</strong>.<br />Probablement dû au fait que l’extension n’est pas installée, voire que des fichiers ou répertoires sont manquants.',
 ));

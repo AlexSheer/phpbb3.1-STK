@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Auto Cookies
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by phpBB-fr http://www.phpbb-fr.com
-*
-*/
+ *
+ * @package Support Toolkit - Auto Cookies French language
+ * French translation by phpBB-fr http://www.phpbb-fr.com & Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -35,12 +35,12 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ « » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
 	'AUTO_COOKIES'				=> 'Automatisation des cookies',
-	'AUTO_COOKIES_EXPLAIN'		=> 'Cet outil vous permet de modifier les réglages des cookies de votre forum. Les réglages qui vous sont suggérés sont corrects dans la plupart des cas. Si vous n’êtes pas certain(e) que les réglages soient corrects, veuillez rechercher de l’aide dans le forum de support avant de réaliser une mauvaise manipulation qui pourrait rendre impossible toute connexion à votre forum.',
+	'AUTO_COOKIES_EXPLAIN'		=> 'Cet outil permet de modifier les réglages des cookies de son forum. Les réglages qui sont suggérés sont corrects dans la plupart des cas. Si l’exactitude des réglages n’est pas certaine, merci de rechercher de l’aide dans le forum de support avant de réaliser une mauvaise manipulation qui pourrait rendre impossible toute connexion à son forum.',
 
 	'COOKIE_SETTINGS_UPDATED'	=> 'Les réglages des cookies ont été mis à jour.',
 ));

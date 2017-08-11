@@ -1,25 +1,22 @@
 <?php
 /**
-*
-* @package Support Toolkit - phpBB
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by Galixte (http://www.galixte.com)
-*
-*/
+ *
+ * @package Support Toolkit - phpBB French language
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 
-/**
-* DO NOT CHANGE
-*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -44,6 +41,6 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'PHPBB'				=> 'Fichiers de phpBB 3.1.x',
 	'ROOT'				=> 'phpBB 3.1.x',
-	'G_TIME'			=> 'Temps de génération de l’arborescence des fichiers : %01.2fs',
+	'G_TIME'			=> 'Temps de génération de l’arborescence des fichiers : %01.2fs',
 	'FILE_NOT_FOUND'	=> 'Fichier non trouvé',
 ));

@@ -1,25 +1,22 @@
 <?php
 /**
-*
-* @package Support Toolkit - Recache Moderators
-* @version $Id$
-* @copyright (c) 2010 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by phpBB-fr http://www.phpbb-fr.com
-*
-*/
+ *
+ * @package Support Toolkit - Recache Moderators French language
+ * French translation by phpBB-fr http://www.phpbb-fr.com & Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
 }
 
-/**
-* DO NOT CHANGE
-*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -38,11 +35,11 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ « » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
 	'RECACHE_MODERATORS'			=> 'Mettre de nouveau en cache les modérateurs',
 	'RECACHE_MODERATORS_COMPLETE'	=> 'Le cache des modérateurs a été reconstruit.',
-	'RECACHE_MODERATORS_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir mettre de nouveau en cache les modérateurs ?',
+	'RECACHE_MODERATORS_CONFIRM'	=> 'Confirmer la mise en cache des modérateurs.',
 ));

@@ -1,16 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Clear Extensions English language
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
+ *
+ * Support Toolkit - Clear black list French language
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -34,9 +35,10 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'CLEAR_BLACK_LIST'				=> 'IP-addresses Black list',
+	'CLEAR_BLACK_LIST'				=> 'Bannissement d’IP',
+	'NO_BAN_CELL'					=> 'Aucune adresse IP n’est exclue'
 ));

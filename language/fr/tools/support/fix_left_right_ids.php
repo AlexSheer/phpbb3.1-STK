@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Fix Left/Right ID's
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by phpBB-fr http://www.phpbb-fr.com
-*
-*/
+ *
+ * @package Support Toolkit - Fix Left/Right ID's French language
+ * French translation by phpBB-fr http://www.phpbb-fr.com & Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -40,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'FIX_LEFT_RIGHT_IDS'			=> 'Réparer les ID de droite et de gauche',
-	'FIX_LEFT_RIGHT_IDS_CONFIRM'	=> 'Êtes-vous sûr(e) de vouloir réparer les ID de droite et de gauche ?<br /><br /><strong>Veuillez sauvegarder votre base de données avant d’exécuter cet outil !</strong>',
+	'FIX_LEFT_RIGHT_IDS_CONFIRM'	=> 'Confirmer la réparation des ID de droite et de gauche.<br /><br /><strong>Merci sauvegarder la base de données avant d’exécuter cet outil !</strong>',
 
 	'LEFT_RIGHT_IDS_FIX_SUCCESS'	=> 'Les ID de droite et de gauche ont été réparés.',
 	'LEFT_RIGHT_IDS_NO_CHANGE'		=> 'L’outil a terminé le balayage de toutes les ID de droite et de gauche et toutes les lignes sont déjà correctes. Aucune modification n’a donc été apportée.',

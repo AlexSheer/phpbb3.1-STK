@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Prune Attachments
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by Galixte (http://www.galixte.com)
-*
-*/
+ *
+ * @package Support Toolkit - Prune Attachments French language
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -40,8 +40,8 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'PRUNE_ATTACHMENTS'				=> 'Vérifier les fichiers joints',
-	'PRUNE_ATTACHMENTS_EXPLAIN'		=> 'Cet outil vérifie l’existence de fichiers joints supplémentaires (<em>les sous-dossiers sont aussi vérifiés !</em>). Si ces fichiers existent, ils seront supprimés. Voulez-vous continuer ?',
-	'PRUNE_ATTACHMENTS_FINISHED'	=> 'Aucun fichier joint supplémentaire trouvé.',
-	'PRUNE_ATTACHMENTS_PROGRESS'	=> 'Vérification des fichiers inutiles en cours. Veuillez ne pas interrompre cette opération !<br />Les fichiers suivants ont été supprimés :',
-	'PRUNE_ATTACHMENTS_FAIL'		=> '<br />Les fichiers suivants ne peuvent pas être supprimés :',
+	'PRUNE_ATTACHMENTS_EXPLAIN'		=> 'Cet outil vérifie l’existence de fichiers joints supplémentaires (<em>les sous-dossiers sont aussi vérifiés !</em>). Si ces fichiers existent, ils seront supprimés. Poursuivre ?',
+	'PRUNE_ATTACHMENTS_FINISHED'	=> 'Aucun fichier joint supplémentaire n’a été trouvé.',
+	'PRUNE_ATTACHMENTS_PROGRESS'	=> 'Vérification des fichiers inutiles en cours. Merci de ne pas interrompre cette opération !<br />Les fichiers suivants ont été supprimés :',
+	'PRUNE_ATTACHMENTS_FAIL'		=> '<br />Les fichiers suivants ne peuvent pas être supprimés :',
 ));

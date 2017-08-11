@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Profile List
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by phpBB-fr http://www.phpbb-fr.com
-*
-*/
+ *
+ * @package Support Toolkit - Profile List French language
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -39,21 +39,21 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ALL'						=> 'Tous',
+	'ALL'					=> 'Tous',
 
-	'CLICK_TO_DELETE'			=> 'Supprimer tous les utilisateurs sélectionnés en cliquant sur ce bouton. <em>Attention, cette action est irréversible !</em>',
+	'CLICK_TO_DELETE'		=> 'Supprimer tous les utilisateurs sélectionnés en cliquant sur ce bouton. <em>Attention, cette action est irréversible !</em>',
 
-	'FILTER'					=> 'Filtre',
+	'FILTER'				=> 'Filtre',
 
-	'LIMIT'						=> 'Limite',
+	'LIMIT'					=> 'Limite',
 
-	'ONLY_NON_EMPTY'			=> 'Remplis uniquement',
-	'ORDER_BY'					=> 'Trier par',
+	'ONLY_NON_EMPTY'		=> 'Remplis uniquement',
+	'ORDER_BY'				=> 'Trier par',
 
-	'PROFILE_LIST'				=> 'Liste des profils',
-	'PROFILE_LIST_EXPLAIN'		=> 'Cet outil affiche les informations de profil de plusieurs utilisateurs. Il peut également être utilisé afin de vous aider dans l’identification des comptes de spammeurs.',
+	'PROFILE_LIST'			=> 'Liste des profils',
+	'PROFILE_LIST_EXPLAIN'	=> 'Cet outil affiche les informations de profil de plusieurs utilisateurs. Il peut également être utilisé afin d’aider à l’identifier les comptes de spammeurs.',
 
 	'USERS_DELETE'				=> 'Supprimer les utilisateurs sélectionnés',
-	'USERS_DELETE_CONFIRM'		=> 'Êtes-vous sûr(e) de vouloir supprimer les utilisateurs sélectionnés ? Cet outil supprimera également <strong>tous</strong> leurs messages !',
+	'USERS_DELETE_CONFIRM'		=> 'Confirmer la suppression des utilisateurs sélectionnés. Cet outil supprimera également <strong>tous</strong> leurs messages !',
 	'USERS_DELETE_SUCCESSFULL'	=> 'Tous les utilisateurs sélectionnés ont été supprimés, ainsi que tous leurs messages !',
 ));

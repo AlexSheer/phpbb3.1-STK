@@ -1,17 +1,17 @@
 <?php
 /**
-*
-* @package Support Toolkit - Config List
-* @version $Id$
-* @copyright (c) 2009 phpBB Group
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-* @French translation by Galixte (http://www.galixte.com)
-*
-*/
+ *
+ * @package Support Toolkit - Config List French language
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 phpBB Limited <https://www.phpbb.com>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
-* DO NOT CHANGE
-*/
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -47,7 +47,7 @@ $lang = array_merge($lang, array(
 	'CONFIG_VALUE'						=> 'Valeur',
 	'IS_DYNAMIC'						=> 'Est dynamique',
 	'CONFIG_CHANGED_SUCCESS'			=> 'Les valeurs de la configuration ont été modifiées avec succès',
-	'CLICK_HERE_TO_CHANGE'				=> 'Cliquez ici pour changer la configuration (les modifications prendront effet <b>immédiatement !</b>)',
+	'CLICK_HERE_TO_CHANGE'				=> 'Cliquer ici pour changer la configuration (les modifications prendront effet <b>immédiatement !</b>)',
 	'TOTAL_ITEMS'						=> 'Total',
 	'CRON_TASKS'						=> 'Tâches du « cron »',
 	'ATTACHMENTS'						=> 'Paramètres des fichiers joints',
@@ -111,7 +111,7 @@ $lang = array_merge($lang, array(
 	'auth_bbcode_pm'					=> 'Autoriser les BBCodes dans les messages privés',
 	'auth_flash_pm'						=> 'Autoriser l’utilisation du BBCode <code>[FLASH]</code>',
 	'auth_img_pm'						=> 'Autoriser l’utilisation du BBCode <code>[IMG]</code>',
-	'auth_method'						=> 'Sélectionnez une méthode d’authentification',
+	'auth_method'						=> 'Sélectionner une méthode d’authentification',
 	'auth_oauth_bitly_key'				=> 'Clé Bitly',
 	'auth_oauth_bitly_secret'			=> 'Code secret Bitly',
 	'auth_oauth_facebook_key'			=> 'Clé Facebook',
