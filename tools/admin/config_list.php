@@ -54,6 +54,7 @@ class config_list
 		}
 
 		$options = array(
+			'statistics'		=> 'STATISTICS',
 			'cron'				=> 'CRON_TASKS',
 			'attachments'		=> 'ATTACHMENTS',
 			'board_config'		=> 'BOARD_CONFIG',
@@ -186,7 +187,13 @@ class config_list
 			'fulltext_sphinx_id', 'fulltext_sphinx_data_path', 'fulltext_sphinx_indexer_mem_limit', 'fulltext_sphinx_host', 'fulltext_sphinx_port', 'fulltext_sphinx_stopwords',
 		);
 
+		$config_statistics = array(
+			'dbms_version', 'last_queue_run', 'board_startdate', 'newest_user_id', 'newest_username', 'num_files', 'num_posts', 'num_topics',
+			'num_users', 'record_online_date', 'record_online_users', 'upload_dir_size', 'version',
+		);
+
 		$config_common = $config_all = array();
+		$config_common = array_merge($config_common, $config_statistics);
 		$config_common = array_merge($config_common, $config_cron);
 		$config_common = array_merge($config_common, $config_attachments);
 		$config_common = array_merge($config_common, $config_avatras);
@@ -238,7 +245,11 @@ class config_list
 		{
 			// Show selected
 			switch ($display)
-			{	case 'cron'				:
+			{
+				case 'statistics'		:
+					$where = $config_statistics;
+				break;
+				case 'cron'				:
 					$where = $config_cron;
 				break;
 				case 'attachments'		:
@@ -320,8 +331,9 @@ class config_list
 		$result = $db->sql_query_limit($sql, $limit, $start);
 
 		$not_bool = array('assets_version', 'form_token_mintime', 'img_link_height', 'img_link_width', 'img_max_height', 'img_max_width', 'max_attachments_pm', 'max_autologin_time', 'max_post_img_height',
-			'max_post_img_width', 'max_post_smilies', 'max_post_urls', 'max_sig_img_height', 'max_sig_img_width', 'max_sig_smilies', 'num_files', 'default_style',
-			'num_posts', 'num_topics', 'num_users', 'pm_edit_time', 'pm_max_recipients', 'search_interval', 'search_anonymous_interval', 'search_indexing_state',
+			'max_post_img_width', 'max_post_smilies', 'max_post_urls', 'max_sig_img_height', 'max_sig_img_width', 'max_sig_smilies', 'num_files', 'default_style', 'cron_lock', 'upload_dir_size',
+			'num_posts', 'num_topics', 'num_users', 'pm_edit_time', 'pm_max_recipients', 'search_interval', 'search_anonymous_interval', 'search_indexing_state', 'plupload_last_gc', 'warnings_expire_days',
+			'last_queue_run',
 		);
 		$ex_time_gc = array('database_gc', 'cache_gc', 'session_gc', 'search_gc', 'warnings_gc', 'read_notification_gc');
 
@@ -368,7 +380,7 @@ class config_list
 			'LIMIT'				=> $limit,
 			'A_BASE_URL'		=> append_sid(STK_INDEX, array('c' => 'admin', 't' => 'config_list', 'limit' => '' . $limit . '&amp;display=' . $display . '', 'go' => 1)),
 			'U_DISPLAY_ACTION'	=> append_sid(STK_INDEX, 't=config_list&amp;go=1'),
-			'S_ACTION'			=> append_sid("" . STK_ROOT_PATH . "index." . PHP_EXT . "", 'c=admin&amp;t=config_list&amp;start=' . $start . '$amp;limit=' . $limit . '&amp;display=' . $display . ''),
+			'S_ACTION'			=> append_sid("" . STK_ROOT_PATH . "index." . PHP_EXT . "", 'c=admin&amp;t=config_list&amp;start=' . $start . '&amp;limit=' . $limit . '&amp;display=' . $display . ''),
 		));
 
 		$template->set_filenames(array(

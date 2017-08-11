@@ -70,17 +70,9 @@ class sql_query
 
 		$dbms=  str_replace('phpbb\\db\\driver\\', '', $dbms);
 		$dbmd = get_available_dbms($dbms);
-		if ($dbms == 'mysql' || $dbms == 'mysqli' || $dbms == 'sqlite')
-		{
-			$remove_remarks = 'phpbb_remove_comments';
-		}
-		else
-		{
-			$remove_remarks = 'phpbb_remove_remarks';
-		}
 
 		$delimiter = $dbmd[$dbms]['DELIM'];
-		$remove_remarks($sql_query);
+		phpbb_remove_comments($sql_query);
 		$sql_query = split_sql_file($sql_query, $delimiter);
 
 		// Return on error

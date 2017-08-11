@@ -557,7 +557,7 @@ class umil
 	/**
 	* Cache Purge
 	*
-	* This function is for purging either phpBB3’s data cache, authorization cache, or the styles cache.
+	* This function is for purging either phpBB3’s data cache, authorization cache, or the styles cache
 	*
 	* @param string $type The type of cache you want purged.  Available types: auth, imageset, template, theme.  Anything else sent will purge the forum's cache.
 	* @param int $style_id The id of the item you want purged (if the type selected is imageset/template/theme, 0 for all items in that section)
@@ -612,7 +612,7 @@ class umil
 					if (!$imageset_row)
 					{
 						$this->umil_start('IMAGESET_CACHE_PURGE', 'UNKNOWN');
-						return $this->umil_end('FAIL');
+						return $this->umil_end($user->lang['FAIL']);
 					}
 
 					$this->umil_start('IMAGESET_CACHE_PURGE', $imageset_row['imageset_name']);
@@ -743,7 +743,7 @@ class umil
 					if (!$template_row)
 					{
 						$this->umil_start('TEMPLATE_CACHE_PURGE', 'UNKNOWN');
-						return $this->umil_end('FAIL');
+						return $this->umil_end($user->lang['FAIL']);
 					}
 
 					$this->umil_start('TEMPLATE_CACHE_PURGE', $template_row['template_name']);
@@ -861,7 +861,7 @@ class umil
 					if (!$theme_row)
 					{
 						$this->umil_start('THEME_CACHE_PURGE', 'UNKNOWN');
-						return $this->umil_end('FAIL');
+						return $this->umil_end($user->lang['FAIL']);
 					}
 
 					$this->umil_start('THEME_CACHE_PURGE', $theme_row['theme_name']);
@@ -1169,10 +1169,10 @@ class umil
 		if (empty($data))
 		{
 			$this->umil_start('MODULE_ADD', $class, 'UNKNOWN');
-			return $this->umil_end('FAIL');
+			return $this->umil_end($user->lang['FAIL']);
 		}
 
-        // Allows '' to be sent as 0
+		// Allows '' to be sent as 0
 		$parent = (!$parent) ? 0 : $parent;
 
 		// allow sending the name as a string in $data to create a category
@@ -1193,7 +1193,7 @@ class umil
 			if (!file_exists((($include_path === false) ? $phpbb_root_path . 'includes/' : $include_path) . $info_file))
 			{
 				$this->umil_start('MODULE_ADD', $class, $info_file);
-				return $this->umil_end('FAIL');
+				return $this->umil_end($user->lang['FAIL']);
 			}
 
 			$classname = "{$class}_{$basename}_info";
@@ -1268,6 +1268,338 @@ class umil
 			$user->add_lang('acp/modules');
 		}
 		$acp_modules = new acp_modules();
+		if(isset($data['module_mode']))
+		{
+			$non_standart_module_langname = array(
+				'ACP_CAT_GENERAL',
+					'ACP_INDEX',
+					'ACP_QUICK_ACCESS',
+						 'ACP_MANAGE_USERS', 'ACP_GROUPS_MANAGE', 'ACP_MANAGE_FORUMS', 'ACP_MOD_LOGS', 'ACP_BOTS', 'ACP_PHP_INFO',
+				'ACP_BOARD_CONFIGURATION',
+					'ACP_ATTACHMENT_SETTINGS', 'ACP_BOARD_SETTINGS', 'ACP_BOARD_FEATURES', 'ACP_AVATAR_SETTINGS', 'ACP_MESSAGE_SETTINGS', 'ACP_POST_SETTINGS',
+					'ACP_SIGNATURE_SETTINGS', 'ACP_FEED_SETTINGS', 'ACP_REGISTER_SETTINGS', 'ACP_VC_SETTINGS', 'ACP_VC_CAPTCHA_DISPLAY','ACP_CONTACT_SETTINGS',
+				'ACP_CLIENT_COMMUNICATION',
+					'ACP_AUTH_SETTINGS', 'ACP_JABBER_SETTINGS', 'ACP_EMAIL_SETTINGS',
+				'ACP_SERVER_CONFIGURATION',
+					'ACP_COOKIE_SETTINGS', 'ACP_SERVER_SETTINGS', 'ACP_SECURITY_SETTINGS', 'ACP_LOAD_SETTINGS', 'ACP_SEARCH_SETTINGS', 'ACP_SEND_STATISTICS',
+				'ACP_CAT_FORUMS',
+					'ACP_MANAGE_FORUMS',
+						'ACP_PRUNE_FORUMS',
+					'ACP_FORUM_BASED_PERMISSIONS',
+						 'ACP_FORUM_PERMISSIONS', 'ACP_FORUM_PERMISSIONS_COPY', 'ACP_FORUM_MODERATORS', 'ACP_USERS_FORUM_PERMISSIONS', 'ACP_GROUPS_FORUM_PERMISSIONS',
+				'ACP_CAT_POSTING',
+					'ACP_MESSAGES',
+						'ACP_BBCODES', 'ACP_MESSAGE_SETTINGS', 'ACP_POST_SETTINGS', 'ACP_ICONS', 'ACP_SMILIES', 'ACP_WORDS',
+					'ACP_ATTACHMENTS',
+						'ACP_ATTACHMENT_SETTINGS', 'ACP_MANAGE_EXTENSIONS', 'ACP_EXTENSION_GROUPS', 'ACP_ORPHAN_ATTACHMENTS', 'ACP_MANAGE_ATTACHMENTS',
+				'ACP_CAT_USERGROUP',
+					'ACP_CAT_USERS',
+						'ACP_INACTIVE_USERS', 'ACP_MANAGE_USERS', 'ACP_USERS_PERMISSIONS', 'ACP_USER_ATTACH', 'ACP_USER_PERM', 'ACP_USER_GROUPS',
+						'ACP_USER_SIG', 'ACP_USER_RANK', 'ACP_USER_AVATAR', 'ACP_USER_PREFS', 'ACP_USER_PROFILE', 'ACP_USER_WARNINGS', 'ACP_USER_FEEDBACK',
+						'ACP_MANAGE_RANKS', 'ACP_PRUNE_USERS', 'ACP_CUSTOM_PROFILE_FIELDS', 'ACP_USERS_FORUM_PERMISSIONS',
+					'ACP_GROUPS',
+						'ACP_GROUPS_MANAGE', 'ACP_GROUPS_POSITION', 'ACP_GROUPS_PERMISSIONS', 'ACP_GROUPS_FORUM_PERMISSIONS',
+					'ACP_USER_SECURITY',
+						'ACP_BAN_EMAILS', 'ACP_BAN_IPS',  'ACP_BAN_USERNAMES', 'ACP_DISALLOW_USERNAMES',
+				'ACP_CAT_PERMISSIONS',
+					'ACP_PERMISSIONS',
+					'ACP_GLOBAL_PERMISSIONS',
+						'ACP_GLOBAL_MODERATORS', 'ACP_ADMINISTRATORS', 'ACP_GROUPS_PERMISSIONS', 'ACP_USERS_PERMISSIONS',
+					'ACP_PERMISSION_ROLES',
+						'ACP_FORUM_ROLES', 'ACP_MOD_ROLES', 'ACP_USER_ROLES', 'ACP_ADMIN_ROLES',
+					'ACP_PERMISSION_MASKS',
+						'ACP_VIEW_FORUM_PERMISSIONS', 'ACP_VIEW_FORUM_MOD_PERMISSIONS', 'ACP_VIEW_GLOBAL_MOD_PERMISSIONS', 'ACP_VIEW_USER_PERMISSIONS', 'ACP_VIEW_ADMIN_PERMISSIONS', 'ACP_PERMISSION_TRACE',
+				'ACP_CAT_CUSTOMISE',
+					'ACP_LANGUAGE',
+						'ACP_LANGUAGE_PACKS',
+					'ACP_STYLE_MANAGEMENT',
+						'ACP_STYLES_INSTALL', 'ACP_STYLES',
+					'ACP_EXTENSION_MANAGEMENT',
+						'ACP_EXTENSIONS',
+				'ACP_FORUM_LOGS',
+					'ACP_CRITICAL_LOGS', 'ACP_USERS_LOGS', 'ACP_ADMIN_LOGS',
+				'ACP_CAT_DATABASE',
+					'ACP_SEARCH_INDEX', 'ACP_RESTORE', 'ACP_BACKUP',
+				'ACP_CAT_SYSTEM',
+					'ACP_MODULE_MANAGEMENT',
+						'MCP', 'UCP', 'ACP',
+				'ACP_GENERAL_TASKS',
+					'ACP_MANAGE_REASONS', 'ACP_MASS_EMAIL',
+				'ACP_AUTOMATION',
+					'ACP_VERSION_CHECK',
+				'ACP_CAT_DOT_MODS',
+				'UCP_USERGROUPS_MANAGE', 'UCP_USERGROUPS_MEMBER', 'UCP_NOTIFICATION_OPTIONS', 'UCP_AUTH_LINK_MANAGE', 'UCP_NOTIFICATION_LIST', 'UCP_MAIN_ATTACHMENTS',
+				'MCP_MAIN',
+					'MCP_MAIN_FRONT', 'MCP_MAIN_FORUM_VIEW', 'MCP_MAIN_TOPIC_VIEW', 'MCP_MAIN_POST_DETAILS',
+				'MCP_QUEUE',
+					'MCP_QUEUE_UNAPPROVED_TOPICS', 'MCP_QUEUE_UNAPPROVED_POSTS', 'MCP_QUEUE_DELETED_TOPICS', 'MCP_QUEUE_DELETED_POSTS', 'MCP_QUEUE_APPROVE_DETAILS',
+				'MCP_REPORTS',
+					'MCP_REPORTS_OPEN', 'MCP_REPORTS_CLOSED', 'MCP_REPORT_DETAILS', 'MCP_PM_REPORTS_OPEN', 'MCP_PM_REPORTS_CLOSED', 'MCP_PM_REPORT_DETAILS',
+				'MCP_NOTES',
+					'MCP_NOTES_FRONT', 'MCP_NOTES_USER',
+				'MCP_WARN',
+					'MCP_WARN_FRONT', 'MCP_WARN_LIST', 'MCP_WARN_USER', 'MCP_WARN_POST',
+				'MCP_LOGS',
+					'MCP_LOGS_FRONT', 'MCP_LOGS_FORUM_VIEW', 'MCP_LOGS_TOPIC_VIEW',
+				'MCP_BAN',
+			);
+			if (in_array($data['module_langname'], $non_standart_module_langname))
+			{
+				switch ($data['module_langname'])
+				{
+					case 'MCP_WARN_FRONT':
+					case 'MCP_WARN_LIST':
+					case 'MCP_WARN_USER':
+					case 'MCP_WARN_POST':
+						$basename = 'warn';
+					break;
+					case 'MCP_NOTES_FRONT':
+					case 'MCP_NOTES_USER':
+						$basename = 'notes';
+					break;
+					case 'MCP_REPORTS_OPEN':
+					case 'MCP_REPORTS_CLOSED':
+					case 'MCP_REPORT_DETAILS':
+						$basename = 'reports';
+					break;
+					case 'MCP_PM_REPORTS_OPEN':
+					case 'MCP_PM_REPORTS_CLOSED':
+					case 'MCP_PM_REPORT_DETAILS':
+						$basename = 'pm_reports';
+					break;
+					case 'MCP_QUEUE_UNAPPROVED_TOPICS':
+					case 'MCP_QUEUE_UNAPPROVED_POSTS':
+					case 'MCP_QUEUE_DELETED_TOPICS':
+					case 'MCP_QUEUE_DELETED_POSTS':
+					case 'MCP_QUEUE_APPROVE_DETAILS':
+						$basename = 'queue';
+					break;
+					case 'ACP_VERSION_CHECK':
+						$basename = 'update';
+					break;
+					case 'ACP_BAN_IPS':
+					case 'ACP_BAN_EMAILS':
+					case 'ACP_BAN_USERNAMES':
+						$basename = 'ban';
+					break;
+					case 'ACP_DISALLOW_USERNAMES':
+						$basename = 'disallow';
+					break;
+					case 'UCP_USERGROUPS_MANAGE':
+					case 'UCP_USERGROUPS_MEMBER':
+					case 'ACP_GROUPS_MANAGE':
+					case 'ACP_GROUPS_POSITION':
+						$basename = 'groups';
+					break;
+					case 'UCP_NOTIFICATION_OPTIONS':
+					case 'UCP_NOTIFICATION_LIST':
+						$basename = 'notifications';
+					break;
+					case 'UCP_AUTH_LINK_MANAGE':
+						$basename = 'auth_link';
+					break;
+					case 'UCP_MAIN_ATTACHMENTS':
+					case 'ACP_ATTACHMENT_SETTINGS':
+					case 'ACP_MANAGE_ATTACHMENTS':
+					case 'ACP_ORPHAN_ATTACHMENTS':
+					case 'ACP_EXTENSION_GROUPS':
+					case 'ACP_MANAGE_EXTENSIONS':
+						$basename = 'attachments';
+					break;
+					case 'ACP_INDEX':
+					case 'MCP_MAIN_FRONT';
+					case 'MCP_MAIN_FORUM_VIEW':
+					case 'MCP_MAIN_TOPIC_VIEW':
+					case 'MCP_MAIN_POST_DETAILS':
+						$basename = 'main';
+					break;
+					case 'ACP_SEND_STATISTICS':
+						$basename = 'send_statistics';
+					break;
+					case 'ACP_SEARCH_SETTINGS':
+					case 'ACP_SEARCH_INDEX':
+						$basename = 'search';
+					break;
+					case 'ACP_LOAD_SETTINGS':
+					case 'ACP_SECURITY_SETTINGS':
+					case 'ACP_SERVER_SETTINGS':
+					case 'ACP_COOKIE_SETTINGS':
+					case 'ACP_EMAIL_SETTINGS':
+					case 'ACP_AUTH_SETTINGS':
+					case 'ACP_REGISTER_SETTINGS':
+					case 'ACP_FEED_SETTINGS':
+					case 'ACP_SIGNATURE_SETTINGS':
+					case 'ACP_POST_SETTINGS':
+					case 'ACP_MESSAGE_SETTINGS':
+					case 'ACP_AVATAR_SETTINGS':
+					case 'ACP_BOARD_FEATURES':
+					case 'ACP_BOARD_SETTINGS':
+						$basename = 'board';
+					break;
+					case 'ACP_JABBER_SETTINGS':
+						$basename = 'jabber';
+					break;
+					case 'ACP_CONTACT_SETTINGS':
+						$basename = 'contact';
+					break;
+					case 'ACP_VC_CAPTCHA_DISPLAY':
+					case 'ACP_VC_SETTINGS':
+						$basename = 'captcha';
+					break;
+					case 'ACP_PHP_INFO':
+						$basename = 'php_info';
+					break;
+					case 'ACP_BOTS';
+						$basename = 'bots';
+					break;
+					case 'ACP_MOD_LOGS':
+					case 'ACP_CRITICAL_LOGS':
+					case 'ACP_USERS_LOGS':
+					case 'ACP_ADMIN_LOGS':
+					case 'MCP_LOGS_FRONT':
+					case 'MCP_LOGS_FORUM_VIEW':
+					case 'MCP_LOGS_TOPIC_VIEW':
+						$basname= 'logs';
+					break;
+					case 'ACP_MANAGE_FORUMS':
+						$basename = 'forums';
+					break;
+					case 'ACP_MANAGE_USERS':
+					case 'ACP_USER_ATTACH':
+					case 'ACP_USER_PERM':
+					case 'ACP_USER_GROUPS':
+					case 'ACP_USER_SIG':
+					case 'ACP_USER_RANK':
+					case 'ACP_USER_AVATAR':
+					case 'ACP_USER_PREFS':
+					case 'ACP_USER_PROFILE':
+					case 'ACP_USER_WARNINGS':
+					case 'ACP_USER_FEEDBACK':
+						$basename = 'users';
+					break;
+					case 'ACP_PRUNE_FORUMS':
+					case 'ACP_PRUNE_USERS':
+						$basename = 'prune';
+					break;
+					case 'ACP_WORDS':
+						$basename = 'words';
+					break;
+					case 'ACP_SMILIES':
+					case 'ACP_ICONS':
+						$basename = 'icons';
+					break;
+					case 'ACP_BBCODES';
+						$basename = 'bbcodes';
+					break;
+					case 'ACP_MANAGE_RANKS':
+						$basename = 'ranks';
+					break;
+					case 'ACP_CUSTOM_PROFILE_FIELDS':
+						$base_name = 'profile';
+					break;
+					case 'ACP_USERS_FORUM_PERMISSIONS':
+					case 'ACP_USERS_PERMISSIONS':
+					case 'ACP_VIEW_FORUM_PERMISSIONS':
+					case 'ACP_VIEW_FORUM_MOD_PERMISSIONS':
+					case 'ACP_VIEW_GLOBAL_MOD_PERMISSIONS':
+					case 'ACP_VIEW_USER_PERMISSIONS':
+					case 'ACP_VIEW_ADMIN_PERMISSIONS':
+					case 'ACP_PERMISSION_TRACE':
+					case 'ACP_GROUPS_FORUM_PERMISSIONS':
+					case 'ACP_USERS_FORUM_PERMISSIONS':
+					case 'ACP_FORUM_MODERATORS':
+					case 'ACP_FORUM_PERMISSIONS_COPY':
+					case 'ACP_FORUM_PERMISSIONS':
+					case 'ACP_GLOBAL_MODERATORS':
+					case 'ACP_ADMINISTRATORS':
+					case 'ACP_GROUPS_PERMISSIONS':
+					case 'ACP_USERS_PERMISSIONS':
+						$basename = 'permissions';
+					break;
+					case 'ACP_INACTIVE_USERS':
+						$basename = 'inactive';
+					break;
+					case 'ACP_FORUM_ROLES':
+					case 'ACP_MOD_ROLES':
+					case 'ACP_USER_ROLES':
+					case 'ACP_ADMIN_ROLES':
+						$basename = 'permission_roles';
+					break;
+					case 'ACP_LANGUAGE_PACKS':
+						$basename = 'language';
+					break;
+					case 'ACP_STYLES_INSTALL':
+					case 'ACP_STYLES':
+						$basename = 'styles';
+					break;
+					case 'ACP_EXTENSIONS':
+						$basename = 'extensions';
+					break;
+					case 'ACP_RESTORE':
+					case 'ACP_BACKUP':
+						$basename = 'database';
+					break;
+					case 'MCP':
+					case 'UCP':
+					case 'ACP':
+						$basename = 'modules';
+					break;
+					case 'ACP_MANAGE_REASONS':
+						$basename = 'reasons';
+					break;
+					case 'ACP_MASS_EMAIL':
+						$basename = 'email';
+					break;
+
+					default:
+						$basename = '';
+						$data['module_basename'] = $basename;
+					break;
+				}
+
+				if ($basename)
+				{
+					$info_file = "$class/info/{$class}_{$basename}.$phpEx";
+					if (!file_exists((($include_path === false) ? $phpbb_root_path . 'includes/' : $include_path) . $info_file))
+					{
+						$this->umil_start('MODULE_ADD', $class, $info_file);
+						return $this->umil_end($user->lang['FAIL']);
+					}
+
+					$classname = "{$class}_{$basename}_info";
+
+					if (!class_exists($classname))
+					{
+						include((($include_path === false) ? $phpbb_root_path . 'includes/' : $include_path) . $info_file);
+					}
+
+					$info = new $classname;
+					$module = $info->module();
+					unset($info);
+					foreach ($module['modes'] as $mode => $module_info)
+					{
+						if ($module_info['title'] == $data['module_langname'])
+						{
+							$data['module_auth'] = $module_info['auth'];
+							$data['module_mode'] = $mode;
+							$data['module_basename'] = "{$class}_{$basename}";
+							continue;
+						}
+					}
+				}
+			}
+		}
+
+		if(
+			$data['module_langname'] == 'UCP_PM_VIEW' || $data['module_langname'] == 'ACP_VC_CAPTCHA_DISPLAY' || $data['module_langname'] == 'ACP_USER_ATTACH' ||
+			$data['module_langname'] == 'ACP_USER_PERM' || $data['module_langname'] == 'ACP_USER_GROUPS' || $data['module_langname'] == 'ACP_USER_SIG' ||
+			$data['module_langname'] == 'ACP_USER_RANK' || $data['module_langname'] == 'ACP_USER_AVATAR' || $data['module_langname'] == 'ACP_USER_PREFS' ||
+			$data['module_langname'] == 'ACP_USER_PROFILE' || $data['module_langname'] == 'ACP_USER_WARNINGS' || $data['module_langname'] == 'ACP_USER_FEEDBACK' ||
+			$data['module_langname'] == 'ACP_PERMISSION_TRACE'
+		)
+		{
+			$data['module_display'] = 0;
+		}
 
 		$module_data = array(
 			'module_enabled'	=> (isset($data['module_enabled'])) ? $data['module_enabled'] : 1,
@@ -1373,7 +1705,7 @@ class umil
 			if (!isset($module['module_basename']))
 			{
 				$this->umil_start('MODULE_REMOVE', $class, 'UNKNOWN');
-				return $this->umil_end('FAIL');
+				return $this->umil_end($user->lang['FAIL']);
 			}
 
 			// Automatic method
@@ -1384,7 +1716,7 @@ class umil
 			if (!file_exists((($include_path === false) ? $phpbb_root_path . 'includes/' : $include_path) . $info_file))
 			{
 				$this->umil_start('MODULE_REMOVE', $class, $info_file);
-				return $this->umil_end('FAIL');
+				return $this->umil_end($user->lang['FAIL']);
 			}
 
 			$classname = "{$class}_{$basename}_info";
@@ -2340,7 +2672,7 @@ class umil
 	*
 	* Add a new key/index to a table
 	*/
-	function table_index_add($table_name, $index_name = '', $column = array())
+	function table_index_add($table_name, $index_name = '', $column = array(), $index_type = 'INDEX')
 	{
 		global $config;
 
@@ -2360,25 +2692,29 @@ class umil
 
 		$this->umil_start('TABLE_KEY_ADD', $table_name, $index_name);
 
-		if ($this->table_index_exists($table_name, $index_name))
-		{
-			return $this->umil_end('TABLE_KEY_ALREADY_EXIST', $table_name, $index_name);
-		}
-
 		if (!is_array($column))
 		{
 			$column = array($column);
 		}
 
-		// remove index length if we are before 3.0.8
-		// the feature (required for some types when using MySQL4)
-		// was added in that release (ticket PHPBB3-8944)
-		if (version_compare($config['version'], '3.0.7-pl1', '<='))
+		switch ($index_type)
 		{
-			$column = preg_replace('#:.*$#', '', $column);
+			case 'UNIQUE':
+				if($this->db_tools->sql_unique_index_exists($table_name, $index_name))
+				{
+					return $this->umil_end('TABLE_KEY_ALREADY_EXIST', $table_name, $index_name);
+				}
+				$this->db_tools->sql_create_unique_index($table_name, $index_name, $column);
+			break;
+			case 'INDEX':
+			default:
+				if($this->db_tools->sql_index_exists($table_name, $index_name))
+				{
+					return $this->umil_end('TABLE_KEY_ALREADY_EXIST', $table_name, $index_name);
+				}
+				$this->db_tools->sql_create_index($table_name, $index_name, $column);
+			break;
 		}
-
-		$this->db_tools->sql_create_index($table_name, $index_name, $column);
 
 		return $this->umil_end();
 	}
@@ -2400,18 +2736,16 @@ class umil
 
 		$this->umil_start('TABLE_KEY_REMOVE', $table_name, $index_name);
 
-		if (!$this->table_index_exists($table_name, $index_name))
-		{
-			return $this->umil_end('TABLE_KEY_NOT_EXIST', $table_name, $index_name);
-		}
-
 		$this->db_tools->sql_index_drop($table_name, $index_name);
 
 		return $this->umil_end();
 	}
 
 	// Ignore, function was renamed to table_row_insert and keeping for backwards compatibility
-	function table_insert($table_name, $data = array()) { $this->table_row_insert($table_name, $data); }
+	function table_insert($table_name, $data = array())
+	{
+		$this->table_row_insert($table_name, $data);
+	}
 
 	/**
 	* Table Insert
@@ -2461,7 +2795,7 @@ class umil
 
 		if (!sizeof($data))
 		{
-			return $this->umil_end('FAIL');
+			return $this->umil_end($user->lang['FAIL']);
 		}
 
 		$this->get_table_name($table_name);
@@ -2500,7 +2834,7 @@ class umil
 
 		if (!sizeof($data))
 		{
-			return $this->umil_end('FAIL');
+			return $this->umil_end($user->lang['FAIL']);
 		}
 
 		$this->get_table_name($table_name);

@@ -38,15 +38,7 @@ require(STK_ROOT_PATH . 'includes/functions.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/fatal_error_handler.' . PHP_EXT);
 require(PHPBB_ROOT_PATH . 'common.' . PHP_EXT);
 require(STK_ROOT_PATH . 'includes/plugin.' . PHP_EXT);
-// We test for UMIL twice. First look whether this user already has an UMIL installation in its default location.
-if (file_exists(PHPBB_ROOT_PATH . 'umil/umil.' . PHP_EXT))
-{
-	require PHPBB_ROOT_PATH . 'umil/umil.' . PHP_EXT;
-}
-else
-{
-	require STK_ROOT_PATH . 'includes/umil.' . PHP_EXT;
-}
+require STK_ROOT_PATH . 'includes/umil.' . PHP_EXT;
 
 // phpBBs common.php registers hooks, these hooks tend to cause problems with the
 // support toolkit. Therefore we unset the `$phpbb_hook` object here
@@ -61,6 +53,10 @@ if (!defined('IN_ERK'))
 
 	$user->session_begin();
 	$auth->acl($user->data);
+	if (!empty($user) && $user->data['user_id'] == ANONYMOUS && isset($config['default_lang']))
+	{
+		$user->data['user_lang'] = $config['default_lang'];
+	}
 	$user->setup('acp/common', $config['default_style']);
 
 	$umil = new umil(true);
@@ -79,9 +75,10 @@ $submit = request_var('submit', false);
 
 // Try to determine the phpBB version number, we might need that down the road
 // `PHPBB_VERSION` was added in 3.0.3, for older versions just rely on the config
-if ((defined('PHPBB_VERSION') && PHPBB_VERSION == $config['version']) || !defined('PHPBB_VERSION'))
+if (!defined('IN_ERK') && (defined('PHPBB_VERSION') && PHPBB_VERSION == $config['version']) || !defined('PHPBB_VERSION'))
 {
 	define('PHPBB_VERSION_NUMBER', $config['version']);
+	stk_add_lang('common');
 	// Try to determine the phpBB actually version number
 	$updates_available = false;
 	$version_helper = $phpbb_container->get('version_helper');
@@ -98,13 +95,13 @@ if ((defined('PHPBB_VERSION') && PHPBB_VERSION == $config['version']) || !define
 	}
 	if ($updates_available)
 	{
-		$action = 'check_phpbb_version';
+		check_phpbb_version();
 	}
 }
 // Cant correctly determine the version, let the user define it.
 // As the `perform_unauthed_quick_tasks` function is used skip this
 // if there is already an action to be performed.
-else if (empty($action))
+else if ($action != 'genpasswdfile' || $action != 'downpasswdfile' || $action != 'stklogout' || $action != 'request_phpbb_version')
 {
 	$action = 'request_phpbb_version';
 }

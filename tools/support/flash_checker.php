@@ -62,16 +62,22 @@ class flash_checker
 		// the tool can be run straight away
 		global $cache;
 
-		if (!empty($this->_vulnerable[POSTS_TABLE]))
+		$ids = implode(',', $this->_vulnerable[POSTS_TABLE]);
+		if ($ids)
 		{
-			$cache->put('_stk_reparse_posts', implode(',', $this->_vulnerable[POSTS_TABLE]));
+			$cache->put('_stk_reparse_posts', $ids);
+			$ids = implode(',', $this->_vulnerable[POSTS_TABLE]);
+			$message = user_lang('FLASH_CHECKER_FOUND', append_sid(STK_INDEX, array('c' => 'admin', 't' => 'reparse_bbcode', 'reparseids' => $ids, 'submit' => true)));
+			$message .= '<br />' . user_lang('FLASH_CHECKER_POST', append_sid(PHPBB_ROOT_PATH . 'viewtopic.' . PHP_EXT . '?p='. $ids . '#' . $ids)) . '';
 		}
 
 		if (!empty($this->_vulnerable[PRIVMSGS_TABLE]))
 		{
 			$cache->put('_stk_reparse_pms', implode(',', $this->_vulnerable[PRIVMSGS_TABLE]));
+			$privmsgs_ids = implode(',', $this->_vulnerable[PRIVMSGS_TABLE]);
+			$message = user_lang('FLASH_CHECKER_FOUND', append_sid(STK_INDEX, array('c' => 'admin', 't' => 'reparse_bbcode', 'reparsepms' => $privmsgs_ids, 'submit' => true)));
 		}
-		trigger_error(user_lang('FLASH_CHECKER_FOUND', append_sid(STK_INDEX, array('c' => 'admin', 't' => 'reparse_bbcode', 'submit' => true))));
+		trigger_error($message, E_USER_WARNING);
 	}
 
 	function check_table_flash_bbcodes($table_name, $id_field, $content_field, $uid_field, $bitfield_field)
@@ -136,7 +142,7 @@ class flash_checker
 		{
 			foreach ($matches[3] as $flash_url)
 			{
-				if (!preg_match("#^($url_regex|$www_url_regex)$#i", $flash_url))
+				if (!preg_match("#^($url_regex|$www_url_regex)$#iu", $flash_url))
 				{
 					return false;
 				}

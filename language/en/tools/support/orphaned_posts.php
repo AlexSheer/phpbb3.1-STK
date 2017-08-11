@@ -65,4 +65,16 @@ $lang = array_merge($lang, array(
 	'POSTS_DELETED'				=> '%d posts deleted',
 	'POSTS_REASSIGNED'			=> '%d posts re-assigned',
 	'TOPICS_DELETED'			=> '%d topics deleted',
+	'ORPHANED_FORUM_POSTS'			=> 'Posts not attached to the forums',
+	'ORPHANED_FORUM_POSTS_EXPLAIN'	=> 'These messages are not attached to a specific forum, so it is considered that they are not attached to specific topics. Specify a new topic ID to have the post attached to that topic.',
+	'NO_FORUM_ORPHANED_POSTS'		=> 'Posts which not attached to the forums not found',
+	'NO_POSTS_SELECTED'				=> 'No posts selected',
+
+	'ORPHANED_TOPICS'				=> 'Orphaned Topics',
+	'NO_ORPHANED_TOPICS'			=> 'No orphaned topics found',
+	'NEW_FORUM_ID'					=> 'New Forum ID',
+	'TOPICS_REASSIGNED'				=> '%d topics re-assigned',
+	'ORPHANED_TOPICS_EXPLAIN'		=> 'These are topics that do not have a forum associated with them. Specify a new forum ID to have the topic attached to that forum.',
+	'NO_FORUMS_IDS'					=> 'No forum IDs provided',
+	'NONEXISTENT_FORUMS_IDS'		=> 'The following target forums IDs do not exist: %s.<br />Please verify the specified forum IDs.',
 ));

@@ -28,6 +28,7 @@ if (!class_exists('database_cleaner'))
 		var $step_to_action = array(
 			'introduction',
 			'tables',
+			'indexes',
 			'columns',
 			'config',
 			'extension_groups',
@@ -108,6 +109,19 @@ if (!class_exists('database_cleaner'))
 		{
 			global $db;
 
+			$next = request_var('next', false);
+			$next_step = request_var('next_step', 0);
+			$quit = request_var('quit', false);
+			if ($quit)
+			{
+				 $this->quit();
+			}
+			// Skip next step & redirect to specified step
+			if ($next)
+			{
+				redirect(append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $next_step)));
+			}
+
 			// Get the step.
 			// If the step is outside the $this->step_to_action range set it to 0
 			$this->step = request_var('step', 0);
@@ -173,6 +187,13 @@ if (!class_exists('database_cleaner'))
 			// Setup
 			$this->_setup();
 
+			// Skip this step & did no any action
+			$skip = request_var('skip', false);
+			if ($skip)
+			{
+				redirect(append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->step + 1)));
+			}
+
 			$selected = request_var('items', array('' => ''), true);
 
 			if ($this->step > 0 && !check_form_key('database_cleaner'))
@@ -207,6 +228,19 @@ if (!class_exists('database_cleaner'))
 
 			// Redirect to the next step
 			redirect(append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->step + 1, 'did_run' => $did_run)));
+		}
+
+		function quit()
+		{
+			global $umil;
+
+			$umil->cache_purge();
+			$umil->cache_purge('auth');
+			set_config('board_disable', 0);
+			set_config('board_disable_msg', '');
+
+			// Finished!
+			trigger_error('DATABASE_CLEANER_BREAK', E_USER_WARNING);
 		}
 	}
 }

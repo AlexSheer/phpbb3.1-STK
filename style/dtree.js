@@ -1,10 +1,14 @@
 // Node object
-function Node(id, pid, name, url, title, target, icon, iconOpen, open) {
+function Node(id, pid, name, url, title, target, icon, iconOpen, open, href, rhref, del, rename) {
 	this.id = id;
 	this.pid = pid;
 	this.name = name;
 	this.url = url;
 	this.title = title;
+	this.href = href;
+	this.rhref = rhref;
+	this.del = del;
+	this.rename = rename;
 	this.target = target;
 	this.icon = icon;
 	this.iconOpen = iconOpen;
@@ -55,8 +59,8 @@ function dTree(objName) {
 };
 
 // Adds a new node to the node array
-dTree.prototype.add = function(id, pid, name, url, title, target, icon, iconOpen, open) {
-	this.aNodes[this.aNodes.length] = new Node(id, pid, name, url, title, target, icon, iconOpen, open);
+dTree.prototype.add = function(id, pid, name, url, title, target, icon, iconOpen, open, rhref, href, del, rename) {
+	this.aNodes[this.aNodes.length] = new Node(id, pid, name, url, title, target, icon, iconOpen, open, rhref, href, del, rename);
 };
 
 // Open/close all nodes
@@ -133,6 +137,11 @@ dTree.prototype.node = function(node, nodeId) {
 		str += '<a href="javascript: ' + this.obj + '.o(' + nodeId + ');" class="node">';
 	str += node.name;
 	if (node.url || ((!this.config.folderLinks || !node.url) && node._hc)) str += '</a>';
+	if (node.href)
+	{
+		str += '&nbsp;<a style="color:red;font-size:0.8em" href="' + node.href + '">&raquo;'+ node.del +'</a>';
+		str += '&nbsp;<a style="color:green;font-size:0.8em" href="' + node.rhref + '">&raquo;'+ node.rename +'</a>';
+	}
 	str += '</div>';
 	if (node._hc) {
 		str += '<div id="d' + this.obj + nodeId + '" class="clip" style="display:' + ((this.root.id == node.pid || node._io) ? 'block' : 'none') + ';">';

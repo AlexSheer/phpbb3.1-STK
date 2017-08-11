@@ -382,9 +382,7 @@ class merge_users
 			'topics_posted'	=> null,
 			'topics_track'	=> null,
 			'topics_watch'	=> null,
-
 			'warnings'		=> 'user_id',
-
 			'zebra'			=> null,
 		) as $key => $data)
 		{
@@ -546,7 +544,7 @@ class merge_users
 			$update['target']['user_notify_type'] = NOTIFY_BOTH;
 		}
 
-		foreach (array('birthday', 'avatar', 'sig', 'from', 'icq', 'aim', 'yim', 'msnm', 'jabber', 'website', 'occ', 'interests') as $var)
+		foreach (array('birthday', 'avatar', 'sig', 'jabber') as $var)
 		{
 			if (!$target['user_' . $var] && $source['user_' . $var])
 			{

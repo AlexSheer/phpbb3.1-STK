@@ -112,9 +112,8 @@ class database_cleaner_data
 		{
 			foreach ($this->tables as $table_name => $table_data)
 			{
-				$this->tables[str_replace('phpbb_', $table_prefix, str_replace($table_prefix, 'phpbb_', $table_name))] = $table_data;
-
 				unset($this->tables[$table_name]);
+				$this->tables[str_replace('phpbb_', $table_prefix, $table_name)] = $table_data;
 			}
 		}
 

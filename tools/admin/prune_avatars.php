@@ -56,7 +56,8 @@ class prune_avatars
 				{
 					$ext = explode('.', $data['user_avatar']);
 					$filename = explode('_', $data['user_avatar']);
-					$bd_files[] = '' . $config['avatar_salt'] . '_' . $filename[0] . '.' . $ext[1] . '';
+					$extension = (isset($ext[1])) ? '.' . $ext[1] . '' : '';
+					$bd_files[] = '' . $config['avatar_salt'] . '_' . $filename[0] . $extension;
 				}
 				$db->sql_freeresult($result);
 				$files = array_diff($files, $bd_files);

@@ -137,6 +137,11 @@ class database_cleaner_views
 		// Determine the link for the next step
 		if (!isset($this->_u_next_step))
 		{
+			if ($this->db_cleaner->step == 1)
+			{
+				set_config('board_disable', 1);
+				set_config('board_disable_msg', user_lang('BOARD_DISABLE_REASON'));
+			}
 			if ($this->_has_changes || !empty($this->_confirm_box))
 			{
 				$_u_next_step = append_sid(STK_INDEX, array('c' => 'support', 't' => 'database_cleaner', 'step' => $this->db_cleaner->step, 'submit' => true));
@@ -157,6 +162,31 @@ class database_cleaner_views
 			$msg = (!empty($this->not_run_message)) ? $this->not_run_message : ((isset($user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step - 1]])) ? $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step - 1]] : $this->success_message);
 		}
 
+		$s_options = '';
+		$actions =array(
+			'introduction'			=> $user->lang['INTRODUCTION'],
+			'tables'				=> $user->lang['DATABASE_TABLES'],
+			'indexes'				=> $user->lang['INDEXES'],
+			'columns'				=> $user->lang['COLUMNS'],
+			'config'				=> $user->lang['CONFIG_SETTINGS'],
+			'extension_groups'		=> $user->lang['ACP_EXTENSION_GROUPS'],
+			'extensions'			=> $user->lang['EXTENSION_FILE_GROUPS'],
+			'permissions'			=> $user->lang['PERMISSION_SETTINGS'],
+			'groups'				=> $user->lang['SYSTEM_GROUPS'],
+			'roles'					=> $user->lang['ROLE_SETTINGS'],
+			'role_data'				=> $user->lang['RESET_ROLE_DATA'],
+			'acp_modules'			=> $user->lang['ACP_MODULES_SETTINGS'],
+			'modules'				=> $user->lang['RESET_MODULES'],
+			'bots'					=> $user->lang['RESET_BOTS'],
+			'report_reasons'		=> $user->lang['RESET_REPORT_REASONS'],
+			'final_step'			=> $user->lang['SECTION_NOT_CHANGED_TITLE']['final_step']
+		);
+		foreach ($this->db_cleaner->step_to_action as $step => $action)
+		{
+			$s_selected = ($step == $this->db_cleaner->step + 1) ? ' selected="selected"' : '';
+			$s_options .= '<option value="' . $step . '" ' . $s_selected . '>' . $actions[$action] . '</option>';
+		}
+
 		// Output some stuff we need always
 		$template->assign_vars(array(
 			'S_HIDDEN_FIELDS'	=> (isset($this->_hidden_fields)) ? build_hidden_fields($this->_hidden_fields) : '',
@@ -166,6 +196,11 @@ class database_cleaner_views
 
 			// Create submit link, always set "submit" so we'll continue in the run_tool method
 			'U_NEXT_STEP'	=> $_u_next_step,
+
+			// Skip next step & go to spcified step
+			'U_SKIP_STEP'	=> append_sid(STK_INDEX, 'c=support&t=database_cleaner'),
+ 			'S_SKIP'		=> ($this->db_cleaner->step > 0 && $this->db_cleaner->step_to_action[$this->db_cleaner->step] != 'final_step') ? true : false,
+ 			'S_SELECT'		=> $s_options,
 		));
 
 		// Do tha page
@@ -255,7 +290,7 @@ class database_cleaner_views
 			}
 		}
 
-		$this->success_message = 'DATABASE_TABLES_SUCCESS';
+		$this->success_message = 'DATABASE_INDEXES_SUCCESS';
 	}
 
 	/**
@@ -263,7 +298,7 @@ class database_cleaner_views
 	*/
 	function config()
 	{
-		global $db;
+		global $db, $user, $template;
 
 		// display extra config variables and let them check/uncheck the ones they want to add/remove
 		$this->_section_data['config'] = array(
@@ -271,7 +306,7 @@ class database_cleaner_views
 			'TITLE'		=> 'ROWS',
 		);
 
-		$removed_config = ($db->get_sql_layer() == 'mysql4') ? array('auth_oauth_bitly_key', 'auth_oauth_bitly_secret', 'auth_oauth_facebook_key', 'auth_oauth_facebook_secret', 'auth_oauth_google_key', 'auth_oauth_google_secret') : array();
+		$removed_config = ($db->get_sql_layer() == 'mysql4' || $db->get_sql_layer() == 'mysqli') ? array('auth_oauth_bitly_key', 'auth_oauth_bitly_secret', 'auth_oauth_facebook_key', 'auth_oauth_facebook_secret', 'auth_oauth_google_key', 'auth_oauth_google_secret', 'fulltext_sphinx_id') : array();
 
 		$config_rows = $existing_config = array();
 		get_config_rows($this->db_cleaner->data->config, $config_rows, $existing_config);
@@ -295,6 +330,11 @@ class database_cleaner_views
 				$this->_has_changes = true;
 			}
 		}
+
+		$template->assign_vars(array(
+			'NO_CHANGES_TEXT'	=> $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+			'NO_CHANGES_TITLE'	=> $user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+		));
 
 		$this->success_message = 'DATABASE_COLUMNS_SUCCESS';
 	}
@@ -370,7 +410,7 @@ class database_cleaner_views
 
 						$this->_section_data[$group] = array(
 							'NAME'	=> user_lang($group),
-							'TITLE'	=> 'COLUMNS',
+							'TITLE'	=> 'EXTENSION_FILE_GROUPS',
 						);
 					}
 
@@ -429,7 +469,7 @@ class database_cleaner_views
 				continue;
 			}
 
-			$this->_section_data['config']['ITEMS'][] = array(
+			$this->_section_data['groups']['ITEMS'][] = array(
 				'NAME'			=> $name,
 				'FIELD_NAME'	=> $name,
 				'MISSING'		=> (!in_array($name, $existing_groups)) ? true : false,
@@ -671,6 +711,7 @@ class database_cleaner_views
 	function acp_modules()
 	{
 		global $db, $user, $template, $phpEx, $phpbb_root_path;
+		$user->add_lang(array('ucp', 'mcp'));
 
 		$this->_section_data['acp_modules'] = array(
 			'NAME'		=> 'ACP_MODULES_SETTINGS',
@@ -711,7 +752,7 @@ class database_cleaner_views
 			}
 			else
 			{
-				$link = append_sid("{$phpbb_root_path}adm/index.$phpEx", 'i=acp_modules&amp;sid=' . $user->data['session_id'] .'&amp;mode=' . $main . '');
+				$link = append_sid("{$phpbb_root_path}adm/index.$phpEx", 'i=acp_modules&amp;sid=' . $user->data['session_id'] .'&amp;mode=' . $class . '');
 				$module_mame = '';
 			}
 			$db->sql_freeresult($res);
@@ -757,12 +798,12 @@ class database_cleaner_views
 				}
 
 				$sql = 'SELECT module_id FROM ' . MODULES_TABLE . '
-					WHERE module_langname = \''. $key .'\'';
+					WHERE module_langname = \'' .  $key . '\'';
 				$res = $db->sql_query($sql);
 				$row = $db->sql_fetchrow($res);
 				$parent_id = $row['module_id'];
 
-				$db->sql_freeresult($result);
+				$db->sql_freeresult($res);
 
 				// Link to ACP manage module
 				$link = ($parent_id) ? '<a style="color:#70AED3;" href="'. append_sid("{$phpbb_root_path}adm/index.$phpEx", 'i=acp_modules&amp;sid=' . $user->data['session_id'] .'&amp;mode=' . $mode . '&parent_id='. $parent_id .'') .'" " target="_blank">' : '';
@@ -770,7 +811,7 @@ class database_cleaner_views
 				$parent_module_langname = $user->lang($key);
 
 				$this->_section_data['acp_modules']['ITEMS'][] = array(
-					'NAME'			=> '' . $module_langname . ' ('.$module.')' . $user->lang['GO_TO_ACP'] .  $link . ''. $parent_module_langname .'</a>',
+					'NAME'			=> '' . $module_langname . ' (' . $module . ')' . $user->lang['GO_TO_ACP'] .  $link . '' . $parent_module_langname . '</a>',
 					'FIELD_NAME'	=> strtolower($module),
 					'MISSING'		=> true,
 				);
@@ -788,5 +829,71 @@ class database_cleaner_views
 		));
 
 		$this->success_message = 'DATABASE_ROLE_DATA_SUCCESS';
+		$this->not_run_message	= 'DATABASE_ROLE_DATA_SKIP';
+	}
+
+	function indexes()
+	{
+		global $db, $user, $template, $phpEx, $phpbb_root_path;
+
+		global $umil;
+		// Time to start going through the database and listing any extra/missing fields
+		$last_output_table = '';
+		foreach ($this->db_cleaner->data->tables as $table_name => $data)
+		{
+			if ($umil->table_exists($table_name) === false)
+			{
+				continue;
+			}
+			$existing_keys = get_keys($table_name);
+			//print "$table_name<pre>";print_r($existing_keys);print "</pre>";
+
+			if ($existing_keys === false)
+			{
+				// Table doesn't exist, don't handle here.
+				continue;
+			}
+
+			if (!empty($data['KEYS']))
+			{
+				$keys = array_unique(array_merge(array_keys($data['KEYS']), $existing_keys));
+			}
+			sort($keys);
+			//print "$table_name<pre>";print_r($keys);print "</pre>";
+			foreach ($keys as $key)
+			{
+				if ((!isset($data['KEYS'][$key]) && in_array($key, $existing_keys)) || (isset($data['KEYS'][$key]) && !in_array($key, $existing_keys)))
+				{
+					if ($last_output_table != $table_name)
+					{
+						$last_output_table = $table_name;
+
+						$this->_section_data[$table_name] = array(
+							'NAME'	=> $table_name,
+							'TITLE'	=> 'INDEXES',
+						);
+					}
+
+					// Add the data
+					$this->_section_data[$table_name]['ITEMS'][] = array(
+						'NAME'			=> $key,
+						'FIELD_NAME'	=> $table_name . '_' . $key,
+						'MISSING'		=> (!in_array($key, $existing_keys) || empty($existing_keys)) ? true : false,
+					);
+
+					if ($this->_has_changes === false)
+					{
+						$this->_has_changes = true;
+					}
+				}
+			}
+		}
+
+		$template->assign_vars(array(
+			'NO_CHANGES_TEXT'	=> $user->lang['SECTION_NOT_CHANGED_EXPLAIN'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+			'NO_CHANGES_TITLE'	=> $user->lang['SECTION_NOT_CHANGED_TITLE'][$this->db_cleaner->step_to_action[$this->db_cleaner->step]],
+		));
+
+		$this->success_message = 'DATABASE_TABLES_SUCCESS';
 	}
 }

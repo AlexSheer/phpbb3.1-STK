@@ -105,13 +105,27 @@ if (!$extra_data)
 		{
 			foreach($ext as $key => $extension)
 			{
-				$ext_dir = '' . $vendor . '\\'. $extension . '\\migrations\\';
-				$migrations = array_diff(scandir('' . $phpbb_root_path . 'ext\\' . $ext_dir . ''), array('..', '.'));
-
+				$ext_dir = '' . $phpbb_root_path . 'ext/' . $vendor . '/'. $extension . '/migrations/';
+				$migrations = (@opendir($ext_dir)) ? array_diff(scandir($ext_dir), array('..', '.')) : array();
 				$table_extra = $column_extra = $config_extra = $module_extra = $permissions_extra = array();
 				foreach($migrations as $file)
 				{
-					$configs = $module_names = $permissions = $columns = array();
+					$file = str_replace('.' . PHP_EXT . '', '', $file);
+					$sub_dir = '' . $phpbb_root_path . 'ext/' . $vendor . '/'. $extension . '/migrations/' . $file . '';
+					if (is_dir($sub_dir))
+					{
+						$migrations_subdir = (@opendir($sub_dir)) ? array_diff(scandir($sub_dir), array('..', '.')) : array();
+						foreach($migrations_subdir as $key => $value)
+						{
+							$migrations[] = ''.$file.'\\'.$value.'';
+						}
+						$migrations = array_diff($migrations, array($file));
+					}
+				}
+
+				foreach($migrations as $file)
+				{
+					$configs = $module_names = $permissions = array();
 					$file = str_replace('.' . PHP_EXT . '', '', $file);
 					$class = '' . $vendor . '\\' . $extension . '\\migrations\\' . $file . '';
 					$phpbb_ext = new $class($config, $db, $db_tools, $table_prefix, $phpEx, $errors);
@@ -123,13 +137,9 @@ if (!$extra_data)
 						{
 							$table_extra = array_merge($table_extra, $table_data['drop_tables']);
 						}
-						// Search columns used for extension
 						if (isset($table_data['drop_columns']))
 						{
-							foreach($table_data['drop_columns'] as $drop_columns)
-							{
-								$columns[] = $drop_columns[0];
-							}
+							$column_extra = array_merge($column_extra, $table_data['drop_columns']);
 						}
 
 						$update_data = $phpbb_ext->update_data();
@@ -160,11 +170,11 @@ if (!$extra_data)
 								$permissions[] = $alue[1][0];
 							}
 						}
+
 						$configs = array_unique($configs);
 						$config_extra = array_merge($config_extra, $configs);
 						$module_extra = array_merge($module_extra, $module_names);
 						$permissions_extra = array_merge($permissions_extra, $permissions);
-						$column_extra = array_merge($column_extra, $columns);
 						unset($phpbb_ext);
 					}
 				}
@@ -275,7 +285,6 @@ page_footer();
 function finder($extra_data, $unit)
 {
 	global $table_prefix;
-
 	$unit = str_replace($table_prefix, '', $unit); // If $unit is table we need remove table prefix from table name
 	$extension = array();
 	foreach($extra_data as $vendor => $exts)
@@ -284,12 +293,25 @@ function finder($extra_data, $unit)
 		{
 			foreach($extra as $dta)
 			{
-				if ($unit == $dta)
+				if(is_array($dta))
 				{
-					$extension['vendor'] = $vendor;
-					$extension['ext'] = $ext_key;
-					$extension['data'] = $dta;
-					return $extension;
+					if(in_array($unit, $dta))
+					{
+						$extension['vendor'] = $vendor;
+						$extension['ext'] = $ext_key;
+						$extension['data'] = $unit;
+						return $extension;
+					}
+				}
+				else
+				{
+					if ($unit == $dta)
+					{
+						$extension['vendor'] = $vendor;
+						$extension['ext'] = $ext_key;
+						$extension['data'] = $dta;
+						return $extension;
+					}
 				}
 			}
 		}

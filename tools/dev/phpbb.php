@@ -37,14 +37,21 @@ class phpbb
 				'S_CONTENTS'	=> true,
 				'FILE_NAME'		=> $file_name,
 			));
-			$ext = substr($file_name, strrpos($file_name, '.') + 1);
+
 			$file_name = ''. $dir . '' . $file_name . '';
-			$handle = fopen($file_name, 'r');
-			$contents = (filesize($file_name)) ? fread($handle, filesize($file_name)) : '';
-			fclose($handle);
+			$handle = @fopen($file_name, 'r');
+			if($handle)
+			{
+				$contents = (filesize($file_name)) ? fread($handle, filesize($file_name)) : '';
+				fclose($handle);
+			}
+			else
+			{
+				trigger_error($user->lang['FILE_NOT_FOUND']);
+			}
 
 			$template->assign_vars(array(
-				'TEXT'	=> ($contents) ? $this->hglights($contents, $ext) : '',
+				'TEXT'	=> ($contents) ? str_replace('</textarea>', '&lt;/textarea&gt;', $contents) : '',
 			));
 		}
 		else
@@ -80,58 +87,6 @@ class phpbb
 		));
 
 		page_footer();
-	}
-
-	function hglights($text = '', $ext = 'php')
-	{
-		if ($ext == 'html' || $ext == 'htm')
-		{
-			$php = $this->highlight_html(stripslashes($text), true);
-			$php = explode('<br />', nl2br($php));
-		}
-		else
-		{
-			$php = highlight_string(stripslashes($text), true);
-			$php = explode('<br />', $php);
-		}
-		$text= '';
-		foreach ($php as $line => $string)
-		{
-			$text .= '<span style="color: #000">' . ($line + 1) . '</span>' . ' ' . $string .'<br />';
-		}
-		$text = str_replace('<code><span style="color: #000000">', '', $text);
-		$text = str_replace("\n", '', $text);
-		$text = str_replace(' </span></code>', '', $text);
-		return $text;
-	}
-
-	function highlight_html($string, $decode = TRUE)
-	{
-		$tag = '#0000ff';
-		$att = '#ff0000';
-		$val = '#8000ff';
-		$com = '#34803a';
-		$find = array(
-			'~(\s[a-z].*?=)~',					// Highlight the attributes
-			'~(&lt;\!--.*?--&gt;)~s',			// Hightlight comments
-			'~(&quot;[a-zA-Z0-9\/].*?&quot;)~',	// Highlight the values
-			'~(&lt;[a-z].*?&gt;)~',				// Highlight the beginning of the opening tag
-			'~(&lt;/[a-z].*?&gt;)~',			// Highlight the closing tag
-			'~(&amp;.*?;)~',					// Stylize HTML entities
-		);
-		$replace = array(
-			'<span style="color:' . $att . ';">$1</span>',
-			'<span style="color:' . $com . ';">$1</span>',
-			'<span style="color:' . $val . ';">$1</span>',
-			'<span style="color:' . $tag . ';">$1</span>',
-			'<span style="color:' . $tag . ';">$1</span>',
-			'<span style="font-style:italic;">$1</span>',
-		);
-		if($decode)
-		{
-			$string = htmlentities($string);
-		}
-		return preg_replace($find, $replace, $string);
 	}
 
 	function list_dir($path = '.', $parent = 0)

@@ -169,7 +169,7 @@ function use_lang(&$lang_key)
 
 /**
 * A wrapper function for the phpBB $user->lang() call. This method was introduced
-* in phpBB 3.0.3. In all versions ≥ 3.0.3 this function will simply call the method
+* in phpBB 3.0.3. In all versions > 3.0.3 this function will simply call the method
 * for the other versions this method will imitate the method as seen in 3.0.3.
 *
 * More advanced language substitution
@@ -260,7 +260,7 @@ function user_lang()
 *								is used for the file. If set to "false" the users default
 *								langauge will be used
 */
-function stk_add_lang($lang_file, $fore_lang = false)
+function stk_add_lang($lang_file)
 {
 	global $config, $user;
 
@@ -268,7 +268,11 @@ function stk_add_lang($lang_file, $fore_lang = false)
 	{
 		if (file_exists(STK_ROOT_PATH . 'default_lang.txt'))
 		{
-			$default_lang = file_get_contents(STK_ROOT_PATH . 'default_lang.txt');
+			$default_lang = trim(file_get_contents(STK_ROOT_PATH . 'default_lang.txt'));
+			if (empty($default_lang))
+			{
+				$default_lang = 'en';
+			}
 		}
 		else
 		{
@@ -322,7 +326,7 @@ function stk_add_lang($lang_file, $fore_lang = false)
 	{
 		$lang_data = array(
 			'lang_path'	=> $user->lang_path,
-			'lang_name'	=> $user->lang_name,
+			'lang_name'	=> $user->data['user_lang'],
 		);
 	}
 
@@ -335,6 +339,11 @@ function stk_add_lang($lang_file, $fore_lang = false)
 	$user->lang_name = '';
 
 	// Find out what languages we could use
+	if (empty($config['default_lang']))
+	{
+		$config['default_lang'] = $language;
+	}
+
 	if (empty($lang_dirs))
 	{
 		$lang_dirs = array(
@@ -353,12 +362,6 @@ function stk_add_lang($lang_file, $fore_lang = false)
 	// Test all languages
 	foreach ($lang_dirs as $dir)
 	{
-		// When forced skip all others
-		if ($fore_lang !== false && $dir != $fore_lang)
-		{
-			continue;
-		}
-
 		if (file_exists($user->lang_path . $dir . "/{$lang_file}." . PHP_EXT))
 		{
 			$user->lang_name = $dir;
@@ -429,10 +432,27 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 						{
 							$announcement = $version_data['announcement'];
 						}
+						// Grep the latest phpBB version number
+						list(,, $_phpbb_version) = explode('.', $version_data['current']);
 					}
-
-					// Grep the latest phpBB version number
-					list(,, $_phpbb_version) = explode('.', $version_data['current']);
+					elseif ($config['version'] != PHPBB_VERSION)
+					{
+						$config['version'] = PHPBB_VERSION;
+						$version_helper = $phpbb_container->get('version_helper');
+						$updates_available = $version_helper->get_suggested_updates(false);
+						if ($updates_available)
+						{
+							foreach ($updates_available as $branch => $version_data)
+							{
+								$announcement = $version_data['announcement'];
+							}
+						}
+						else
+						{
+							$version_data['current'] = $config['version'];
+						}
+						list(,, $_phpbb_version) = explode('.', PHPBB_VERSION);
+					}
 
 					// Build the options
 					$version_options = '';
@@ -441,6 +461,10 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 						$v = "3.1.{$i}";
 						$d = ($v == $config['version']) ? " default='default'" : '';
 						$version_options .= "<option value='{$v}'{$d}>{$v}</option>";
+						if ($i >= 8 && $i < $_phpbb_version)
+						{
+							$version_options .= '<option value="3.1.7-pl1">3.1.7-pl1</option>';
+						}
 					}
 
 					$template->assign_vars(array(
@@ -458,28 +482,14 @@ function perform_unauthed_quick_tasks($action, $submit = false)
 			}
 			if ($config['version'] < '3.1.2')
 			{
-				trigger_error(sprintf($user->lang['INCORRECT_PHPBB_VERSION'], $version_data['current']), E_USER_WARNING);
+				trigger_error(sprintf($user->lang['INCORRECT_PHPBB_VERSION'], $_version_number), E_USER_WARNING);
 			}
 			define('PHPBB_VERSION_NUMBER', $_version_number);
 		break;
+
+		// Check PHPBB version
 		case 'check_phpbb_version' :
-			global $phpbb_container;
-
-			$version_helper = $phpbb_container->get('version_helper');
-			$updates_available = $version_helper->get_suggested_updates(false);
-			if ($updates_available)
-			{
-				foreach ($updates_available as $branch => $version_data)
-				{
-					$announcement = $version_data['announcement'];
-					$version = $version_data['current'];
-				}
-
-				$template->assign_vars(array(
-					'UPDATES_AVAILABLE'		=> (PHPBB_VERSION < $version_data['current'] || $config['version'] < $version_data['current']) ? sprintf($user->lang['UPDATES_AVAILABLE'], $version_data['current'], $announcement) : false,
-				));
-			}
-
+			check_phpbb_version();
 		break;
 
 		// Generate the passwd file
@@ -1130,5 +1140,26 @@ function stk_send_status_line($code, $message)
 			$version = 'HTTP/1.0';
 		}
 		header("$version $code $message", true, $code);
+	}
+}
+
+// Check PHPBB version
+function check_phpbb_version()
+{
+	global $phpbb_container, $template, $config, $user;
+
+	$version_helper = $phpbb_container->get('version_helper');
+	$updates_available = $version_helper->get_suggested_updates(false);
+	if ($updates_available)
+	{
+		foreach ($updates_available as $branch => $version_data)
+		{
+			$announcement = $version_data['announcement'];
+			$version = $version_data['current'];
+		}
+
+		$template->assign_vars(array(
+			'UPDATES_AVAILABLE'		=> (PHPBB_VERSION < $version_data['current'] || $config['version'] < $version_data['current']) ? sprintf($user->lang['UPDATES_AVAILABLE'], $version_data['current'], $announcement) : false,
+		));
 	}
 }

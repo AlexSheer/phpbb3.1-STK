@@ -40,7 +40,7 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'CLEAR_EXTENSIONS'				=> 'Проверка и управление расширениями',
 	'CLEAR_EXTENSIONS_EXPLAIN'		=> 'Здесь вы можете управлять <b>установленными</b> расширениями.',
-	'EXT_PATH'						=> 'Путь относительно папки ' . $phpbb_root_path . 'ext/',
+	'EXT_PATH'						=> 'Путь относительно папки ' . PHPBB_ROOT_PATH . 'ext/',
 	'MISSING_PATH'					=> 'Отсутствующая папка',
 	'S_ACTIVE'						=> ' (активно) ',
 	'S_OFF'							=> ' (отключено) ',
@@ -56,7 +56,7 @@ $lang = array_merge($lang, array(
 	'EXT_OFF'						=> 'Отключить расширения',
 	'EXT_OFF_CONFIRM'				=> 'Вы действительно желаете отключить эти расширения?',
 	'EXT_MISSING_PATH'				=> 'Расширение «%s» не является совместимым.<br />',
-	'NO_COMPOSER'					=> 'Запрашиваемый файл не найден: ' . $phpbb_root_path . 'ext/%s/composer.json',
+	'NO_COMPOSER'					=> 'Запрашиваемый файл не найден: ' . PHPBB_ROOT_PATH . 'ext/%s/composer.json',
 	'NO_EXTENSIONS_TITLE'			=> 'Расширения',
 	'NO_EXTENSIONS_TEXT'			=> 'Не найдено ни одного установленного расширения',
 ));

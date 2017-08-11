@@ -174,6 +174,15 @@ class critical_repair
 								foreach ($msg as $m)
 								{
 									echo "<p>{$m}</p>";
+									$pos = strripos($m, 'Undefined index: user_id');
+									if($pos)
+									{
+										$msg = sprintf($user->lang['ANONYMOUS_MISSING'], ''.STK_ROOT_PATH.'erk.'.PHP_EXT.'');
+										?><hr><?php
+										echo $msg;
+										?><hr><?php
+									}
+
 								}
 								?>
 								<p>
@@ -222,7 +231,7 @@ class critical_repair
 
 			if (file_exists(STK_ROOT_PATH . 'default_lang.txt'))
 			{
-				$default_lang = file_get_contents(STK_ROOT_PATH . 'default_lang.txt');
+				$default_lang = trim(file_get_contents(STK_ROOT_PATH . 'default_lang.txt'));
 			}
 			else
 			{
@@ -239,15 +248,25 @@ class critical_repair
 			while (($file = readdir($dir)) !== false)
 			{
 				$path = STK_ROOT_PATH . 'language/' . $file;
-				if (!is_file($path) && !is_link($path) && $file == strtolower($default_lang))
-				{
-					$language = $file;
-					break;
-				}
+				$lang[] = $file;
 			}
 			closedir($dir);
 
-			if (!file_exists(PHPBB_ROOT_PATH . 'language/' . $language) || !is_dir(PHPBB_ROOT_PATH . 'language/' . $language))
+			$lang = array_diff($lang, array('index.htm', '.', '..'));
+			foreach($lang as $key => $value)
+			{
+				if ($value == strtolower($default_lang))
+				{
+					$language = $value;
+				}
+			}
+
+			if (empty($language))
+			{
+				$language = $default_lang;
+			}
+
+			if (empty($lang))
 			{
 				die('No language found!');
 			}
@@ -255,11 +274,11 @@ class critical_repair
 			$user = new \phpbb\user('\phpbb\datetime');
 			$lang_path = $user->lang_path;
 			$lang_path = '' . $lang_path . '' . $language . '';
-			$user->lang_path = ''.PHPBB_ROOT_PATH.''.$lang_path.'';
-			$user->add_lang('install.'. PHP_EXT . '');
-			$user->add_lang('common.'. PHP_EXT . '');
+			$user->lang_path = '' . PHPBB_ROOT_PATH . '' . $lang_path . '';
+			$user->data['user_lang'] = $language;
+			$user->add_lang(array(), array(), 'install.'. PHP_EXT . '');
+			$user->add_lang(array(), array(), 'common.'. PHP_EXT . '');
 			$user->lang_path = $lang_path;
-			$user->add_lang('common.'. PHP_EXT . '');
 		}
 		return $user;
 	}

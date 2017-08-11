@@ -145,10 +145,12 @@ class reparse_bbcode
 		$step				= request_var('step', 0);
 		$start				= $step * $this->step_size;
 		$cnt				= 0;
+		$sql_forum_where	= '';
 
 		if (sizeof($reparse_forum_ids))
 		{
 			$reparse_id = '';
+			$sql_forum_where = ' WHERE ' . $db->sql_in_set('forum_id', $reparse_forum_ids);
 		}
 
 		if (!sizeof($reparse_forum_ids) && !$reparse_id && !$reparse_pm_id && !$all && $step == 0)
@@ -284,7 +286,7 @@ class reparse_bbcode
 
 				$sql = "SELECT COUNT({$ccol}) AS cnt
 					FROM {$ctab}
-					{$sql_where}";
+					{$sql_where}{$sql_forum_where}";
 				$result		= $db->sql_query($sql);
 				$this->max	= $db->sql_fetchfield('cnt', false, $result);
 				$db->sql_freeresult($result);
@@ -297,6 +299,13 @@ class reparse_bbcode
 
 				// Make sure that the loop is finished
 				$last_batch = true;
+				if(!$reparse_id && empty($reparse_forum_ids))
+				{
+					// Done!
+					$cache->destroy('_stk_reparse_posts');
+					$cache->destroy('_stk_reparse_pms');
+					trigger_error($user->lang['REPARSE_BBCODE_COMPLETE']);
+				}
 			}
 		}
 
@@ -318,7 +327,7 @@ class reparse_bbcode
 
 				$sql_ary = array(
 					'SELECT'	=> 'f.forum_id, f.enable_indexing, f.forum_name,
-									p.post_id, p.poster_id, p.icon_id, p.post_text, p.post_subject, p.post_username, p.post_time, p.post_edit_reason, p.bbcode_uid, p. bbcode_bitfield, p.post_checksum, p.enable_sig, p.post_edit_locked, p.enable_bbcode, p.enable_magic_url, p.enable_smilies, p.post_attachment, p.post_edit_user,
+									p.post_id, p.poster_id, p.icon_id, p.post_text, p.post_subject, p.post_username, p.post_time, p.post_edit_reason, p.bbcode_uid, p.bbcode_bitfield, p.post_checksum, p.enable_sig, p.post_edit_locked, p.enable_bbcode, p.enable_magic_url, p.enable_smilies, p.post_attachment, p.post_edit_user,
 									t.topic_id, t.topic_first_post_id, t.topic_last_post_id, t.topic_type, t.topic_status, t.topic_title, t.poll_title, t.topic_time_limit, t.poll_start, t.poll_length, t.poll_max_options, t.poll_last_vote, t.poll_vote_change, t.topic_posts_approved, topic_posts_unapproved, topic_posts_softdeleted,
 									u.username',
 					'FROM'		=> array(
@@ -788,5 +797,5 @@ class reparse_bbcode
 
 function get_forums()
 {
-	return make_forum_select(false, false, false, false, false);
+	return make_forum_select(false, false, false, true, true);
 }

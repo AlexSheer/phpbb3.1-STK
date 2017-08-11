@@ -22,14 +22,14 @@ class db_backup
 {
 	function display_options()
 	{
-		global $db, $template, $config, $user;
+		global $db, $template, $config, $user, $request;
 
-		$submit = request_var('sa', false);
-		$tables = request_var('table_select', array(''));
-		$gzip = request_var('gzip', true);
-		$where = request_var('action', 'store');
-		$type = request_var('type', 'full');
-		$format	= request_var('method', '', true);
+		$submit = $request->variable('sa', false);
+		$tables = $request->variable('table_select', array(''));
+		$gzip = $request->variable('gzip', true);
+		$where = $request->variable('action', 'store');
+		$type = $request->variable('type', 'full');
+		$format = $request->variable('method', '', true);
 
 		$sql_layer = $db->get_sql_layer();
 
@@ -80,14 +80,53 @@ class db_backup
 			'TYPE'	=> $user->lang['NO']
 		));
 
-		$db_name = $db->get_db_name();
-		$sql = 'SHOW TABLE STATUS FROM '. $db_name;
+		switch ($sql_layer)
+		{
+			case 'mysql':
+			case 'mysql4':
+			case 'mysqli':
+				$sql = 'SHOW TABLES';
+			break;
+
+			case 'sqlite':
+				$sql = 'SELECT name
+					FROM sqlite_master
+					WHERE type = "table"';
+			break;
+
+			case 'sqlite3':
+				$sql = 'SELECT name
+					FROM sqlite_master
+					WHERE type = "table"
+						AND name <> "sqlite_sequence"';
+			break;
+
+			case 'mssql':
+			case 'mssql_odbc':
+			case 'mssqlnative':
+				$sql = "SELECT name
+					FROM sysobjects
+					WHERE type='U'";
+			break;
+
+			case 'postgres':
+				$sql = 'SELECT relname
+					FROM pg_stat_user_tables';
+			break;
+
+			case 'oracle':
+				$sql = 'SELECT table_name
+					FROM USER_TABLES';
+			break;
+		}
+
 		$result = $db->sql_query($sql);
+
 		$option_list = '';
 		while ($row = $db->sql_fetchrow($result))
 		{
-			$table_name = $row['Name'];
-			$option_list .= "<option value='{$row['Name']}'>{$table_name}</option>";
+			$name = current($row);
+			$option_list .= "<option value='{$name}'>{$name}</option>";
 		}
 		$db->sql_freeresult($result);
 
@@ -214,7 +253,9 @@ class db_backup
 		$tables = is_array($tables) ? $tables : explode(',', $tables);
 		$db_name = $db->get_db_name();
 
-		$sql = 'SHOW TABLE STATUS FROM '. $db_name .' WHERE '. $db->sql_in_set('Name', $tables) .'';
+		$sql = 'SHOW TABLE STATUS
+			WHERE ' . $db->sql_in_set('Name', $tables) . '';
+
 		$result = $db->sql_query($sql);
 		$table_count = $records = 0;
 		while ($row = $db->sql_fetchrow($result))
@@ -496,7 +537,9 @@ class mysql_dumper_extractor extends dbbase_extractor
 		$tables = is_array($tables) ? $tables : explode(',', $tables);
 		$db_name = $db->get_db_name();
 
-		$sql = 'SHOW TABLE STATUS FROM '. $db_name .' WHERE '. $db->sql_in_set('Name', $tables) .'';
+		$sql = 'SHOW TABLE STATUS
+			WHERE ' . $db->sql_in_set('Name', $tables) . '';
+
 		$result = $db->sql_query($sql);
 		$table_count = $records = 0;
 		while ($row = $db->sql_fetchrow($result))
