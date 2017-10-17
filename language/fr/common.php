@@ -137,7 +137,8 @@ $lang = array_merge($lang, array(
 	'VERSIONCHECK_FAIL'					=> 'Impossible d’obtenir l’information sur la dernière version de phpBB.',
 
 	'SELECT_ALL'						=> 'Pour tout sélectionner, merci de déplacer le curseur dans le champ ci-dessous et appuyer sur les touches Ctrl et A (sur PC) ou les touches Cmd et A (sur Mac).<br />Un double clic sélectionne un mot et un triple clic une ligne entière.'
-	'PHPBB_DEBUG'					=> '[phpBB Debug]',
-	'DEBUG_IN_FILE'					=> 'in file',
-	'DEBUG_ON_LINE'					=> 'on line',
+
+	'PHPBB_DEBUG'						=> '[Débogueur phpBB]',
+	'DEBUG_IN_FILE'						=> 'dans le fichier',
+	'DEBUG_ON_LINE'						=> 'à la ligne',
 ));
