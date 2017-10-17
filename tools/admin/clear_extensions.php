@@ -67,6 +67,7 @@ class clear_extensions
 		global $db, $template, $user, $cache;
 
 		$off = request_var('off', false);
+		$on = request_var('on', false);
 
 		page_header($user->lang['CLEAR_EXTENSIONS']);
 		$no_composer = false;
@@ -95,8 +96,26 @@ class clear_extensions
 			}
 		}
 
+		if ($on)
+		{
+			$uids = request_var('marked_name', array('', ''));
+			if (empty($uids))
+			{
+				$error[] = 'NO_EXT_SELECTED';
+				trigger_error('NO_EXT_SELECTED', E_USER_WARNING);
+			}
+
+			$sql = 'UPDATE ' . EXT_TABLE . '
+				SET ext_active = 1
+				WHERE ' . $db->sql_in_set('ext_name', $uids, false);
+			$db->sql_query($sql);
+			$cache->purge(); // Purge the cache
+			trigger_error('ON_EXT_SUCCESS');
+		}
+
 		$sql = 'SELECT *
-			FROM ' . EXT_TABLE . '';
+			FROM ' . EXT_TABLE . '
+			ORDER BY ext_active DESC';
 		$result = $db->sql_query($sql);
 		while ($row = $db->sql_fetchrow($result))
 		{
@@ -104,10 +123,10 @@ class clear_extensions
 			$display_name = $root = $missing_path = '';
 			foreach($path as $key => $ext_path)
 			{
-				if($dir = @opendir('' . PHPBB_ROOT_PATH . 'ext/'.$root.''.$ext_path.''))
+				if($dir = @opendir('' . PHPBB_ROOT_PATH . 'ext/' . $root . $ext_path . ''))
 				{
 					$file = readdir($dir);
-					$root = ''.$ext_path.'/';
+					$root = $ext_path . '/';
 				}
 				else
 				{
@@ -118,9 +137,9 @@ class clear_extensions
 
 			if(!$missing_path)
 			{
-				if (file_exists('' . PHPBB_ROOT_PATH . 'ext/'.$row['ext_name'].'/composer.json'))
+				if (file_exists('' . PHPBB_ROOT_PATH . 'ext/' . $row['ext_name' ] . '/composer.json'))
 				{
-					$buffer =  file_get_contents('' . PHPBB_ROOT_PATH . 'ext/'.$row['ext_name'].'/composer.json');
+					$buffer =  file_get_contents('' . PHPBB_ROOT_PATH . 'ext/' . $row['ext_name'] . '/composer.json');
 					if ($buffer)
 					{
 						$obj = json_decode($buffer);

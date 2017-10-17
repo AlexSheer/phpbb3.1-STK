@@ -318,7 +318,7 @@ class config_list
 		page_header($user->lang['CONFIG_LIST']);
 
 		$sql = 'SELECT COUNT(config_name) as count
-				FROM ' . CONFIG_TABLE .'
+				FROM ' . CONFIG_TABLE . '
 				' . $sql_where ;
 		$result = $db->sql_query($sql);
 		$count = $db->sql_fetchfield('count');

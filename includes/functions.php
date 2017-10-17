@@ -710,7 +710,7 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 		case E_USER_ERROR:
 		case E_RECOVERABLE_ERROR:
 			$backtrace = get_backtrace();
-			$msg_text = '<br /><b>[phpBB Debug] PHP '.$error_level[$errno].':</b> in file ' . phpbb_filter_root_path($errfile) . ' on line <b>'. $errline .': ' . $msg_text . '</b><br />'.$backtrace.'';
+			$msg_text = '<br /><strong>[phpBB Debug] PHP ' . $error_level[$errno] . ':</strong> in file ' . phpbb_filter_root_path($errfile) . ' on line <strong>' . $errline . ': ' . $msg_text . '</strong><br />' . $backtrace . '';
 		break;
 		default:
 		break;
@@ -770,14 +770,19 @@ function stk_msg_handler($errno, $msg_text, $errfile, $errline)
 				$errfile = stk_filter_root_path($errfile);
 				$msg_text = stk_filter_root_path($msg_text);
 				$error_name = ($errno === E_WARNING) ? 'PHP Warning' : 'PHP Notice';
-				echo '<b>[phpBB Debug] ' . $error_name . '</b>: in file <b>' . $errfile . '</b> on line <b>' . $errline . '</b>: <b>' . $msg_text . '</b><br />' . "\n";
 
+				$id = rand(1, 10000);
+				$template->assign_block_vars('debug_r', array(
+					'U_DEBUGING_ERN'	=> $error_name,
+					'U_DEBUGING_ERF'	=> $errfile,
+					'U_DEBUGING_ERL'	=> $errline,
+					'U_DEBUGING_MSG'	=> $msg_text,
+				));
 				// we are writing an image - the user won't see the debug, so let's place it in the log
 				if (defined('IMAGE_OUTPUT') || defined('IN_CRON'))
 				{
 					add_log('critical', 'LOG_IMAGE_GENERATION_ERROR', $errfile, $errline, $msg_text);
 				}
-				echo '<br /><br />BACKTRACE<br />' . get_backtrace() . '<br />' . "\n";
 			}
 
 			return;
