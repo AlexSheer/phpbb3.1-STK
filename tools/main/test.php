@@ -29,7 +29,7 @@ class test
 
 		// This is kinda like the main page
 		// Output the main page
-		page_header($user->lang['SUPPORT_TOOL_KIT']);
+		page_header($user->lang['TEST']);
 
 		ob_start();
 		phpinfo(INFO_GENERAL | INFO_CONFIGURATION | INFO_MODULES | INFO_VARIABLES);
@@ -78,6 +78,8 @@ class test
 			'DATABASE_INFO'		=> $db->sql_server_info(),
 			'BOARD_VERSION'		=> $config['version'],
 			'DBMS'				=> $db->get_sql_layer(),
+			'PHP_VERSION'		=> @phpversion(),
+			'STK_VERSION'		=> STK_VERSION,
 		));
 
 		if (extension_loaded('mbstring'))
