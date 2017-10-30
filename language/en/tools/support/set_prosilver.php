@@ -1,12 +1,13 @@
 <?php
 /**
 *
-* @package Support Toolkit - Test English language Sheer
+* @package Support Toolkit - Set prosilver as default style English language Sheer
 * @version $Id$
 * @copyright (c) 2009 phpBB Group
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
+
 /**
 * DO NOT CHANGE
 */
@@ -15,9 +16,6 @@ if (!defined('IN_PHPBB'))
 	exit;
 }
 
-/**
-* DO NOT CHANGE
-*/
 if (empty($lang) || !is_array($lang))
 {
 	$lang = array();
@@ -40,13 +38,10 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'TEST'				=> 'General Information',
-	'DATABASE_INFO'		=> 'Database server',
-	'DBMS'				=> 'Database type',
-	'PHP_INFO'			=> 'Information about php',
-	'PHP_VERSION'		=> 'PHP version',
-	'STK_VERSION'		=> 'Support Tookit version',
-	'MBSTRING_LOADED'	=> 'Functions for working with multi-byte strings (extension php <strong>mbstring</strong>) is loaded',
-	'MBSTRING_NOT_LOADED'				=> 'Functions for working with multi-byte strings (extension php <strong>mbstring</strong>) not loaded',
-	'ERROR_MBSTRING_NOT_LOADED_EXPLAIN'	=> 'mbstring is not included in the list of extensions that are installed by default. This means that initially this extension is disabled. To use the functions of this extension, you must explicitly enable the module to configure php. Need to consult the documentation for <a href="http://php.net/manual/ru/mbstring.configuration.php"> php </a>',
+	'SET_PROSILVER'						=> 'Assigning prosilver to the default style',
+	'SET_PROSILVER_CONFIRM'				=> 'Allows set Prosilver and assign it as the default style for all users.',
+	'SET_PROSILVER_ALLREADY_ASSIGNED'	=> 'Prosilver is already assigned as the default style. No action is taken.',
+	'SET_PROSILVER_ACTIVATED'			=> 'Prosilver was successfully activated.',
+	'SET_PROSILVER_RESET'				=> 'Prosilver was assigned as the default style.',
+	'SET_PROSILVER_DOES_NOT_EXIST'		=> 'Prosilver does not exist. Please upload a copy of prosilver from the <a href="https://www.phpbb.com/downloads/">3.1.11 Full Package</a>.',
 ));
