@@ -39,8 +39,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'SET_PROSILVER'						=> 'Définir « prosilver » comme le style par défaut',
-	'SET_PROSILVER_CONFIRM'				=> 'Permet de définir « prosilver » comme le style par défaut pour tous les utilisateurs du forum.',
+	'SET_PROSILVER'						=> 'Définir « prosilver » par défaut',
+	'SET_PROSILVER_CONFIRM'				=> 'Permet de définir le style « prosilver » par défaut pour tous les utilisateurs du forum.',
 	'SET_PROSILVER_ALLREADY_ASSIGNED'	=> 'Le style « prosilver » est déjà le style par défaut du forum. Aucune action n’est nécessaire.',
 	'SET_PROSILVER_ACTIVATED'			=> 'Le style « prosilver » a été activé avec succès !',
 	'SET_PROSILVER_RESET'				=> 'Le style « prosilver » a été féfini comme le style par défaut pour tous les utilisateurs du forum.',
