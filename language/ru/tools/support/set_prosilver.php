@@ -43,5 +43,5 @@ $lang = array_merge($lang, array(
 	'SET_PROSILVER_ALLREADY_ASSIGNED'	=> 'Стиль prosilver уже назначен стилем по умолчанию. Никаких действий не трубуется.',
 	'SET_PROSILVER_ACTIVATED'			=> 'Стиль prosilver был успешно активирован.',
 	'SET_PROSILVER_RESET'				=> 'Стиль prosilver был назначен стилем по умолчанию.',
-	'SET_PROSILVER_DOES_NOT_EXIST'		=> 'Файлы стиля отсутсвуют на сервере. Загрузите файлы из дистрибутива <a href="https://www.phpbb.com/downloads/">3.2.1 Full Package</a>.',
+	'SET_PROSILVER_DOES_NOT_EXIST'		=> 'Файлы стиля отсутсвуют на сервере. Загрузите файлы из дистрибутива <a href="https://www.phpbb.com/downloads/">3.1.11 Full Package</a>.',
 ));
