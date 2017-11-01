@@ -140,4 +140,5 @@ $lang = array_merge($lang, array(
 	'PHPBB_DEBUG'					=> '[phpBB Debug]',
 	'DEBUG_IN_FILE'					=> 'в файле',
 	'DEBUG_ON_LINE'					=> 'в строке',
+	'STK_INCOMPARTIBLE'				=> 'Эта версия STK для phpBB версии 3.1.x, в то время как ваша версия %1$s',
 ));
