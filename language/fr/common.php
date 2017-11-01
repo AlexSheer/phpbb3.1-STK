@@ -141,4 +141,5 @@ $lang = array_merge($lang, array(
 	'PHPBB_DEBUG'						=> '[Débogueur phpBB]',
 	'DEBUG_IN_FILE'						=> 'dans le fichier',
 	'DEBUG_ON_LINE'						=> 'à la ligne',
+	'STK_INCOMPATIBLE'					=> 'Cette version de STK est dédiée aux forums phpBB 3.1.x, alors que la version du forum phpBB utilisé est %1$s.',
 ));
