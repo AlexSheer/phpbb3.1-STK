@@ -552,7 +552,7 @@ if (!defined('IN_PHPBB') || !defined('STK_VERSION'))
 		default:
 			if ($config['version'] > '3.1.11')
 			{
-				trigger_error(user_lang('STK_INCOMPARTIBLE'));
+				trigger_error(user_lang('STK_INCOMPATIBLE'));
 			}
 		break;
 	}
