@@ -135,7 +135,7 @@ $lang = array_merge($lang, array(
 	'UPDATES_AVAILABLE'					=> 'Your version of phpBB is not the latest. Available version for updates is %1$s<br />Follow this link <a href="%2$s" target="_blank" />%2$s</a> to the release announcement for the latest version, which contains additional information, as well as instructions for updating phpBB',
 	'VERSIONCHECK_FAIL'					=> 'Failed to obtain latest phpBB version information.',
 
-	'SELECT_ALL'						=> 'To select all, move cursor in field below and press Ctrl-A (PC), Cmd-A (Mac) <br />Double click selects a word and triple entire row.'
+	'SELECT_ALL'						=> 'To select all, move cursor in field below and press Ctrl-A (PC), Cmd-A (Mac) <br />Double click selects a word and triple entire row.',
 
 	'PHPBB_DEBUG'					=> '[phpBB Debug]',
 	'DEBUG_IN_FILE'					=> 'in file',
