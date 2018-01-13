@@ -550,9 +550,10 @@ if (!defined('IN_PHPBB') || !defined('STK_VERSION'))
 			exit_handler();
 		break;
 		default:
-			if ($config['version'] > '3.1.11')
+			$vers = explode('.', $config['version']);
+			if ($vers[1] > 1)
 			{
-				trigger_error(user_lang('STK_INCOMPATIBLE'));
+				trigger_error(sprintf(user_lang('STK_INCOMPATIBLE'), $config['version']), E_USER_WARNING);
 			}
 		break;
 	}
